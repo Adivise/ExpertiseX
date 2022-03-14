@@ -61,7 +61,6 @@ Copy or Rename `.env.example` to `.env` and fill out the values:
 # Self Bot
 TOKEN=REPLACE_TOKEN_HERE
 PREFIX=.
-LEAVE_TIMEOUT=120000
 
 # Devloper
 OWNER_ID=515490955801919488
@@ -85,9 +84,6 @@ module.exports = {
     PREFIX: process.env.PREFIX || ".", //<= default is .  // self-bot prefix
 
     OWNER_ID: process.env.OWNER_ID || "YOUR_CLIENT_ID", //your owner discord id example: "515490955801919488" this is not id like *Stylish.#4078
-
-    LEAVE_TIMEOUT: parseInt(process.env.LEAVE_TIMEOUT || "120000"), // leave timeout default "120000" = 2 minutes // 1000 = 1 seconds
-
     DEV_ID: process.env.DEV_ID || [], // if you want to use command bot only, you can put your id here  // example ["515490955801919488", "543595284345782296"]
 
     NODES: [
