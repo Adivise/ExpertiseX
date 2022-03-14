@@ -1,7 +1,7 @@
 {
   "name": "expertisex",
   "version": "1.0.1",
-  "description": "✈ Join Discord: https://discord.gg/4pk97A2 👌",
+  "description": "THIS A SELF-BOT IF YOU GET BANNED I'M NOT RESPONSIBLE!",
   "main": "index.js",
   "dependencies": {
     "better-erela.js-apple": "^1.0.1",
@@ -18,7 +18,7 @@
     "start": "node --no-warnings index.js"
   },
   "author": "Adivise",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "devDependencies": {
     "node": "^17.0.1"
   }
