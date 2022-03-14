@@ -19,11 +19,6 @@
 - [x] Vimeo
 - [x] Https (Radio)
 
-## 🚨 Have a Problem
-
-✈ Join Discord:  [NanoSpace ♪♪](https://discord.gg/SNG3dh3MbR)
-   mention me in chat #general or #javascript and ask problem okay! 👌
-
 <details><summary>📎 Requirements [CLICK ME]</summary>
 <p>
 
