@@ -30,7 +30,7 @@
 ## 📎 Requirements
 
 1. Node.js Version 16+ **[Download](https://nodejs.org/en/download/)**
-2. Discord Bot Token **[Guide](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)**
+2. Your Discord Token **[Video](https://youtu.be/YEgFvgg7ZPI)**
 3. Lavalink **[Guide](https://github.com/freyacodes/lavalink)** (i use this development version [Direct Download](https://ci.fredboat.com/repository/downloadAll/Lavalink_Build/9311:id/artifacts.zip) )
 
 ## 🛑 Super Requirements 
