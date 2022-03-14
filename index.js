@@ -1,4 +1,4 @@
-const MainClient = require("./nanospace");
+const MainClient = require("./expertise");
 const client = new MainClient();
 
 client.connect()
