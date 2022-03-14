@@ -1,4 +1,4 @@
-## 📄 Read Warning [SELF-BOT]
+## 📄 Read Warning
 - [ ] Do not break the Discord TOS or guidelines while using this selfbot.
 - [ ] I am not responsible if you get banned from Discord or any guilds.
 - [ ] If you do not agree with the above, don't use it. 
@@ -43,8 +43,8 @@
 ## 📚 Installation
 
 ```
-git clone https://github.com/Adivise/NanoSpace
-cd NanoSpace
+git clone https://github.com/Adivise/ExpertiseX
+cd ExpertiseX
 npm install
 ```
 
@@ -58,18 +58,14 @@ npm install
 Copy or Rename `.env.example` to `.env` and fill out the values:
 
 ```.env
-# Bot
-TOKEN=REPLACE_HERE
-PREFIX=#
-NP_REALTIME=true
+# Self Bot
+TOKEN=REPLACE_TOKEN_HERE
+PREFIX=.
+LEAVE_TIMEOUT=120000
 
 # Devloper
-OWNER_ID=REPLACE_HERE
-
-# Database
-MONGO_URI=mongodb://127.0.0.1:27017/playlist
-LIMIT_TRACK=100
-LIMIT_PLAYLIST=10
+OWNER_ID=515490955801919488
+DEV_ID=515490955801919488, 908006641155309619
 
 # Lavalink
 NODE_HOST=localhost
@@ -85,18 +81,14 @@ Go to folder `settings` edit `config.js` and you can fill out the values:
 require("dotenv").config();
 
 module.exports = {
-    TOKEN: process.env.TOKEN || "YOUR_TOKEN",  // your bot token
-    PREFIX: process.env.PREFIX || "#", //<= default is #  // bot prefix
+    TOKEN: process.env.TOKEN || "YOUR_TOKEN",  // your token discord
+    PREFIX: process.env.PREFIX || ".", //<= default is .  // self-bot prefix
 
-    OWNER_ID: process.env.OWNER_ID || "YOUR_CLIENT_ID", //your client id
+    OWNER_ID: process.env.OWNER_ID || "YOUR_CLIENT_ID", //your owner discord id example: "515490955801919488" this is not id like *Stylish.#4078
 
-    NP_REALTIME: process.env.NP_REALTIME || "BOOLEAN", // "true" = realtime, "false" = not realtime :3 // WARNING: on set to "true" = laggy
+    LEAVE_TIMEOUT: parseInt(process.env.LEAVE_TIMEOUT || "120000"), // leave timeout default "120000" = 2 minutes // 1000 = 1 seconds
 
-    DEV_ID: [], // if you want to use command bot only, you can put your id here // example: ["515490955801919488", "543595284345782296"]
-
-    MONGO_URI: process.env.MONGO_URI || "YOUR_MONGO_URI", // your mongo uri
-    LIMIT_TRACK: process.env.LIMIT_TRACK || "100",  //<= dafault is "100" // limit track in playlist
-    LIMIT_PLAYLIST: process.env.LIMIT_PLAYLIST || "10", //<= default is "10" // limit can create playlist
+    DEV_ID: process.env.DEV_ID || [], // if you want to use command bot only, you can put your id here  // example ["515490955801919488", "543595284345782296"]
 
     NODES: [
       { 
@@ -170,50 +162,8 @@ After installation or finishes all you can use `node .` to start the bot. or `Ru
 - Vibrate (#vibrate)
 - Vibrato (#vibrato)
 	
-📦 **Playlist Commands!**
-- Create (#create [link] [name]) <= Work all link? use same name to add! went your have!
-- Delete (#delete [name])
-- Import (#import [name])
-- Detail (#detail [name])
-- View (#view)
-	
-💎 **Premium Commands!**
-- Premium (#premium [plan] [user id])
-- Generate (#generate [plan] [amount])
-- Redeem (#redeem [code])
-	
 📑 **Utilities Commands!**
 - Restart (#restart, #stopbot)
-- DeploySlash (#deploy, #dps) <= only one guild
-- ClearSlash (#cdps) <= work only deployslash
-- Prefix (#prefix [new prefix])
-- DeploySlashGlobal (#deployglobal, #dpsg) <= want change need wait 1 - 2 hrs.
-- Help (#help, #halp [command])
-
-</p>
-</details>
-
-
-<details><summary>🖼 Picture [CLICK ME]</summary>
-<p>
-
-## 🖼 Picture & ScreenShots
-
-![see](https://i.imgur.com/xUurYDJ.png)
-![see](https://i.imgur.com/hxSCmeP.png)
-![see](https://i.imgur.com/P3GNCbQ.png)
-![see](https://i.imgur.com/9Plhzar.png)
-![see](https://i.imgur.com/k2Sp8zo.png)
-
-</p>
-</details>
-
-<details><summary>👏 Credits [CLICK ME]</summary>
-<p>
-
-## 👏 THANK
-- [lavamusic](https://github.com/brblacky/lavamusic)
-- [EarTensifier](https://github.com/Tetracyl/EarTensifier)
 
 </p>
 </details>
