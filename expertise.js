@@ -12,8 +12,8 @@ class MainClient extends Client {
     this.config = require("./settings/config.js");
     this.loadslash = [];
     this.prefix = this.config.PREFIX;
-    this.owner = this.config.OWNER_ID;
     this.dev = this.config.DEV_ID;
+    
     if(!this.token) this.token = this.config.TOKEN;
 
     process.on('unhandledRejection', error => console.log(error));

@@ -16,7 +16,7 @@ module.exports = {
             guild: message.guild.id,
             voiceChannel: message.member.voice.channel.id,
             textChannel: message.channel.id,
-            selfDeafen: true,
+            selfDeafen: false,
         });
 
         await player.connect();

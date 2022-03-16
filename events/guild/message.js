@@ -5,14 +5,11 @@ module.exports = async (client, message) => {
 
     let prefix = client.prefix;
 	
-	if (!client.dev.includes(message.author.id) && client.dev.length > 0) { 
-		console.log(chalk.red(`[INFORMATION] ${message.author.tag} Trying request the command!`)); 
-		return;
-    }
+	if (!client.dev.includes(message.author.id) && client.dev.length > 0) return console.log(chalk.red(`[INFORMATION] ${message.author.tag} Trying request the command!`)); 
 
     const mention = new RegExp(`^<@!?${client.user.id}>( |)$`);
 	if (message.content.match(mention)) {
-		message.channel.send(`**My prefix is \`${prefix}\`**`).then(msg => {
+		message.channel.send(`*\`My prefix is\`* \`${prefix}\`**`).then(msg => {
 			setTimeout(() => msg.delete(), 5000)
 		});
 	};
@@ -30,7 +27,7 @@ module.exports = async (client, message) => {
 			command.run(client, message, args, prefix)
       } catch (error) {
         console.log(error)
-        message.channel.send({ content: 'Something went wrong.' }).then(msg => {
+        message.channel.send({ content: '*`Something went wrong.`*' }).then(msg => {
 			setTimeout(() => msg.delete(), 5000)
 		});
     }

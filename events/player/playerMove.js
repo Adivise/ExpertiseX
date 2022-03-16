@@ -17,14 +17,14 @@ module.exports = async (client, player, oldChannel, newChannel) => {
         if(newChannel === null || !newChannel) {
         if(!player) return;
 
-        if(channel) await channel.send(`**I've been disconnected from <#${oldChannel}>**`).then(msg => {
+        if(channel) await channel.send(`*\`I've been disconnected from ${oldChannel.name}\`*`).then(msg => {
           setTimeout(() => msg.delete(), 5000)
       });
         return player.destroy();
       } else {
         player.voiceChannel = newChannel;
         
-        if(channel) await channel.send(`**I got moved auto disconnected**`).then(msg => {
+        if(channel) await channel.send(`*\`I've got moved auto disconnected\`*`).then(msg => {
           setTimeout(() => msg.delete(), 5000)
       });
         return player.destroy();

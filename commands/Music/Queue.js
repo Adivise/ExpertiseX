@@ -25,7 +25,7 @@ module.exports = {
 		for (let i = 0; i < player.queue.length; i++) {
 			const song = player.queue[i];
 			songStrings.push(
-				`*\` ${i + 1}. ${song.title} [${formatDuration(song.duration)}] • ${song.requester.tag} \`*
+				`*\`${i + 1}. ${song.title} [${formatDuration(song.duration)}]\`* • ${song.requester.tag}
 				`);
 		}
 
@@ -33,7 +33,7 @@ module.exports = {
 		for (let i = 0; i < pagesNum; i++) {
 			const str = songStrings.slice(i * 10, i * 10 + 10).join('');
 
-			const String = `*Currently Playing:*\n*\` ${song.title}** \`[${formatDuration(song.duration)}]\` • ${song.requester.tag} \`*\n\n*Rest of queue*:${str == '' ? '  Nothing' : '\n' + str}`;
+			const String = `*Currently Playing:*\n*\`${song.title}** [${formatDuration(song.duration)}]\`* • ${song.requester.tag}\n\n*Rest of queue*:${str == '' ? '  Nothing' : '\n' + str}`;
 
 			pages.push(String);
 		}

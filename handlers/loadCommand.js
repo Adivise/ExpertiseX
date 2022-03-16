@@ -9,5 +9,5 @@ module.exports = async (client) => {
             if (pull.config.aliases) pull.config.aliases.forEach(a => client.aliases.set(a, pull.config.name));
           };
         };
-        ["Music", "Filters", "Utilities"].forEach(x => load(x));
+        ["Music", "Filters"].forEach(x => load(x));
 };

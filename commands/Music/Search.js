@@ -8,19 +8,21 @@ module.exports = {
         category: "Music",
         accessableby: "Member",
     },
-    run: async (client, message, args) => {
+    run: async (client, message, args, prefix) => {
         const msg = await message.channel.send(`*\`Loading please wait...\`*`);
 
             const { channel } = message.member.voice;
             if(!channel) return msg.edit("*`You need to be in a voice channel.`*");
 
-        if (!args[0]) return msg.edit("*`Please provide a song name or link to search.`*");
+        if (!args[0]) return msg.edit("*`Please provide a song name or link to search.`*").then(msg => {
+            setTimeout(() => msg.delete(), 5000)
+        });
 
         const player = client.manager.create({
             guild: message.guild.id,
             voiceChannel: message.member.voice.channel.id,
             textChannel: message.channel.id,
-            selfDeafen: true,
+            selfDeafen: false,
         });
 
         const search = args.join(" ");
@@ -33,7 +35,7 @@ module.exports = {
             if(res.loadType == "TRACK_LOADED") {
                     player.queue.add(res.tracks[0]);
 
-                    msg.edit(`* \`Queued • ${res.tracks[0].title} ${convertTime(res.tracks[0].duration, true)} • ${res.tracks[0].requester.tag} \`*`).then(msg => {
+                    msg.edit(`*\`Queued • ${res.tracks[0].title} ${convertTime(res.tracks[0].duration, true)}\`* • ${res.tracks[0].requester.tag}`).then(msg => {
                         setTimeout(() => msg.delete(), 5000)
                     });
                     if (!player.playing) player.play()
@@ -59,7 +61,7 @@ module.exports = {
                         const track = tracks[Number(m.content) - 1];
                         player.queue.add(track)
 
-                        msg.edit(`* \`Queued • ${track.title} ${convertTime(track.duration)} • ${track.requester.tag} \`*`).then(msg => {
+                        msg.edit(`*\`Queued • ${track.title} ${convertTime(track.duration)} \`* • ${track.requester.tag}`).then(msg => {
                             setTimeout(() => msg.delete(), 5000)
                         });
                         if(!player.playing) player.play();
@@ -68,7 +70,7 @@ module.exports = {
                     collector.on("end", async (collected, reason) => {
                         if(reason === "time") {
                             await player.destroy();
-                            return msg.edit("`*No track selected.*`").then(msg => {
+                            return msg.edit("`*No Track Selected.*`").then(msg => {
                                 setTimeout(() => msg.delete(), 5000)
                             });
                         }
@@ -78,21 +80,21 @@ module.exports = {
                     let search = await player.search(args.join(" "), message.author);
                     player.queue.add(search.tracks)
 
-                    msg.edit(`* \`Queued • ${search.playlist.name} ${convertTime(search.playlist.duration)} (${search.tracks.length} tracks) • ${search.tracks[0].requester.tag} \`*`).then(msg => {
+                    msg.edit(`*\`Queued • ${search.playlist.name} ${convertTime(search.playlist.duration)} (${search.tracks.length} tracks) \`* • ${search.tracks[0].requester.tag}`).then(msg => {
                         setTimeout(() => msg.delete(), 5000)
                     });
                     if(!player.playing) player.play()
             }
                 else if(res.loadType == "LOAD_FAILED") {
                     await player.destroy();
-                    return msg.edit("*`Error loading track.*`").then(msg => {
+                    return msg.edit("*`Error Loading Failed.*`").then(msg => {
                         setTimeout(() => msg.delete(), 5000)
                     });
                 }
             }
             else {
                 await player.destroy();
-                return msg.edit("*`Error loading track.`*").then(msg => {
+                return msg.edit("*`Error No Matches.`*").then(msg => {
                     setTimeout(() => msg.delete(), 5000)
                 });
             }
