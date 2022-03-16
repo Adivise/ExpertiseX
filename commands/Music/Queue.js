@@ -29,7 +29,7 @@ module.exports = {
 
 		const pages = [];
 		for (let i = 0; i < pagesNum; i++) {
-			const str = songStrings.slice(i * 10, i * 10 + 10).join('');
+			const str = songStrings.slice(i * 10, i * 10 + 10).join('\n');
 
 			const String = `*Currently Playing:*\n*\`${song.title}** [${formatDuration(song.duration)}]\`* • ${song.requester.tag}\n\n*Rest of queue*:${str == '' ? '  Nothing' : '\n' + str}`;
 
