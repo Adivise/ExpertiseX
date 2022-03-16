@@ -31,13 +31,13 @@ module.exports = {
 		for (let i = 0; i < pagesNum; i++) {
 			const str = songStrings.slice(i * 10, i * 10 + 10).join('\n');
 
-			const String = `*Currently Playing:*\n*\`${song.title}** [${formatDuration(song.duration)}]\`* • ${song.requester.tag}\n\n*Rest of queue*:${str == '' ? '  Nothing' : '\n' + str}`;
+			const String = `*Currently Playing:*\n*\`${song.title} [${formatDuration(song.duration)}]\`* • ${song.requester.tag}\n\n*Rest of queue*:${str == '' ? '  Nothing' : '\n' + str}`;
 
 			pages.push(String);
 		}
 
 		return msg.edit([pages[0]]).then(msg => {
-			setTimeout(() => msg.delete(), 10000)
+			setTimeout(() => msg.delete(), 20000)
 		});
 	}
 };
