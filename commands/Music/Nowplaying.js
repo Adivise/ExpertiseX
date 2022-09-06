@@ -16,7 +16,7 @@ module.exports = {
 
         const song = player.queue.current;
 
-        return msg.edit(`\`⏹\` *\`Now playing... | ${song.title} [${formatDuration(song.duration)}] • ${song.requester.tag}\`*`).then(msg => {
+        return msg.edit(`\`⏹\` \`Now playing... | ${song.title} [${formatDuration(song.duration)}] • ${song.requester.tag}\``).then(msg => {
             setTimeout(() => msg.delete(), 5000)
         });
     }

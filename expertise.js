@@ -1,4 +1,4 @@
-const { Client, Collection } = require("discord.js");
+const { Client, Collection } = require("discord.js-selfbot-v13");
 const { Manager } = require("erela.js");
 const Spotify = require("better-erela.js-spotify").default;
 const Apple = require("better-erela.js-apple").default;
@@ -7,7 +7,9 @@ const Facebook = require("erela.js-facebook");
 
 class MainClient extends Client {
     constructor() {
-        super();
+        super({
+          checkUpdate: false
+        });
 
     this.config = require("./settings/config.js");
     this.loadslash = [];

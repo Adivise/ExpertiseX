@@ -11,10 +11,10 @@ module.exports = {
     run: async (client, message, args, prefix) => {
         const msg = await message.channel.send(`*\`Loading please wait...\`*`);
 
-            const player = client.manager.get(message.guild.id);
-            if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
-            const { channel } = message.member.voice;
-            if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
+		const player = client.manager.get(message.guild.id);
+		if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
+		const { channel } = message.member.voice;
+		if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
 
 		const song = player.queue.current;
 
@@ -36,7 +36,7 @@ module.exports = {
 			pages.push(String);
 		}
 
-		return msg.edit([pages[0]]).then(msg => {
+		return msg.edit({ content: pages[0] }).then(msg => {
 			setTimeout(() => msg.delete(), 20000)
 		});
 	}

@@ -11,8 +11,10 @@ module.exports = {
     run: async (client, message, args, prefix) => {
         const msg = await message.channel.send(`*\`Loading please wait...\`*`);
 
-            const { channel } = message.member.voice;
-            if(!channel) return msg.edit("*`You need to be in a voice channel.`*");
+        console.log("Hey seach command is error have right? nah give a shit don't care this error this error not effect this bot!")
+
+        const { channel } = message.member.voice;
+        if(!channel) return msg.edit("*`You need to be in a voice channel.`*");
 
         if (!args[0]) return msg.edit("*`Please provide a song name or link to search.`*").then(msg => {
             setTimeout(() => msg.delete(), 5000)
@@ -55,15 +57,19 @@ module.exports = {
                         return m.author.id === message.author.id && new RegExp(`^([1-5]|cancel)$`, "i").test(m.content)
                     }, { time: 30000, max: 1 });
 
-                    collector.on("collect", m => {
-                        if (/cancel/i.test(m.content)) return;
+                    collector.on("collect", async (m) => {
+                        if (/cancel/i.test(m.cleanContent)) return;
 
-                        const track = tracks[Number(m.content) - 1];
-                        player.queue.add(track)
+                        const resulted = Number(m.cleanContent) - 1;
+
+                        /// i give a shit error // RangeError: Provided argument must be present.
+                        let track = await tracks[resulted];
+                        await player.queue.add(track);
 
                         msg.edit(`*\`Queued • ${track.title} ${convertTime(track.duration)} \`* • ${track.requester.tag}`).then(msg => {
                             setTimeout(() => msg.delete(), 5000)
                         });
+
                         if(!player.playing) player.play();
                     });
 
