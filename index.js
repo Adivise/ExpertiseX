@@ -1,4 +1,4 @@
-const MainClient = require("./expertise");
+const MainClient = require("./expertise.js");
 const client = new MainClient();
 
 client.connect()

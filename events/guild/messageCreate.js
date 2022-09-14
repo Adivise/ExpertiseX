@@ -1,18 +1,22 @@
-const chalk = require('chalk');
-
 module.exports = async (client, message) => { 
-    if(message.author.bot || message.channel.type === "dm") return;
+    /// Delete bot message! after 8 seconds!
+    if (client.config.AUTO_DELETE) {
+      if (message.author.id === client.user.id) {
+          await delay(5000);
+          message.delete()
+      }
+    }
+
+    if(message.author.bot || message.channel.type === "DM") return;
 
     let prefix = client.prefix;
 	
-	if (!client.dev.includes(message.author.id) && client.dev.length > 0) return; // console.log(chalk.red(`[INFORMATION] ${message.author.tag} Trying request the command!`)); 
+    if (!client.listen.includes(message.author.id) && client.listen.length > 0) return; // console.log(`[INFORMATION] ${message.author.tag} Trying request the command!`); 
 
     const mention = new RegExp(`^<@!?${client.user.id}>( |)$`);
-	if (message.content.match(mention)) {
-		message.channel.send(`*\`My prefix is\`* \`${prefix}\`**`).then(msg => {
-			setTimeout(() => msg.delete(), 5000)
-		});
-	};
+    if (message.content.match(mention)) {
+        message.channel.send(`*\`My prefix is\`* \`${prefix}\``);
+    };
 
     const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
@@ -25,10 +29,12 @@ module.exports = async (client, message) => {
 
     try {
 			command.run(client, message, args, prefix)
-      } catch (error) {
-        console.log(error)
-        message.channel.send({ content: '*`Something went wrong.`*' }).then(msg => {
-			setTimeout(() => msg.delete(), 5000)
-		});
+    } catch (error) {
+      console.log(error)
+      message.channel.send({ content: '*`Something went wrong.`*' });
     }
+}
+
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

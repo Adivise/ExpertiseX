@@ -9,8 +9,8 @@ module.exports = {
     run: async (client, message, args, prefix) => {
         const msg = await message.channel.send(`*\`Loading please wait...\`*`);
 
-            const { channel } = message.member.voice;
-            if(!channel) return msg.edit("*\`You need to be in a voice channel.\`*");
+        const { channel } = message.member.voice;
+        if(!channel) return msg.edit("*\`You need to be in a voice channel.\`*");
 
         const player = client.manager.create({
             guild: message.guild.id,
@@ -21,8 +21,6 @@ module.exports = {
 
         await player.connect();
 
-        return msg.edit(`\`🔊\` | *Joined:* \`${channel.name}\``).then(msg => {
-            setTimeout(() => msg.delete(), 5000)
-        });
+        return msg.edit(`\`🔊\` | *Joined:* \`${channel.name}\``);
     }
 }

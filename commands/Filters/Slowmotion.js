@@ -1,5 +1,3 @@
-const delay = require('delay');
-
 module.exports = { 
     config: {
         name: "slowmotion",
@@ -8,28 +6,30 @@ module.exports = {
         accessableby: "Member",
     },
     run: async (client, message, args, prefix) => {
-        const msg = await message.channel.send(`*\`Turning on\`* **${client.commands.get('slowmotion').config.name}** *\`This may take a few seconds...\`*`);
+        const msg = await message.channel.send(`*\`Turning on\`* **Slowmotion** *\`This may take a few seconds...\`*`);
 
-            const player = client.manager.get(message.guild.id);
-            if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
-            const { channel } = message.member.voice;
-            if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
+        const player = client.manager.get(message.guild.id);
+        if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
+        const { channel } = message.member.voice;
+        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
 
-            const data = {
-                op: 'filters',
-                guildId: message.guild.id,
-                timescale: {
-                    speed: 0.5,
-                    pitch: 1.0,
-                    rate: 0.8
-                }
+        const data = {
+            op: 'filters',
+            guildId: message.guild.id,
+            timescale: {
+                speed: 0.5,
+                pitch: 1.0,
+                rate: 0.8
             }
+        }
 
-            await player.node.send(data);
+        await player.node.send(data);
 
-        await delay(5000);
-        return msg.edit(`\`🔩\` | *Turned on:* \`${client.commands.get('slowmotion').config.name}\``).then(msg => {
-            setTimeout(() => msg.delete(), 5000)
-        });
-   }
+        await delay(1000);
+        return msg.edit("`🔩` | *Turned on:* `Slowmotion`");
+    }
 };
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }

@@ -8,10 +8,10 @@ module.exports = {
     run: async (client, message, args, prefix) => {
         const msg = await message.channel.send(`*\`Loading please wait...\`*`);
 
-            const player = client.manager.get(message.guild.id);
-            if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
-            const { channel } = message.member.voice;
-            if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
+        const player = client.manager.get(message.guild.id);
+        if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
+        const { channel } = message.member.voice;
+        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
 
         const autoplay = player.get("autoplay");
 
@@ -19,9 +19,7 @@ module.exports = {
             await player.set("autoplay", false);
             await player.queue.clear();
 
-            return msg.edit("\`📻\` | *Autoplay has been:* `Deactivated`").then(msg => {
-                setTimeout(() => msg.delete(), 5000)
-            });
+            return msg.edit("\`📻\` | *Autoplay has been:* `Deactivated`");
         } else {
             const identifier = player.queue.current.identifier;
             const search = `https://www.youtube.com/watch?v=${identifier}&list=RD${identifier}`;
@@ -32,9 +30,7 @@ module.exports = {
             await player.set("identifier", identifier);
             await player.queue.add(res.tracks[1]);
 
-            return msg.edit("\`📻\` | *Autoplay has been:* `Activated`").then(msg => {
-                setTimeout(() => msg.delete(), 5000)
-            });
+            return msg.edit("\`📻\` | *Autoplay has been:* `Activated`");
         }
     }
 };

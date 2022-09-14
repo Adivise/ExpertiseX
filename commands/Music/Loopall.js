@@ -9,24 +9,17 @@ module.exports = {
     run: async (client, message, args, prefix) => {
         const msg = await message.channel.send(`*\`Loading please wait...\`*`);
 
-            const player = client.manager.get(message.guild.id);
-            if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
-            const { channel } = message.member.voice;
-            if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
+        const player = client.manager.get(message.guild.id);
+        if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
+        const { channel } = message.member.voice;
+        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
 
 		if (player.queueRepeat === true) {
             await player.setQueueRepeat(false)
-
-            return msg.edit(`\`🔁\` | *Song is unloop:* \`All\``).then(msg => {
-                setTimeout(() => msg.delete(), 5000)
-            });
-		}
-		else {
+            return msg.edit(`\`🔁\` | *Song is unloop:* \`All\``);
+		} else {
             await player.setQueueRepeat(true);
-
-            return msg.edit(`\`🔁\` | *Song is loop:* \`All\``).then(msg => {
-                setTimeout(() => msg.delete(), 5000)
-            });
+            return msg.edit(`\`🔁\` | *Song is loop:* \`All\``);
 		}
 	}
 };

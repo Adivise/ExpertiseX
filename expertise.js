@@ -1,8 +1,11 @@
 const { Client, Collection } = require("discord.js-selfbot-v13");
 const { Manager } = require("erela.js");
+
+/// All Plugins!!
 const Spotify = require("better-erela.js-spotify").default;
 const Apple = require("better-erela.js-apple").default;
 const Deezer = require("erela.js-deezer");
+const Tidal = require("erela.js-tidal");
 const Facebook = require("erela.js-facebook");
 
 class MainClient extends Client {
@@ -12,16 +15,14 @@ class MainClient extends Client {
         });
 
     this.config = require("./settings/config.js");
-    this.loadslash = [];
     this.prefix = this.config.PREFIX;
-    this.dev = this.config.DEV_ID;
-    
+    this.listen = this.config.LISTENING;
     if(!this.token) this.token = this.config.TOKEN;
 
     process.on('unhandledRejection', error => console.log(error));
     process.on('uncaughtException', error => console.log(error));
 
-	const client = this;
+	  const client = this;
 
     this.manager = new Manager({
       nodes: this.config.NODES,
@@ -31,6 +32,7 @@ class MainClient extends Client {
         new Facebook(),
         new Deezer(),
         new Apple(),
+        new Tidal()
       ],
       send(id, payload) {
         const guild = client.guilds.cache.get(id);
@@ -41,7 +43,7 @@ class MainClient extends Client {
     ["aliases", "commands"].forEach(x => client[x] = new Collection());
     ["loadCommand", "loadEvent", "loadPlayer"].forEach(x => require(`./handlers/${x}`)(client));
 
-	}
+	  }
 		connect() {
         return super.login(this.token);
     };

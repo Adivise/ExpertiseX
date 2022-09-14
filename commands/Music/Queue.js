@@ -36,8 +36,6 @@ module.exports = {
 			pages.push(String);
 		}
 
-		return msg.edit({ content: pages[0] }).then(msg => {
-			setTimeout(() => msg.delete(), 20000)
-		});
+		return msg.edit({ content: pages[0] });
 	}
 };
