@@ -48,14 +48,12 @@ npm install
 
 ## 📄 Configuration
 
-> **OPTION 1️⃣**
-
 Copy or Rename `.env.example` to `.env` and fill out the values:
 
 ```.env
 # Self Bot
 TOKEN=REPLACE_TOKEN_HERE
-PREFIX=.
+PREFIX=#
 
 # Devloper
 OWNER_ID=515490955801919488
@@ -67,29 +65,6 @@ NODE_PORT=5555
 NODE_PASSWORD=123456
 ```
 
-> **OPTION 2️⃣**
-
-Go to folder `settings` edit `config.js` and you can fill out the values:
-
-```js
-require("dotenv").config();
-
-module.exports = {
-    TOKEN: process.env.TOKEN || "YOUR_TOKEN",  // your token discord
-    PREFIX: process.env.PREFIX || ".", //<= default is .  // self-bot prefix
-
-    OWNER_ID: process.env.OWNER_ID || "YOUR_CLIENT_ID", //your owner discord id example: "515490955801919488" this is not id like *Stylish.#4078
-    DEV_ID: process.env.DEV_ID || [], // if you want to use command bot only, you can put your id here  // example ["515490955801919488", "543595284345782296"]
-
-    NODES: [
-      { 
-        host: process.env.NODE_HOST || "localhost",
-        port: parseInt(process.env.NODE_PORT || "5555"),
-        password: process.env.NODE_PASSWORD || "123456",
-      } 
-    ],
-}
-```
 After installation or finishes all you can use `node .` to start the bot. or `Run Start.bat`
 
 </p>
@@ -152,9 +127,6 @@ After installation or finishes all you can use `node .` to start the bot. or `Ru
 - Tremolo (#tremolo)
 - Vibrate (#vibrate)
 - Vibrato (#vibrato)
-	
-📑 **Utilities Commands!**
-- Restart (#restart, #stopbot)
 
 </p>
 </details>
