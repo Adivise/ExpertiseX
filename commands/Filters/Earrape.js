@@ -6,27 +6,23 @@ module.exports = {
         accessableby: "Member",
         aliases: ["ear"]
     },
-    run: async (client, message, args, prefix) => {
-        const msg = await message.channel.send(`*\`Turning on\`* **Earrape** *\`This may take a few seconds...\`*`);
+    run: async (client, message, args) => {
+        const msg = await message.reply(`Loading please wait....`);
 
-        const player = client.manager.get(message.guild.id);
-        if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
+        const player = client.manager.players.get(message.guild.id);
+        if(!player) return msg.edit(`No playing in this guild!`);
         const { channel } = message.member.voice;
-        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
+        if (!channel || message.member.voice.channel !== message.guild.members.me.voice.channel) return msg.edit(`I'm not in the same voice channel as you!`);
 
-        await player.setVolume(500);
-        const data = {
-            op: 'filters',
-            guildId: message.guild.id,
-        }
-
-        await player.node.send(data);
+		    await player.setVolume(500);
+        const data = {}
+        await player.shoukaku.setFilters(data);
 
         await delay(3000);
-        return msg.edit("`🔩` | *Turned on:* `Earrape`");
+        return msg.edit({ content: "**Turned on filter:** `Earrape`" });
     }
 };
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
+}

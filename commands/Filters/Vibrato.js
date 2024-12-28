@@ -5,30 +5,28 @@ module.exports = {
         category: "Filters",
         accessableby: "Member",
     },
-    run: async (client, message, args, prefix) => {
-        const msg = await message.channel.send(`*\`Turning on\`* **Vibrato** *\`This may take a few seconds...\`*`);
+    run: async (client, message, args) => {
+        const msg = await message.reply(`Loading please wait....`);
 
-        const player = client.manager.get(message.guild.id);
-        if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
+        const player = client.manager.players.get(message.guild.id);
+        if(!player) return msg.edit(`No playing in this guild!`);
         const { channel } = message.member.voice;
-        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
+        if (!channel || message.member.voice.channel !== message.guild.members.me.voice.channel) return msg.edit(`I'm not in the same voice channel as you!`);
 
         const data = {
-            op: 'filters',
-            guildId: message.guild.id,
             vibrato: {
                 frequency: 4.0,
                 depth: 0.75
             },
         }
 
-        await player.node.send(data);
+        await player.shoukaku.setFilters(data);
 
-        await delay(1000);
-        return msg.edit("`🔩` | *Turned on:* `Vibrato`");
+        await delay(5000);
+        return msg.edit({ content: "**Turned on filter:** `Vibrato`" });
     }
 };
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
+}

@@ -1,23 +1,15 @@
 module.exports = async (client, message) => { 
-    /// Delete bot message! after 8 seconds!
-    if (client.config.AUTO_DELETE) {
-      if (message.author.id === client.user.id) {
-          await delay(5000);
-          message.delete()
-      }
-    }
+    if(message.author.bot || message.channel.type === 1) return;
 
-    if(message.author.bot || message.channel.type === "DM") return;
-
-    let prefix = client.prefix;
+	if (!client.listen.includes(message.author.id) && client.listen.length > 0) return;
 	
-    if (!client.listen.includes(message.author.id) && client.listen.length > 0) return; // console.log(`[INFORMATION] ${message.author.tag} Trying request the command!`); 
+    const prefix = client.prefix;
 
     const mention = new RegExp(`^<@!?${client.user.id}>( |)$`);
-    if (message.content.match(mention)) {
-        message.channel.send(`*\`My prefix is\`* \`${prefix}\``);
+    if(message.content.match(mention)) {
+      message.channel.send({ content: `My prefix is: \`${prefix}\`` })
     };
-
+    
     const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
     if (!prefixRegex.test(message.content)) return;
@@ -27,14 +19,17 @@ module.exports = async (client, message) => {
     const command = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
     if(!command) return;
 
+    console.log(`[COMMAND] - ${command.config.name} executed by ${message.author.tag} | ${client.user.username} in ${message.guild.name} (${message.guild.id})`);
+
     try {
-			command.run(client, message, args, prefix)
+      if (command.ownerOnly) {
+        if (message.author.id !== client.owner) {
+            return message.channel.send(`${message.author}, You are not the owner!`);
+        }
+    }
+      command.run(client, message, args);
     } catch (error) {
       console.log(error)
-      message.channel.send({ content: '*`Something went wrong.`*' });
+      await message.channel.send(`${message.author}, an error occured!`);
     }
-}
-
-function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
 }

@@ -2,25 +2,22 @@ module.exports = {
     config: {
         name: "join",
         aliases: ["summon"],
-        description: "Makes the bot join the voice channel.",
+        description: "Make the bot join the voice channel.",
         accessableby: "Member",
         category: "Music",
     },
-    run: async (client, message, args, prefix) => {
-        const msg = await message.channel.send(`*\`Loading please wait...\`*`);
-
+    run: async (client, message, args) => {
         const { channel } = message.member.voice;
-        if(!channel) return msg.edit("*\`You need to be in a voice channel.\`*");
+        if (!channel) return message.reply(`You are not in a voice channel`);
 
-        const player = client.manager.create({
-            guild: message.guild.id,
-            voiceChannel: message.member.voice.channel.id,
-            textChannel: message.channel.id,
-            selfDeafen: false,
+        client.manager.createPlayer({
+            guildId: message.guild.id,
+            textId: message.channel.id,
+            voiceId: channel.id,
+            volume: 100,
+            deaf: true
         });
 
-        await player.connect();
-
-        return msg.edit(`\`🔊\` | *Joined:* \`${channel.name}\``);
+        return message.reply({ content: `**Joined:** \`${channel.name}\`` })
     }
 }

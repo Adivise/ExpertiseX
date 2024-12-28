@@ -1,3 +1,5 @@
+const { KazagumoTrack } = require('kazagumo');
+
 module.exports = { 
     config: {
         name: "previous",
@@ -5,19 +7,16 @@ module.exports = {
         accessableby: "Member",
         category: "Music"
     },
-    run: async (client, message, args, prefix) => {
-        const msg = await message.channel.send(`*\`Loading please wait...\`*`);
-
-        const player = client.manager.get(message.guild.id);
-        if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
+    run: async (client, message, args) => {
+        const player = client.manager.players.get(message.guild.id);
+        if (!player) return message.reply(`No playing in this guild!`);
         const { channel } = message.member.voice;
-        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
+        if (!channel || message.member.voice.channel !== message.guild.members.me.voice.channel) return message.reply(`I'm not in the same voice channel as you!`);
 
-        if (!player.queue.previous) return msg.edit("*\`No previous song/s found.\`*");
+        if (!player.queue.previous) return message.reply(`No previous song/s not found`);
 
-        await player.queue.unshift(player.queue.previous);
-        await player.stop();
+        await player.play(new KazagumoTrack(player.queue.previous.getRaw(), message.author));
 
-        return msg.edit("`⏮` | *Song has been:* `Previous`");
+        return message.reply({ embeds: "**Song is now:** `Previous`" });
     }
 }

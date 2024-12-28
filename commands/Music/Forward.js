@@ -1,4 +1,5 @@
 const formatDuration = require('../../structures/FormatDuration.js')
+
 const fastForwardNum = 10;
 
 module.exports = { 
@@ -7,36 +8,36 @@ module.exports = {
         description: "Forward timestamp in the song!",
         accessableby: "Member",
         category: "Music",
-        usage: "<seconds>"
+        usage: "<integer>"
     },
-    run: async (client, message, args, prefix) => {
-        const msg = await message.channel.send(`*\`Loading please wait...\`*`);
-
-        const player = client.manager.get(message.guild.id);
-        if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
+    run: async (client, message, args) => {
+		const player = client.manager.players.get(message.guild.id);
+		if (!player) return message.reply(`No playing in this guild!`);
         const { channel } = message.member.voice;
-        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
+        if (!channel || message.member.voice.channel !== message.guild.members.me.voice.channel) return message.reply(`I'm not in the same voice channel as you!`);
 
         const song = player.queue.current;
         const CurrentDuration = formatDuration(player.position);
 
 		if (args[0] && !isNaN(args[0])) {
-			if((player.position + args[0] * 1000) < song.duration) {
-                player.seek(player.position + args[0] * 1000);
-                return msg.edit("`⏭` | *Forward to:* "+ `\`${CurrentDuration}\``);
+			if((player.position + args[0] * 1000) < song.length) {
+                await player.seek(player.position + args[0] * 1000);
+
+                message.reply({ content: `**Forward to:** \`${CurrentDuration}\`` });
 			} else { 
-                return msg.edit("*\`Cannot forward beyond the song's duration.\`*");
+                return message.reply(`You can't forward more than the duration of the song!`);
             }
 		} else if (args[0] && isNaN(args[0])) { 
-            return message.reply(`*\`Invalid argument, must be a number.\`*\nCorrect Usage: \`${prefix}forward <seconds>\``);
+            return message.reply(`Please enter a number!`);
         }
 
 		if (!args[0]) {
-			if((player.position + fastForwardNum * 1000) < song.duration) {
-                player.seek(player.position + fastForwardNum * 1000);
-                return msg.edit("`⏭` | *Forward to:* "+ `\`${CurrentDuration}\``);
+			if((player.position + fastForwardNum * 1000) < song.length) {
+                await player.seek(player.position + fastForwardNum * 1000);
+
+                message.reply({ content: `**Forward to:** \`${CurrentDuration}\`` });
 			} else {
-				return msg.edit("*\`Cannot forward beyond the song's duration.\`*");
+				return message.reply(`You can't forward more than the duration of the song!`);
 			}
 		}
 	}

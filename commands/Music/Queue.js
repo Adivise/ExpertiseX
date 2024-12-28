@@ -3,39 +3,26 @@ const formatDuration = require('../../structures/FormatDuration.js');
 module.exports = { 
     config: {
         name: "queue",
-        aliases: ["q",],
+        aliases: ["q"],
         description: "Displays what the current queue is.",
         accessableby: "Member",
         category: "Music",
     },
-    run: async (client, message, args, prefix) => {
-        const msg = await message.channel.send(`*\`Loading please wait...\`*`);
+    run: async (client, message, args) => {
+        const player = client.manager.players.get(message.guild.id);
+        if (!player) return message.reply(`No playing in this guild!`);
+        const { channel } = message.member.voice;
+        if (!channel || message.member.voice.channel !== message.guild.members.me.voice.channel) return message.reply(`I'm not in the same voice channel as you!`);
 
-		const player = client.manager.get(message.guild.id);
-		if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
-		const { channel } = message.member.voice;
-		if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
-
-		const song = player.queue.current;
-
-		let pagesNum = Math.ceil(player.queue.length / 10);
-		if(pagesNum === 0) pagesNum = 1;
-
-		const songStrings = [];
-		for (let i = 0; i < player.queue.length; i++) {
-			const song = player.queue[i];
-			songStrings.push(`*\`${i + 1}. ${song.title} [${formatDuration(song.duration)}]\`* • ${song.requester.tag}`);
-		}
-
-		const pages = [];
-		for (let i = 0; i < pagesNum; i++) {
-			const str = songStrings.slice(i * 10, i * 10 + 10).join('\n');
-
-			const String = `*Currently Playing:*\n*\`${song.title} [${formatDuration(song.duration)}]\`* • ${song.requester.tag}\n\n*Rest of queue*:${str == '' ? '  Nothing' : '\n' + str}`;
-
-			pages.push(String);
-		}
-
-		return msg.edit({ content: pages[0] });
-	}
+        const songStrings = [];
+        for (let i = 0; i < Math.min(player.queue.length, 5); i++) { // Adjusted to only show top 10 songs
+            const song = player.queue[i];
+            songStrings.push(`- -# **${song.title}** \`[${formatDuration(song.length)}]\``);
+        }
+        
+        const str = songStrings.join('\n');
+        const song = player.queue.current;
+    
+        return message.reply({ content: `**Current Playing • [${song.title}](<${song.uri}>)** \`[${formatDuration(song.length)}]\` • ${song.requester}\n\n-# **Rest of Queues:**\n${str || "Queue is Empty"}` });
+    }
 };

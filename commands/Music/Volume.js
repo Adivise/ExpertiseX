@@ -5,21 +5,19 @@ module.exports = {
         description: "Adjusts the volume of the bot.",
         accessableby: "Member",
         category: "Music",
-        usage: "<input>"
+        usage: "<integer>"
     },
-    run: async (client, message, args, prefix) => {
-        const msg = await message.channel.send(`*\`Loading please wait...\`*`);
-
-        const player = client.manager.get(message.guild.id);
-        if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
+    run: async (client, message, args) => {
+		const player = client.manager.players.get(message.guild.id);
+		if (!player) return message.reply(`No playing in this guild!`);
         const { channel } = message.member.voice;
-        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
+        if (!channel || message.member.voice.channel !== message.guild.members.me.voice.channel) return message.reply(`I'm not in the same voice channel as you!`);
 
-        if (!args[0]) return msg.edit(`\`🔊\` | *\`Current Volume:\`* \`${player.volume}\``);
-        if (Number(args[0]) <= 0 || Number(args[0]) > 100) return msg.edit("*\`You may only set the volume to 1-100\`*");
+        if (!args[0]) return message.reply(`**Current volume:** \`${player.volume}%\``);
+        if (Number(args[0]) <= 0 || Number(args[0]) > 100) return message.reply(`Please provide a volume between 1 and 100.`);
 
         await player.setVolume(Number(args[0]));
-        
-        return msg.edit(`\`🔊\` | *Change volume to:* \`${args[0]}\``);
+
+        return message.reply({ content: `**Volume set to:** \`${args[0]}%\`` });
     }
 }

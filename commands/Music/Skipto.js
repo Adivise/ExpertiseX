@@ -7,22 +7,21 @@ module.exports = {
         category: "Music",
         usage: "<positions>"
     },
-    run: async (client, message, args, prefix) => {
-        const msg = await message.channel.send(`*\`Loading please wait...\`*`);
+    run: async (client, message, args) => {
+        if (isNaN(args[0])) return message.reply(`Please enter a valid position!`);
+		if (args[0] == 0) return message.reply(`You can't skip to the first song!`);
 
-        const player = client.manager.get(message.guild.id);
-        if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
+		const player = client.manager.players.get(message.guild.id);
+		if (!player) return message.reply(`No playing in this guild!`);
         const { channel } = message.member.voice;
-        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
+        if (!channel || message.member.voice.channel !== message.guild.members.me.voice.channel) return message.reply(`I'm not in the same voice channel as you!`);
 
-        if (isNaN(args[0])) return msg.edit('*\`Invalid number\`*');
-		if (args[0] === 0) return msg.edit(`*\`Cannot skip to a song that is already playing.\`*\nTo skip the current playing song type: \`${prefix}skip\``);
-		if ((args[0] > player.queue.length) || (args[0] && !player.queue[args[0] - 1])) return msg.edit('*\`Song not found\`*');
-		if (args[0] == 1) return player.stop();
+		if ((args[0] > player.queue.size) || (args[0] && !player.queue[args[0] - 1])) return message.reply(`You can't skip to a song that doesn't exist!`);
+		if (args[0] == 1) player.skip();
 
 		await player.queue.splice(0, args[0] - 1);
-        await player.stop();
+        await player.skip();
 
-        return msg.edit("`⏭` | *Song has been:* `Skipto`");
+        return message.reply({ content: `**Skip to:** \`${args[0]}\`` });
     }
 }

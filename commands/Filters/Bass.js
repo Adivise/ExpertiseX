@@ -1,21 +1,19 @@
 module.exports = { 
     config: {
         name: "bass",
-        description: "Turning on bass filter",
+        description: "Turn on bass filter",
         category: "Filters",
-        accessableby: "Member",
+        accessableby: "Member"
     },
-    run: async (client, message, args, prefix) => {
-        const msg = await message.channel.send(`*\`Turning on\`* **Bass** *\`This may take a few seconds...\`*`);
+    run: async (client, message, args) => {
+        const msg = await message.reply("Loading please wait...");
 
-        const player = client.manager.get(message.guild.id);
-        if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
+        const player = client.manager.players.get(message.guild.id);
+        if(!player) return msg.edit(`No playing in this guild!`);
         const { channel } = message.member.voice;
-        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
+        if (!channel || message.member.voice.channel !== message.guild.members.me.voice.channel) return msg.edit(`I'm not in the same voice channel as you!`);
 
         const data = {
-            op: 'filters',
-            guildId: message.guild.id,
             equalizer: [
                 { band: 0, gain: 0.10 },
                 { band: 1, gain: 0.10 },
@@ -33,14 +31,14 @@ module.exports = {
                 { band: 13, gain: 0.10 },
             ],
         }
-        
-        await player.node.send(data);
 
-        await delay(1000);
-        return msg.edit("`🔩` | *Turned on:* `Bass`");
+        await player.shoukaku.setFilters(data);
+
+        await delay(5000);
+        return msg.edit({ content: "**Turned on filter:** `Basd`" });
     }
-};
+}
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
+}
