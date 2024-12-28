@@ -1,24 +1,22 @@
 module.exports = { 
     config: {
         name: "bassboost",
-        description: "Turning on bassboost filter",
+        description: "Turn on bassboost filter",
         category: "Filters",
-        usage: "<-10 - 10>",
+        usage: "<integer>",
         accessableby: "Member",
         aliases: ["bb"]
     },
-    run: async (client, message, args, prefix) => {
-        const msg = await message.channel.send(`*\`Turning on\`* **BassBoost** *\`This may take a few seconds...\`*`);
+    run: async (client, message, args) => {
+        const msg = await message.reply("Loading please wait...");
 
-        const player = client.manager.get(message.guild.id);
-        if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
+        const player = client.manager.players.get(message.guild.id);
+        if(!player) return msg.edit(`No playing in this guild!`);
         const { channel } = message.member.voice;
-        if (!channel || message.member.voice.channel !== message.guild.me.voice.channel) return msg.edit(`*\`You need to be in a same/voice channel.\`*`);
+        if (!channel || message.member.voice.channel !== message.guild.members.me.voice.channel) return msg.edit(`I'm not in the same voice channel as you!`);
 
         if(!args[0]) {
             const data = {
-                op: 'filters',
-                guildId: message.guild.id,
                 equalizer: [
                     { band: 0, gain: 0.10 },
                     { band: 1, gain: 0.10 },
@@ -37,17 +35,15 @@ module.exports = {
                 ]
             }
 
-            await player.node.send(data);
-                    
-            await delay(1000);
-            return msg.edit("`🔩` | *Turned on:* `BassBoost`");
-        } 
+          await player.shoukaku.setFilters(data);
 
-        if(isNaN(args[0])) return msg.edit(`\`*Please enter a number.*\``);
-        if(args[0] > 10 || args[0] < -10) return msg.edit(`\`*Please enter a number between 0-10*\``);
+			  await delay(5000);
+			  return msg.edit({ content: "**Turned on filter:** `BassBoost`" });
+        } else {
+            if(isNaN(args[0])) return msg.edit(`Please enter a number!`);
+            if(args[0] > 10 || args[0] < -10) return msg.edit(`Please enter a number between -10 - 10!`);
+
             const data = {
-                op: 'filters',
-                guildId: message.guild.id,
                 equalizer: [
                     { band: 0, gain: args[0] / 10 },
                     { band: 1, gain: args[0] / 10 },
@@ -65,13 +61,15 @@ module.exports = {
                     { band: 13, gain: 0 },
                 ]
             }
-            await player.node.send(data);
-        
-        await delay(1000);
-        return msg.edit(`\`🔩\` | *Bassboost set to:* \`${args[0]}\``);
+
+            await player.shoukaku.setFilters(data);
+            
+            await delay(5000);
+            return msg.edit({ content: "**Turned on filter:** `BassBoost` " + args[0] });
+        }
     }
-};
+}
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
+}

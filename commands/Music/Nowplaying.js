@@ -1,21 +1,20 @@
-const formatDuration = require('../../structures/FormatDuration.js');
+const formatDuration = require("../../structures/FormatDuration.js");
 
 module.exports = { 
     config: {
         name: "nowplaying",
         aliases: ["np", "now"],
-        description: "Displays what the current song every 5 seconds.",
+        description: "Display the song currently playing.",
         accessableby: "Member",
         category: "Music",
     },
-    run: async (client, message, args, prefix) => {
-        const msg = await message.channel.send(`*\`Loading please wait...\`*`);
 
-        const player = client.manager.get(message.guild.id);
-        if(!player) return msg.edit(`*\`No song/s currently playing within this guild.\`*`);
+    run: async (client, message, args) => {
+        const player = client.manager.players.get(message.guild.id);
+        if (!player) return message.reply(`No playing in this guild!`);
 
         const song = player.queue.current;
-
-        return msg.edit(`\`⏹\` \`Now playing... | ${song.title} [${formatDuration(song.duration)}] • ${song.requester.tag}\``);
+      
+        return message.reply({ content: `**Nowplaying • [${song.title}](<${song.uri}>)** \`${formatDuration(song.length, true)}\` • ${song.requester}` });
     }
 }
