@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import MarkdownRenderer from '../../module/MDRender';
 import '../../css/Style.css';
+import config from '../../module/config.json';
 
 const GoLive = () => {
     const [voiceId, setVoiceId] = useState('');
@@ -21,7 +22,7 @@ const GoLive = () => {
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
                 sessionStorage.setItem('voiceId', voiceId);
-                const { data } = await axios.post('http://localhost:3000/golive', { voiceId, linkUrl });
+                const { data } = await axios.post(`http://${config.ip}:3000/golive`, { voiceId, linkUrl });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);

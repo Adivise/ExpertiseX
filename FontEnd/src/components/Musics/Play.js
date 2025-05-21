@@ -3,6 +3,7 @@ import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
 import '../../css/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
+import config from '../../module/config.json';
 
 const Play = () => {
     const [guildId, setGuildId] = useState('');
@@ -28,7 +29,7 @@ const Play = () => {
             try {
                 sessionStorage.setItem('guildId', guildId);
                 sessionStorage.setItem('voiceId', voiceId);
-                const { data } = await axios.post('http://localhost:3000/play', { guildId, voiceId, songName });
+                const { data } = await axios.post(`http://${config.ip}:3000/play`, { guildId, voiceId, songName });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
@@ -44,7 +45,7 @@ const Play = () => {
 
     const fetchSearch = async ({ value }) => {
         try {
-            const { data } = await axios.get(`http://localhost:3000/search?q=${value}`);
+            const { data } = await axios.get(`http://${config.ip}:3000/search?q=${value}`);
             const limitedSuggestions = data.songs.slice(0, 5);
             setSuggestions(limitedSuggestions);
         } catch (error) {
@@ -56,7 +57,7 @@ const Play = () => {
         setSuggestions([]);
     };
 
-    const getSuggestionValue = (suggestion) => suggestion.name;
+    const getSuggestionValue = (suggestion) => suggestion.url;
 
     const renderSuggestion = (suggestion) => (
         <button className="suggestion-item">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../css/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
+import config from '../../module/config.json';
 
 const Queue = () => {
     const [guildId, setGuildId] = useState('');
@@ -21,7 +22,7 @@ const Queue = () => {
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown 
             try {
                 sessionStorage.setItem('guildId', guildId);
-                const { data } = await axios.post('http://localhost:3000/queue', { guildId });
+                const { data } = await axios.post(`http://${config.ip}:3000/queue`, { guildId });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);

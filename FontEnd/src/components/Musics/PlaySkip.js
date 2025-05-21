@@ -3,6 +3,7 @@ import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
 import '../../css/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
+import config from '../../module/config.json';
 
 const PlaySkip = () => {
     const [guildId, setGuildId] = useState('');
@@ -24,7 +25,7 @@ const PlaySkip = () => {
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
                 sessionStorage.setItem('guildId', guildId);
-                const { data } = await axios.post('http://localhost:3000/playskip', { guildId, songName });
+                const { data } = await axios.post(`http://${config.ip}:3000/playskip`, { guildId, songName });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
@@ -40,7 +41,7 @@ const PlaySkip = () => {
 
     const fetchSearch = async ({ value }) => {
         try {
-            const { data } = await axios.get(`http://localhost:3000/search?q=${value}`);
+            const { data } = await axios.get(`http://${config.ip}:3000/search?q=${value}`);
             const limitedSuggestions = data.songs.slice(0, 5);
             setSuggestions(limitedSuggestions);
         } catch (error) {
@@ -52,7 +53,7 @@ const PlaySkip = () => {
         setSuggestions([]);
     };
 
-    const getSuggestionValue = (suggestion) => suggestion.name;
+    const getSuggestionValue = (suggestion) => suggestion.url;
 
     const renderSuggestion = (suggestion) => (
         <button className="suggestion-item">

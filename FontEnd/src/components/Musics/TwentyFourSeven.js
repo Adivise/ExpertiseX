@@ -3,6 +3,7 @@ import axios from 'axios';
 import Select from 'react-select';
 import '../../css/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
+import config from '../../module/config.json';
 
 const TwentyFourSeven = () => {
     const [guildId, setGuildId] = useState('');
@@ -23,7 +24,7 @@ const TwentyFourSeven = () => {
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
                 sessionStorage.setItem('guildId', guildId);
-                const { data } = await axios.post('http://localhost:3000/twentyfourseven', { guildId, twentyfourseven: twentyfourseven.value });
+                const { data } = await axios.post(`http://${config.ip}:3000/twentyfourseven`, { guildId, twentyfourseven: twentyfourseven.value });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);

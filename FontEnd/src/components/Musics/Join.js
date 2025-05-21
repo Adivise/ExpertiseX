@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../css/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
+import config from '../../module/config.json';
 
 const Join = () => {
     const [guildId, setGuildId] = useState('');
@@ -25,7 +26,7 @@ const Join = () => {
             try {
                 sessionStorage.setItem('guildId', guildId);
                 sessionStorage.setItem('voiceId', voiceId);
-                const { data } = await axios.post('http://localhost:3000/join', { guildId, voiceId });
+                const { data } = await axios.post(`http://${config.ip}:3000/join`, { guildId, voiceId });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
