@@ -11,7 +11,7 @@
   <a href="https://ko-fi.com/nanotect" target="_blank"> <img src="https://ko-fi.com/img/githubbutton_sm.svg"/> </a> 
 </p>
 
-# 🛑 Please carefully read all requirement information and don't rush
+# 🛑 Please carefully read all requirement and information don't rush
 
 ## 📌 Read Warning
 - **If you break the Discord TOS or guidelines while using this selfbot, I am not responsible if you get banned from Discord or any guilds, If you do not agree with the above, don't use it.**
