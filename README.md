@@ -30,7 +30,7 @@
 - Node.JS **[Click Here](https://nodejs.org/en/download/)**
 - Self Bot Token **[Watch Video](https://youtu.be/OpuBH2EDMOg)**
 - Java 17 SE **[Click Here](https://download.oracle.com/java/17/archive/jdk-17.0.12_windows-x64_bin.msi)**
-- LavaLink **[Click Here](https://lavalink.dev/getting-started/index.html)** or **[My LavaLink](https://limewire.com/d/ScvMM#NrXPVtXJ3j)**
+- LavaLink **[Click Here](https://lavalink.dev/getting-started/index.html)** or **[My LavaLink](https://limewire.com/d/VjJ3l#m4PB0KUmaZ)**
 
 <details><summary>📚 Installation for MidEnd [CLICK ME]</summary>
 <p>
