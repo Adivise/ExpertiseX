@@ -21,6 +21,7 @@
 - [x] Choose Port
 - [x] Go Live
 - [x] Play Music
+- [x] Sound Filters
 - [x] AutoSuggest Music
 - [x] Multiple Account
 - [x] Easy to use
