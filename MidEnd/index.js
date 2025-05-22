@@ -53,7 +53,7 @@ app.post('/midend_logout', async (req, res) => {
     const { ip, port } = req.body;
 
     // remove port from active port
-    activePorts.delete(port);
+    activePorts.delete(Number(port));
 
     try {
         await axios.post(`http://${ip}:${port}/logout`, {});
