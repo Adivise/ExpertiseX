@@ -10,7 +10,7 @@ app.use(cors());
 
 const activePorts = new Set();
 
-app.post('/midend', async (req, res) => {
+app.post('/midend_login', async (req, res) => {
     const { token, port } = req.body;
 
     if (!token) {
@@ -19,18 +19,14 @@ app.post('/midend', async (req, res) => {
         return res.send({ content: "Missing port!"});
     }
 
-    console.log(`Token: ${token}, Port: ${port}`);
-
     if (activePorts.has(port)) {
         return res.send({ content: `Port ${port} is already in use. Choose another port.` });
     }
 
     const client = new Client();
 
-    client.login(token)
-        .then(() => {
-            console.log(`Valid bot token for: ${client.user.username} (${client.user.id})`);
-            res.send({ content: `Login as: ${client.user.username} (${client.user.id}) | On port: ${port}`, port });
+    client.login(token).then(() => {
+            res.send({ content: `Login as: ${client.user.username} (${client.user.id})`, port: port, working: true });
 
             // store active port
             activePorts.add(port);
@@ -48,8 +44,8 @@ app.post('/midend', async (req, res) => {
 
             client.destroy(); // Properly close the client
         }).catch(error => {
-            console.error(`Invalid Token: ${error}`);
-            res.send({ content: `Invalid bot token!` });
+            console.log(`Invalid Token: ${error}`);
+            res.send({ content: `Invalid Bot Token!`, port: port, working: false });
         });
 });
 

@@ -6,9 +6,7 @@ import config from '../../module/config.json';
 
 const Login = ({ setIsLoggedIn }) => {
     const [token, setToken] = useState('');
-    const [port, setPort] = useState(() => {
-        return sessionStorage.getItem('port') || 3000;
-    });
+    const [port, setPort] = useState(3000);
     const [response, setResponse] = useState('');
     const [isCooldown, setIsCooldown] = useState(false);
 
@@ -24,20 +22,25 @@ const Login = ({ setIsLoggedIn }) => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000);
             try {
-                // Check if port is already used by another session
                 const checkPort = await axios.post(`http://${config.ip}:5000/check_port`, { port });
                 if (checkPort.data.used) {
                     setResponse(`Port ${port} is already in use. Choose another.`);
                     return;
                 }
 
-                const { data } = await axios.post(`http://${config.ip}:5000/midend`, { token, port });
+                const { data } = await axios.post(`http://${config.ip}:5000/midend_login`, { token, port });
 
-                // Store port
-                sessionStorage.setItem('port', data.port)
-                setPort(data.port)
-                setIsLoggedIn(true)
+                if (!data.working) { 
+                    setResponse(data.content);
+                    return;
+                }
+
+                // Store port and proceed with login only when working is true
+                sessionStorage.setItem('port', data.port);
+                setPort(data.port);
+                setIsLoggedIn(true);
                 setResponse(data.content);
+
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
             }

@@ -35,7 +35,7 @@ client.manager = new Kazagumo({
 
 ["loadEvent", "loadPlayer", "loadTrack", "loadEndpoint"].forEach(x => require(`./handlers/${x}`)(client));
 
-client.app.listen(port, () => {
-    console.log(`Dashboard is running on: http://localhost:${port}`);
+client.app.listen(port);
+client.login(token).then(() => {
+    console.log(`${client.user.username} is running on: http://localhost:${port}`);
 });
-client.login(token);
