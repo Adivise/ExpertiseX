@@ -28,7 +28,7 @@
 ## 📎 Requirements
 
 - Node.JS **[Click Here](https://nodejs.org/en/download/)**
-- Self Bot Token **[Watch Video](https://youtu.be/OpuBH2EDMOg)**
+- Self Bot Token **[Click Here](https://roze.lol/faq?question=How+do+I+add+a+token+to+my+account%3F)**
 - Java 17 SE **[Click Here](https://download.oracle.com/java/17/archive/jdk-17.0.12_windows-x64_bin.msi)**
 - LavaLink **[Click Here](https://lavalink.dev/getting-started/index.html)** or **[My LavaLink](https://limewire.com/d/VjJ3l#m4PB0KUmaZ)**
 - FFmpeg **[Click Here](https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z)**
