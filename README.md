@@ -17,8 +17,8 @@
 - **If you break the Discord TOS or guidelines while using this selfbot, I am not responsible if you get banned from Discord or any guilds, If you do not agree with the above, don't use it.**
 
 ## 📑 Feature
-- [x] Token Logins
-- [x] Choose Port
+- [x] Token Login/Logout
+- [x] Choose Port (Max: 999 Ports/Bots)
 - [x] Go Live
 - [x] Play Music
 - [x] Sound Filters
