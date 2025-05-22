@@ -31,6 +31,7 @@
 - Self Bot Token **[Watch Video](https://youtu.be/OpuBH2EDMOg)**
 - Java 17 SE **[Click Here](https://download.oracle.com/java/17/archive/jdk-17.0.12_windows-x64_bin.msi)**
 - LavaLink **[Click Here](https://lavalink.dev/getting-started/index.html)** or **[My LavaLink](https://limewire.com/d/VjJ3l#m4PB0KUmaZ)**
+- FFmpeg **[Click Here](https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z)**
 
 <details><summary>📚 Installation for MidEnd [CLICK ME]</summary>
 <p>
