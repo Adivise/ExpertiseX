@@ -9,12 +9,15 @@ const Join = () => {
     const [voiceId, setVoiceId] = useState('');
     const [response, setResponse] = useState('');
     const [isCooldown, setIsCooldown] = useState(false);
+    const [port, setPort] = useState('');
 
     useEffect(() => {
         const storedGuildId = sessionStorage.getItem('guildId');
         const storedVoiceId = sessionStorage.getItem('voiceId');
+        const storedPort = sessionStorage.getItem('port');
         if (storedGuildId) setGuildId(storedGuildId);
         if (storedVoiceId) setVoiceId(storedVoiceId);
+        if (storedPort) setPort(storedPort);
     }, []);
 
     const handleJoin = async (event) => {
@@ -26,7 +29,7 @@ const Join = () => {
             try {
                 sessionStorage.setItem('guildId', guildId);
                 sessionStorage.setItem('voiceId', voiceId);
-                const { data } = await axios.post(`http://${config.ip}:3000/join`, { guildId, voiceId });
+                const { data } = await axios.post(`http://${config.ip}:${port}/join`, { guildId, voiceId });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);

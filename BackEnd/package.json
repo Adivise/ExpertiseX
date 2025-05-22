@@ -10,7 +10,7 @@
     "opusscript": "^0.0.8",
     "shoukaku": "^4.1.1"
   },
-  "name": "expertisex",
+  "name": "expertisex-backend",
   "description": "✈ Join Discord: https://discord.gg/4pk97A2 👌",
   "version": "1.0.1",
   "main": "index.js",

@@ -4,20 +4,28 @@ const { Kazagumo } = require("kazagumo");
 const express = require('express');
 const cors = require('cors');
 
-const port = 3000;
-
 const client = new Client();
 
 client.config = require("./settings/config.js");
 client.app = express();
 client.app.use(cors());
 client.stated = "none";
-if(!client.token) client.token = client.config.TOKEN;
+
+const token = process.argv[2];
+const port = process.argv[3];
+
+if(!token) {
+    console.log("Please provide a token");
+    process.exit(1);
+} else if (!port) {
+    console.log("Plrease provide a port");
+    process.exit(1);
+}
 
 client.app.use(express.json());
 
 client.manager = new Kazagumo({
-    defaultSearchEngine: client.config.SEARCH_ENGINE, // 'youtube' | 'soundcloud' | 'youtube_music'
+    defaultSearchEngine: "youtube", // 'youtube' | 'soundcloud' | 'youtube_music'
     plugins: [],
     send: (guildId, payload) => {
         const guild = client.guilds.cache.get(guildId);
@@ -28,6 +36,6 @@ client.manager = new Kazagumo({
 ["loadEvent", "loadPlayer", "loadTrack", "loadEndpoint"].forEach(x => require(`./handlers/${x}`)(client));
 
 client.app.listen(port, () => {
-    console.log(`Dashboard is running on http://localhost:${port}`);
+    console.log(`Dashboard is running on: http://localhost:${port}`);
 });
-client.login(client.token);
+client.login(token);

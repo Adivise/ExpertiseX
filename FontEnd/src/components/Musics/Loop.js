@@ -10,10 +10,13 @@ const Loop = () => {
     const [loop, setLoop] = useState({ value: "track", label: 'Current' });
     const [response, setResponse] = useState('');
     const [isCooldown, setIsCooldown] = useState(false);
+    const [port, setPort] = useState('');
 
     useEffect(() => {
         const storedGuildId = sessionStorage.getItem('guildId');
+        const storedPort = sessionStorage.getItem('port');
         if (storedGuildId) setGuildId(storedGuildId);
+        if (storedPort) setPort(storedPort);
     }, []);
 
     const handleLoop = async (event) => {
@@ -24,7 +27,7 @@ const Loop = () => {
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
                 sessionStorage.setItem('guildId', guildId);
-                const { data } = await axios.post(`http://${config.ip}:3000/loop`, { guildId, loop: loop.value });
+                const { data } = await axios.post(`http://${config.ip}:${port}/loop`, { guildId, loop: loop.value });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);

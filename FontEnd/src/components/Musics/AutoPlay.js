@@ -10,10 +10,13 @@ const AutoPlay = () => {
     const [autoplay, setAutoplay] = useState({ value: true, label: 'Active' });
     const [response, setResponse] = useState('');
     const [isCooldown, setIsCooldown] = useState(false);
+    const [port, setPort] = useState('');
 
     useEffect(() => {
         const storedGuildId = sessionStorage.getItem('guildId');
+        const storedPort = sessionStorage.getItem('port');
         if (storedGuildId) setGuildId(storedGuildId);
+        if (storedPort) setPort(storedPort);
     }, []);
 
     const handleAutoPlay = async (event) => {
@@ -24,7 +27,7 @@ const AutoPlay = () => {
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
                 sessionStorage.setItem('guildId', guildId);
-                const { data } = await axios.post(`http://${config.ip}:3000/autoplay`, { guildId, autoplay: autoplay.value });
+                const { data } = await axios.post(`http://${config.ip}:${port}/autoplay`, { guildId, autoplay: autoplay.value });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);

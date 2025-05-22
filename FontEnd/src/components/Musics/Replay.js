@@ -8,10 +8,13 @@ const Replay = () => {
     const [guildId, setGuildId] = useState('');
     const [response, setResponse] = useState('');
     const [isCooldown, setIsCooldown] = useState(false);
+    const [port, setPort] = useState('');
 
     useEffect(() => {
         const storedGuildId = sessionStorage.getItem('guildId');
+        const storedPort = sessionStorage.getItem('port');
         if (storedGuildId) setGuildId(storedGuildId);
+        if (storedPort) setPort(storedPort);
     }, []);
 
     const handleReplay = async (event) => {
@@ -22,7 +25,7 @@ const Replay = () => {
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown 
             try {
                 sessionStorage.setItem('guildId', guildId);
-                const { data } = await axios.post(`http://${config.ip}:3000/replay`, { guildId });
+                const { data } = await axios.post(`http://${config.ip}:${port}/replay`, { guildId });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);

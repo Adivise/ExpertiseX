@@ -12,12 +12,15 @@ const Play = () => {
     const [suggestions, setSuggestions] = useState([]);
     const [response, setResponse] = useState('');
     const [isCooldown, setIsCooldown] = useState(false);
+    const [port, setPort] = useState('');
 
     useEffect(() => {
         const storedGuildId = sessionStorage.getItem('guildId');
         const storedVoiceId = sessionStorage.getItem('voiceId');
+        const storedPort = sessionStorage.getItem('port');
         if (storedGuildId) setGuildId(storedGuildId);
         if (storedVoiceId) setVoiceId(storedVoiceId);
+        if (storedPort) setPort(storedPort);
     }, []);
 
     const handlePlay = async (event) => {
@@ -29,7 +32,7 @@ const Play = () => {
             try {
                 sessionStorage.setItem('guildId', guildId);
                 sessionStorage.setItem('voiceId', voiceId);
-                const { data } = await axios.post(`http://${config.ip}:3000/play`, { guildId, voiceId, songName });
+                const { data } = await axios.post(`http://${config.ip}:${port}/play`, { guildId, voiceId, songName });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);

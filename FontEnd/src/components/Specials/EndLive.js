@@ -8,10 +8,14 @@ const EndLive = () => {
     const [guildId, setGuildId] = useState('');
     const [response, setResponse] = useState('');
     const [isCooldown, setIsCooldown] = useState(false);
+    const [port, setPort] = useState('');
+    
 
     useEffect(() => {
         const storedGuildId = sessionStorage.getItem('guildId');
+        const storedPort =  sessionStorage.getItem('port');
         if (storedGuildId) setGuildId(storedGuildId);
+        if (storedPort) setPort(storedPort);
     }, []);
 
     const handleEndLive = async (event) => {
@@ -22,7 +26,7 @@ const EndLive = () => {
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown 
             try {
                 sessionStorage.setItem('guildId', guildId);
-                const { data } = await axios.post(`http://${config.ip}:3000/endlive`, { guildId });
+                const { data } = await axios.post(`http://${config.ip}:${port}/endlive`, { guildId });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);

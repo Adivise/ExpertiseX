@@ -8,12 +8,14 @@ const Television = () => {
     const [guildId, setGuildId] = useState('');
     const [response, setResponse] = useState('');
     const [isCooldown, setIsCooldown] = useState(false);
+    const [port, setPort] = useState('');
 
     useEffect(() => {
         const storedGuildId = sessionStorage.getItem('guildId');
+        const storedPort = sessionStorage.getItem('port');
         if (storedGuildId) setGuildId(storedGuildId);
+        if (storedPort) setPort(storedPort);
     }, []);
-
     const handleTelevision = async (event) => {
         event.preventDefault();
         setResponse(''); // Clear the old response
@@ -22,7 +24,7 @@ const Television = () => {
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown 
             try {
                 sessionStorage.setItem('guildId', guildId);
-                const { data } = await axios.post(`http://${config.ip}:3000/television`, { guildId });
+                const { data } = await axios.post(`http://${config.ip}:${port}/television`, { guildId });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);

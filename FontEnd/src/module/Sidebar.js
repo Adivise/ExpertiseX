@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/Style.css';
+import axios from 'axios';
+import config from '../module/config.json';
 
-const Sidebar = ({ setActiveComponent }) => {
+
+const Sidebar = ({ setActiveComponent, setIsLoggedIn }) => {
     const [isSpecialCollapsed, setIsSpecialCollapsed] = useState(false);
     const [isMusicCollapsed, setIsMusicCollapsed] = useState(false);
     const [isFilterCollapsed, setIsFilterCollapsed] = useState(false);
+    const [port, setPort] = useState('');
+
+    useEffect(() => {
+        const storedPort = sessionStorage.getItem('port');
+        if (storedPort) setPort(storedPort)
+    }, []);
+
+    const handleLogout = async () => {
+        setIsLoggedIn(false);
+        sessionStorage.removeItem('isLoggedIn'); // Clear login state
+        sessionStorage.removeItem('port');
+        await axios.post(`http://${config.ip}:5000/midend_logout`, { ip: config.ip, port: port });
+        setActiveComponent('logins')
+    };
 
     return (
         <div className="sidebar">
+            <button className="sidebar=button" onClick={handleLogout}>Logout</button>
             <div className="category">
                 <h2>Special Control</h2>
                 <button className="collapse-button" onClick={() => setIsSpecialCollapsed(!isSpecialCollapsed)}>

@@ -39,3 +39,5 @@ export { default as TrebleBass } from './Filters/TrebleBass';
 export { default as Tremolo } from './Filters/Tremolo';
 export { default as Vibrato } from './Filters/Vibrato';
 export { default as Vibrate } from './Filters/Vibrate';
+
+export { default as Logins } from './Tokens/Logins';

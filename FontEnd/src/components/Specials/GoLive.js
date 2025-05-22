@@ -9,9 +9,12 @@ const GoLive = () => {
     const [linkUrl, setlinkUrl] = useState('');
     const [response, setResponse] = useState('');
     const [isCooldown, setIsCooldown] = useState(false);
+    const [port, setPort] = useState('');
 
     useEffect(() => {
         const storedVoiceId = sessionStorage.getItem('voiceId');
+        const storedPort = sessionStorage.getItem('port');
+        if (storedPort) setPort(storedPort);
         if (storedVoiceId) setVoiceId(storedVoiceId);
     }, []);
 
@@ -22,7 +25,7 @@ const GoLive = () => {
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
                 sessionStorage.setItem('voiceId', voiceId);
-                const { data } = await axios.post(`http://${config.ip}:3000/golive`, { voiceId, linkUrl });
+                const { data } = await axios.post(`http://${config.ip}:${port}/golive`, { voiceId, linkUrl });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
