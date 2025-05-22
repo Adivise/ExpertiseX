@@ -1,4 +1,3 @@
-# Soon...
 <p align="center">
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=ExpertiseX&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient"/> </a> 
 </p>
@@ -17,8 +16,8 @@
 - **If you break the Discord TOS or guidelines while using this selfbot, I am not responsible if you get banned from Discord or any guilds, If you do not agree with the above, don't use it.**
 
 ## 📑 Feature
-- [x] Token Logins
-- [x] Choose Port
+- [x] Token Login/Logout
+- [x] Choose Port (Max: 999 Ports/Bots)
 - [x] Go Live
 - [x] Play Music
 - [x] Sound Filters
@@ -31,7 +30,7 @@
 - Node.JS **[Click Here](https://nodejs.org/en/download/)**
 - Self Bot Token **[Watch Video](https://youtu.be/OpuBH2EDMOg)**
 - Java 17 SE **[Click Here](https://download.oracle.com/java/17/archive/jdk-17.0.12_windows-x64_bin.msi)**
-- LavaLink **[Click Here](https://lavalink.dev/getting-started/index.html)** or **[My LavaLink](https://limewire.com/d/ScvMM#NrXPVtXJ3j)**
+- LavaLink **[Click Here](https://lavalink.dev/getting-started/index.html)** or **[My LavaLink](https://limewire.com/d/VjJ3l#m4PB0KUmaZ)**
 
 <details><summary>📚 Installation for MidEnd [CLICK ME]</summary>
 <p>
