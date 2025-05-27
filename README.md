@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=ExpertiseX&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient"/> </a> 
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=ExpertiseX v2&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient"/> </a> 
 </p>
 
 <p align="center"> 
@@ -18,6 +18,7 @@
 ## 📑 Feature
 - [x] Token Login/Logout
 - [x] Choose Port (Max: 999 Ports/Bots)
+- [x] Console Logs in WebUI
 - [x] Go Live
 - [x] Play Music
 - [x] Sound Filters
@@ -30,77 +31,50 @@
 - Node.JS **[Click Here](https://nodejs.org/en/download/)**
 - Self Bot Token **[Click Here](https://roze.lol/faq?question=How+do+I+add+a+token+to+my+account%3F)**
 - Java 17 SE **[Click Here](https://download.oracle.com/java/17/archive/jdk-17.0.12_windows-x64_bin.msi)**
-- LavaLink **[Click Here](https://lavalink.dev/getting-started/index.html)** or **[My LavaLink](https://limewire.com/d/VjJ3l#m4PB0KUmaZ)**
-- FFmpeg **[Click Here](https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z)**
+- LavaLink **[Click Here](https://lavalink.dev/getting-started/index.html)** or **[My Config](https://limewire.com/d/VjJ3l#m4PB0KUmaZ)**
 
-<details><summary>📚 Installation for MidEnd [CLICK ME]</summary>
-<p>
+# 🚩 Normal User
+- *Sigle Executable* `(Desktop PC)` **[Lastest]()**
 
-## 📚 Installation for MidEnd
+- *Installer Executable* `(Desktop PC)` **[Lastest]()**
 
+- *Installer Executable* `(MacOS)` **Not Unavailable**
+
+- *Installer Executable*`(Linux)` **Not Unavailable**
+
+# 🤖 Dev User
+
+## ⚒️ Installation
 ```
-git clone https://github.com/Adivise/ExpertiseX
-cd ExpertiseX/MidEnd
-npm install
-```
-
-After installation for `MidEnd` all you can use `node index.js` to start.
-
-</p>
-</details>
-
-<details><summary>📚 Installation for FontEnd [CLICK ME]</summary>
-<p>
-
-## 📚 Installation for FontEnd
-
-```
-git clone https://github.com/Adivise/ExpertiseX
-cd ExpertiseX/FontEnd
-npm install
+$ git clone https://github.com/Adivise/ExpertiseX
+$ cd ExpertiseX
+$ npm install
 ```
 
-## 📄 Configuration for FontEnd
-
-Goto `src/module/config.json.example` Copy or Rename `config.json.example` to `config.json` and fill out the values:
-
-```json
-module.exports = {
-    ip: 'localhost',
-}
+## 🏗️ Build
+```
+$ npm run build:win
+$ npm run build:win-portable
 ```
 
-After installation for `FontEnd` all you can use `npm run start` to start.
+For some reason i cant build for `mac` and `linux` user just try by your self
 
-</p>
-</details>
+## 📄 Configuration for Development
 
-<details><summary>📚 Installation for MidEnd [CLICK ME]</summary>
-<p>
-
-## 📚 Installation for BackEnd
-
-```
-git clone https://github.com/Adivise/ExpertiseX
-cd ExpertiseX/BackEnd
-npm install
-```
-
-## 📄 Configuration for BackEnd
-
-Goto `.env.example` Copy or Rename `.env.example` to `.env` and fill out the values:
+Goto `.env` and fill out the values:
 
 ```env
-# Nodes
-NODE_NAME=NanoSpace
+# When build will use this config file
+IP=localhost
+LEAVE_EMPTY=12000
+
+# LavaLink Nodes
+NODE_NAME=ExpertiseX
 NODE_URL=localhost:5555
-NODE_AUTH=nanospace
+NODE_AUTH=youshallnotpass
 ```
 
-After installation for BackEnd you can use `node index.js` to start.
-
-</p>
-</details>
+After installation you can use `$ npm run dev` or `$ npm run start` to start.
 
 
 ## ❤️ Contributors
