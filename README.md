@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=ExpertiseX v2&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient"/> </a> 
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=ExpertiseX-v2&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient"/> </a> 
 </p>
 
 <p align="center"> 
@@ -34,9 +34,9 @@
 - LavaLink **[Click Here](https://lavalink.dev/getting-started/index.html)** or **[My Config](https://limewire.com/d/VjJ3l#m4PB0KUmaZ)**
 
 # 🚩 Normal User
-- *Sigle Executable* `(Desktop PC)` **[Lastest]()**
+- *Sigle Executable* `(Desktop PC)` **[Lastest](https://github.com/Adivise/ExpertiseX/releases/download/v2.0.0/ExpertiseX-2.0.0.exe)**
 
-- *Installer Executable* `(Desktop PC)` **[Lastest]()**
+- *Installer Executable* `(Desktop PC)` **[Lastest](https://github.com/Adivise/ExpertiseX/releases/download/v2.0.0/expertisex-2.0.0-setup.exe)**
 
 - *Installer Executable* `(MacOS)` **Not Unavailable**
 
