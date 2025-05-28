@@ -34,7 +34,7 @@
 - LavaLink **[Click Here](https://lavalink.dev/getting-started/index.html)** or **[My Config](https://limewire.com/d/VjJ3l#m4PB0KUmaZ)**
 
 # 🚩 Normal User
-- *Sigle Executable* `(Desktop PC)` **[Lastest](https://github.com/Adivise/ExpertiseX/releases/download/v2.0.0/ExpertiseX-2.0.0.exe)**
+- *Single Executable* `(Desktop PC)` **[Lastest](https://github.com/Adivise/ExpertiseX/releases/download/v2.0.0/ExpertiseX-2.0.0.exe)**
 
 - *Installer Executable* `(Desktop PC)` **[Lastest](https://github.com/Adivise/ExpertiseX/releases/download/v2.0.0/expertisex-2.0.0-setup.exe)**
 
