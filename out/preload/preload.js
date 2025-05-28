@@ -26,20 +26,17 @@ if (process.contextIsolated) {
     electron.contextBridge.exposeInMainWorld("electron", preload.electronAPI);
     electron.contextBridge.exposeInMainWorld("api", api);
     electron.contextBridge.exposeInMainWorld("electronAPI", {
-      // ✅ Detect when Electron window is closing
       onWindowClose: (callback) => electron.ipcRenderer.on("window-closing", callback),
-      // ✅ Start bot with token & port
       startBot: (token, port) => electron.ipcRenderer.send("start-bot", token, port),
-      // ✅ Chech token validity
       checkToken: (token) => electron.ipcRenderer.invoke("invalid-token", token),
-      // ✅ Bot Logging
       getBotLogs: () => electron.ipcRenderer.invoke("get-bot-logs"),
-      // ✅ Environment variable for development
       getEnv: () => ({ ip: process.env.IP || "localhost" }),
-      // ✅ Check port availability
       checkPort: (port) => electron.ipcRenderer.invoke("check-port", port),
-      // ✅ Remove listener for bot logs
-      removeListener: (channel, callback) => electron.ipcRenderer.removeListener(channel, callback)
+      removeListener: (channel, callback) => electron.ipcRenderer.removeListener(channel, callback),
+      storeToken: (token) => electron.ipcRenderer.invoke("store-token", token),
+      getToken: () => electron.ipcRenderer.invoke("get-token"),
+      checkFFmpeg: () => electron.ipcRenderer.invoke("check-ffmpeg"),
+      downloadFFmpeg: () => electron.ipcRenderer.invoke("download-ffmpeg")
     });
   } catch (error) {
     console.error("Error exposing Electron API:", error);

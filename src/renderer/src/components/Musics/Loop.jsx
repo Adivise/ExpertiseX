@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
 import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
-import config from '../../module/config.json';
 
 const Loop = () => {
     const [guildId, setGuildId] = useState('');

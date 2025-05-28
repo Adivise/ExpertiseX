@@ -6,13 +6,88 @@ import { fork } from 'child_process';
 import net from 'net';
 import fs from 'fs';
 import { Client } from 'discord.js-selfbot-v13';
+import https from 'https';
 
 let botProcess;
-const logFilePath = join(app.getPath("exe"), '../bot.log');
+
+let logFilePath;
+let tokenFilePath;
+let ffmpegPath;
+
+if (is.dev) {
+  // In development, use paths relative to the current __dirname
+  logFilePath = join(__dirname, "../../bot.log");
+  tokenFilePath = join(__dirname, "../../token.txt");
+  ffmpegPath = join(__dirname, "../../ffmpeg.exe");
+} else {
+  // In production builds, use the executable's directory.
+  logFilePath = join(app.getPath("exe"), "../bot.log");
+  tokenFilePath = join(app.getPath("exe"), "../token.txt");
+  ffmpegPath = join(app.getPath("exe"), "../ffmpeg.exe");
+}
+
+// Handle for check ffmpeg.exe
+ipcMain.handle("check-ffmpeg", async () => {
+  return fs.existsSync(ffmpegPath);
+});
+
+// Handler to download FFmpeg if missing
+ipcMain.handle("download-ffmpeg", async () => {
+  const initialUrl = "https://github.com/Adivise/ExpertiseX/releases/download/v2.0.0/ffmpeg.exe";
+
+  // Recursive function to follow redirects.
+  const downloadFile = (url) => {
+    return new Promise((resolve, reject) => {
+      https.get(url, (response) => {
+          // If redirect status code detected and there's a location header, follow it.
+          if (
+            response.statusCode >= 300 &&
+            response.statusCode < 400 &&
+            response.headers.location
+          ) {
+            return resolve(downloadFile(response.headers.location));
+          } else if (response.statusCode !== 200) {
+            return reject(
+              new Error(`Failed to download ffmpeg.exe. Status code: ${response.statusCode}`)
+            );
+          }
+
+          // Download the file
+          const fileStream = fs.createWriteStream(ffmpegPath);
+          response.pipe(fileStream);
+          fileStream.on("finish", () => {
+            fileStream.close();
+            resolve(true);
+          });
+        })
+        .on("error", (err) => {
+          // Clean up the file if any error occurred.
+          fs.unlink(ffmpegPath, () => reject(err));
+        });
+    });
+  };
+
+  return downloadFile(initialUrl);
+});
 
 // Handle bot logs retrieval
 ipcMain.handle("get-bot-logs", () => {
-    return fs.readFileSync(logFilePath, "utf8") || "No logs found.";
+  if (!fs.existsSync(logFilePath));
+  return fs.readFileSync(logFilePath, "utf8") || "No logs found.";
+});
+
+// Handle save token
+ipcMain.handle("store-token", (_, token) => {
+  if (!fs.existsSync(tokenFilePath));
+  return fs.writeFileSync(tokenFilePath, token, "utf-8");
+});
+
+// Handle get token
+ipcMain.handle("get-token", () => {
+  if (fs.existsSync(tokenFilePath)) { // not have = return to null
+    return fs.readFileSync(tokenFilePath, "utf-8");
+  }
+  return null;
 });
 
 // Handle invalid token
@@ -46,14 +121,8 @@ function createWindow() {
     main.show();
   });
 
-  // Open links in the default browser
-  main.webContents.setWindowOpenHandler((details) => {
-    shell.openExternal(details.url)
-    return { action: 'deny' }
-  });
-
   // Load the index.html of the app.
-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+  if (is.dev) {
     main.loadURL(process.env['ELECTRON_RENDERER_URL']);
   } else {
     main.loadFile(join(__dirname, '../../out/renderer/index.html'));
@@ -74,7 +143,8 @@ function createWindow() {
         second: '2-digit',
         hour12: false
       });
-      fs.appendFileSync(logFilePath, `[${timestamp}] ${message}\n`);
+
+      fs.appendFileSync(logFilePath, `[${timestamp}] | ${message}`);
     }
 
     if (botProcess.stdout) {
@@ -101,11 +171,10 @@ function createWindow() {
       writeLog(`[❌] ${err}`);
     });
   });
+  
   // Handle window closing
   main.on('close', () => {
     main.webContents.send('window-closing');
-    if (!botProcess) return; // If botProcess is not running, do nothing
-    botProcess.kill(); // Stop the bot
   });
 }
 
@@ -113,7 +182,6 @@ function createWindow() {
 app.whenReady().then(() => {
   electronApp.setAppUserModelId('com.expertise');
   createWindow();
-
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
@@ -129,12 +197,6 @@ app.on("web-contents-created", (_, contents) => {
     contents.setWindowOpenHandler(() => {
         return { action: "deny" }; // ✅ Block new windows entirely
     });
-});
-
-app.on('before-quit', () => {
-  if (botProcess) {
-    botProcess.kill(); // Ensure the bot process is killed before quitting
-  }
 });
 
 // Quit when all windows are closed, except on macOS

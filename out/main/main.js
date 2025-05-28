@@ -6,11 +6,62 @@ const child_process = require("child_process");
 const net = require("net");
 const fs = require("fs");
 const discord_jsSelfbotV13 = require("discord.js-selfbot-v13");
+const https = require("https");
 const icon = path.join(__dirname, "../../resources/icon.png");
 let botProcess;
-const logFilePath = path.join(electron.app.getPath("exe"), "../bot.log");
+let logFilePath;
+let tokenFilePath;
+let ffmpegPath;
+if (utils.is.dev) {
+  logFilePath = path.join(__dirname, "../../bot.log");
+  tokenFilePath = path.join(__dirname, "../../token.txt");
+  ffmpegPath = path.join(__dirname, "../../ffmpeg.exe");
+} else {
+  logFilePath = path.join(electron.app.getPath("exe"), "../bot.log");
+  tokenFilePath = path.join(electron.app.getPath("exe"), "../token.txt");
+  ffmpegPath = path.join(electron.app.getPath("exe"), "../ffmpeg.exe");
+}
+electron.ipcMain.handle("check-ffmpeg", async () => {
+  return fs.existsSync(ffmpegPath);
+});
+electron.ipcMain.handle("download-ffmpeg", async () => {
+  const initialUrl = "https://github.com/Adivise/ExpertiseX/releases/download/v2.0.0/ffmpeg.exe";
+  const downloadFile = (url) => {
+    return new Promise((resolve, reject) => {
+      https.get(url, (response) => {
+        if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
+          return resolve(downloadFile(response.headers.location));
+        } else if (response.statusCode !== 200) {
+          return reject(
+            new Error(`Failed to download ffmpeg.exe. Status code: ${response.statusCode}`)
+          );
+        }
+        const fileStream = fs.createWriteStream(ffmpegPath);
+        response.pipe(fileStream);
+        fileStream.on("finish", () => {
+          fileStream.close();
+          resolve(true);
+        });
+      }).on("error", (err) => {
+        fs.unlink(ffmpegPath, () => reject(err));
+      });
+    });
+  };
+  return downloadFile(initialUrl);
+});
 electron.ipcMain.handle("get-bot-logs", () => {
+  if (!fs.existsSync(logFilePath)) ;
   return fs.readFileSync(logFilePath, "utf8") || "No logs found.";
+});
+electron.ipcMain.handle("store-token", (_, token) => {
+  if (!fs.existsSync(tokenFilePath)) ;
+  return fs.writeFileSync(tokenFilePath, token, "utf-8");
+});
+electron.ipcMain.handle("get-token", () => {
+  if (fs.existsSync(tokenFilePath)) {
+    return fs.readFileSync(tokenFilePath, "utf-8");
+  }
+  return null;
 });
 electron.ipcMain.handle("invalid-token", async (_, token) => {
   return await isValidToken(token);
@@ -35,11 +86,7 @@ function createWindow() {
   main.on("ready-to-show", () => {
     main.show();
   });
-  main.webContents.setWindowOpenHandler((details) => {
-    electron.shell.openExternal(details.url);
-    return { action: "deny" };
-  });
-  if (utils.is.dev && process.env["ELECTRON_RENDERER_URL"]) {
+  if (utils.is.dev) {
     main.loadURL(process.env["ELECTRON_RENDERER_URL"]);
   } else {
     main.loadFile(path.join(__dirname, "../../out/renderer/index.html"));
@@ -57,8 +104,7 @@ function createWindow() {
         second: "2-digit",
         hour12: false
       });
-      fs.appendFileSync(logFilePath, `[${timestamp}] ${message}
-`);
+      fs.appendFileSync(logFilePath, `[${timestamp}] | ${message}`);
     }
     if (botProcess.stdout) {
       botProcess.stdout.on("data", (data) => {
@@ -83,8 +129,6 @@ function createWindow() {
   });
   main.on("close", () => {
     main.webContents.send("window-closing");
-    if (!botProcess) return;
-    botProcess.kill();
   });
 }
 electron.app.whenReady().then(() => {
@@ -102,11 +146,6 @@ electron.app.on("web-contents-created", (_, contents) => {
   contents.setWindowOpenHandler(() => {
     return { action: "deny" };
   });
-});
-electron.app.on("before-quit", () => {
-  if (botProcess) {
-    botProcess.kill();
-  }
 });
 electron.app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {

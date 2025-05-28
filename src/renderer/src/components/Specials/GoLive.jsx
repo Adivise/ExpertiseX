@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import MarkdownRenderer from '../../module/MDRender';
 import '../../assets/Style.css';
-import config from '../../module/config.json';
 
 const GoLive = () => {
     const [voiceId, setVoiceId] = useState('');
@@ -20,6 +19,19 @@ const GoLive = () => {
 
     const handleGoLive = async () => {
         setResponse(''); // Clear the old response
+
+        try { // check and download ffmpeg.exe
+            const hasFFmpeg = await window.electronAPI.checkFFmpeg();
+            if (!hasFFmpeg) {
+                setResponse("FFmpeg not found. Downloading FFmpeg, please wait...");
+                await window.electronAPI.downloadFFmpeg();
+                setResponse("FFmpeg downloaded successfully.");
+            }
+        } catch {
+            setResponse("Error checking/downloading FFmpeg: " + err.message);
+            return;
+        }
+
         if (!isCooldown) {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown

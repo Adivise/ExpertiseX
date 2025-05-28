@@ -34,9 +34,11 @@
 - LavaLink **[Click Here](https://lavalink.dev/getting-started/index.html)** or **[My Config](https://limewire.com/d/VjJ3l#m4PB0KUmaZ)**
 
 # 🚩 Normal User
-- *Single Executable* `(Desktop PC)` **[Lastest](https://github.com/Adivise/ExpertiseX/releases/download/v2.0.0/ExpertiseX-2.0.0.exe)**
+- *Single Executable* `(Desktop PC)` **[Lastest]()**
+> *`when your close executable your config or anything will be reset to default`*
 
-- *Installer Executable* `(Desktop PC)` **[Lastest](https://github.com/Adivise/ExpertiseX/releases/download/v2.0.0/expertisex-2.0.0-setup.exe)**
+- *Installer Executable* `(Desktop PC)` **[Lastest]()**
+> *`your can setting config .env, just do open executable file location`*
 
 - *Installer Executable* `(MacOS)` **Not Unavailable**
 

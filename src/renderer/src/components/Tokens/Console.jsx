@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import MarkdownRenderer from "../../module/MDRender";
 
 const Console = () => {
   const [botLogs, setBotLogs] = useState("Loading logs...");
@@ -17,7 +16,13 @@ const Console = () => {
     <div className="content">
         <div className="markdown-container">
             <h2>Bot Console</h2>
-            <MarkdownRenderer content={botLogs} />
+            <pre style={{
+              whiteSpace: "pre-wrap", // Allows the text to wrap
+              wordWrap: "break-word", // Breaks words if needed
+              overflowX: "auto" // Enables horizontal scrolling if necessary
+            }}>
+            {botLogs}
+          </pre>
         </div>
     </div>
   );

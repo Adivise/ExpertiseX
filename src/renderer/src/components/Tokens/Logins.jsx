@@ -5,12 +5,22 @@ import "../../assets/Style.css";
 const Login = ({ setIsLoggedIn }) => {
     const [token, setToken] = useState("");
     const [port, setPort] = useState(3000);
+    const [saveToken, setSaveToken] = useState(false);
     const [response, setResponse] = useState("");
     const [isCooldown, setIsCooldown] = useState(false);
 
     useEffect(() => {
         const storedPort = sessionStorage.getItem("port");
         if (storedPort) setPort(storedPort);
+
+        window.electronAPI.getToken().then((storedToken) => {
+            if (storedToken) {
+                setToken(storedToken);
+                setSaveToken(true);
+            }
+        }).catch((error) => {
+            //
+        });
     }, []);
 
     const handleLogin = async () => {
@@ -38,6 +48,9 @@ const Login = ({ setIsLoggedIn }) => {
                 setIsLoggedIn(true);
                 window.electronAPI.startBot(token, port); // ✅ Call Electron to run bot
                 
+                if (saveToken) {
+                    window.electronAPI.storeToken(token);
+                }
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
             }
@@ -86,6 +99,17 @@ Enter the details below to login
                         }
                     }}
                 />
+                <div style={{ marginTop: "10px" }}>
+                    <input
+                        type="checkbox"
+                        id="saveToken"
+                        checked={saveToken}
+                        onChange={(e) => setSaveToken(e.target.checked)}
+                    />
+                    <label htmlFor="saveToken">
+                        <pre>Save Token (Auto Put)</pre>
+                    </label>
+                </div>
                 <div style={{ marginTop: "20px" }}>
                     <button type="button" onClick={handleLogin} disabled={isCooldown} id="b1">
                         {isCooldown ? "Loading..." : "Login"}

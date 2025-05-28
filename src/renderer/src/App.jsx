@@ -3,6 +3,7 @@ import { PlaySkip, PlayTop, AutoPlay, Join, Leave, Play, Queue, GoLive, Loop, Sk
 import Navbar from './module/Navbar';
 import Sidebar from './module/Sidebar';
 import './assets/Style.css';
+import axios from 'axios';
 
 const App = () => {
     const [activeComponent, setActiveComponent] = useState('logins');
@@ -12,7 +13,9 @@ const App = () => {
         // Logout handler
         window.electronAPI.onWindowClose( async() => {
             const port = sessionStorage.getItem('port');
+            const env = window.electronAPI.getEnv();
             if (port) {
+                await axios.post(`http://${env.ip}:${port}/logout`); // Destroy bot!
                 sessionStorage.removeItem('isLoggedIn'); // Clear login state
                 sessionStorage.removeItem('port');
             }

@@ -20,7 +20,7 @@ module.exports = (client) => {
             const str = songStrings.join('\n');
             const song = player.queue.current;
 
-            return res.send({ content: `**Current Playing • [${song.title}](${song.uri})** \`[${formatDuration(song.length)}]\`\n\n**Rest of Queue:**\n${str || "Queue is Empty"}` });
+            return res.send({ content: `**Current Playing • [${song.title}](${song.uri})** \`[${formatDuration(song.length)}]\`\n\n**Rest of Queue:**\n${str || "There is no rest of queue."}` });
         } catch (error) {
             console.error('Error:', error);
             res.status(500).send(`Error: ${error.message}`);

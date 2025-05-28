@@ -7,19 +7,21 @@ files:
   - "!src/**"
   - "!.env"
   - "!bot.log"
+  - "!token.txt"
 asarUnpack:
   - "resources/**"
 extraFiles:
-  - from: "out/backend/ffmpeg.exe"
-    to: "ffmpeg.exe"
   - from: ".env"
     to: ".env"
-  - from: "bot.log"
-    to: "bot.log"
 win:
   publisherName: Adivise
+  target:
+    - portable
+    - nsis
+portable:
+  artifactName: ${name}-${version}-single.${ext}
 nsis:
-  artifactName: ${name}-${version}.${ext}
+  artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
