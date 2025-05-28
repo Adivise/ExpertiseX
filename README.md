@@ -31,7 +31,7 @@
 - Node.JS **[Click Here](https://nodejs.org/en/download/)**
 - Self Bot Token **[Click Here](https://roze.lol/faq?question=How+do+I+add+a+token+to+my+account%3F)**
 - Java 17 SE **[Click Here](https://download.oracle.com/java/17/archive/jdk-17.0.12_windows-x64_bin.msi)**
-- LavaLink **[Click Here](https://lavalink.dev/getting-started/index.html)** or **[My Config](https://limewire.com/d/VjJ3l#m4PB0KUmaZ)**
+- LavaLink **[Click Here](https://lavalink.dev/getting-started/index.html)** or **[My Config](https://github.com/Adivise/ExpertiseX/releases/download/v2.1.0/LavaLink.zip)**
 
 # 🚩 Normal User
 - *Single Executable* `(Desktop PC)` **[Lastest](https://github.com/Adivise/ExpertiseX/releases/download/v2.1.0/expertisex-2.1.0-single.exe)**
