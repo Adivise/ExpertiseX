@@ -10,15 +10,15 @@ const https = require("https");
 const icon = path.join(__dirname, "../../resources/icon.png");
 let botProcess;
 let logFilePath;
-let tokenFilePath;
+let credentialFilePath;
 let ffmpegPath;
 if (utils.is.dev) {
   logFilePath = path.join(__dirname, "../../bot.log");
-  tokenFilePath = path.join(__dirname, "../../token.txt");
+  credentialFilePath = path.join(__dirname, "../../credentials.json");
   ffmpegPath = path.join(__dirname, "../../ffmpeg.exe");
 } else {
   logFilePath = path.join(electron.app.getPath("exe"), "../bot.log");
-  tokenFilePath = path.join(electron.app.getPath("exe"), "../token.txt");
+  credentialFilePath = path.join(electron.app.getPath("exe"), "../credentials.json");
   ffmpegPath = path.join(electron.app.getPath("exe"), "../ffmpeg.exe");
 }
 electron.ipcMain.handle("check-ffmpeg", async () => {
@@ -53,18 +53,33 @@ electron.ipcMain.handle("get-bot-logs", () => {
   if (!fs.existsSync(logFilePath)) ;
   return fs.readFileSync(logFilePath, "utf8") || "No logs found.";
 });
-electron.ipcMain.handle("store-token", (_, token) => {
-  if (!fs.existsSync(tokenFilePath)) ;
-  return fs.writeFileSync(tokenFilePath, token, "utf-8");
-});
-electron.ipcMain.handle("get-token", () => {
-  if (fs.existsSync(tokenFilePath)) {
-    return fs.readFileSync(tokenFilePath, "utf-8");
+electron.ipcMain.handle("get-credentials", () => {
+  if (fs.existsSync(credentialFilePath)) {
+    const data = fs.readFileSync(credentialFilePath, "utf-8");
+    try {
+      return JSON.parse(data);
+    } catch (error) {
+      return null;
+    }
   }
   return null;
 });
-electron.ipcMain.handle("invalid-token", async (_, token) => {
-  return await isValidToken(token);
+electron.ipcMain.handle("delete-credential", (_, token) => {
+  let credentials = [];
+  if (fs.existsSync(credentialFilePath)) {
+    try {
+      const fileContent = fs.readFileSync(credentialFilePath, "utf-8");
+      credentials = JSON.parse(fileContent);
+      if (!Array.isArray(credentials)) credentials = [];
+    } catch (err) {
+    }
+  }
+  credentials = credentials.filter((cred) => cred.token !== token);
+  fs.writeFileSync(credentialFilePath, JSON.stringify(credentials), "utf-8");
+  return;
+});
+electron.ipcMain.handle("invalid-token", async (_, token, shouldSave) => {
+  return await isValidToken(token, shouldSave);
 });
 electron.ipcMain.handle("check-port", async (_, port) => {
   return await isPortAvailable(port);
@@ -78,10 +93,12 @@ function createWindow() {
     ...process.platform === "linux" ? { icon } : {},
     webPreferences: {
       preload: path.join(__dirname, "../preload/preload.js"),
-      sandbox: false,
-      devTools: false
+      sandbox: false
     }
   });
+  if (utils.is.dev) {
+    main.webContents.openDevTools();
+  }
   main.setMenu(null);
   main.on("ready-to-show", () => {
     main.show();
@@ -166,14 +183,41 @@ function isPortAvailable(port) {
     server.listen(port);
   });
 }
-function isValidToken(token) {
+function isValidToken(token, shouldSave) {
   return new Promise((resolve) => {
     const client = new discord_jsSelfbotV13.Client();
     client.login(token).then(() => {
+      const username = client.user ? client.user.username : "";
+      if (shouldSave) {
+        const newCredential = { token, username };
+        let credentials = [];
+        if (fs.existsSync(credentialFilePath)) {
+          try {
+            const fileContent = fs.readFileSync(credentialFilePath, "utf-8");
+            if (fileContent && fileContent.trim()) {
+              credentials = JSON.parse(fileContent);
+              if (!Array.isArray(credentials)) {
+                credentials = [];
+              }
+            }
+          } catch (err) {
+            console.error("Error parsing credentials file, starting with an empty array.", err);
+            credentials = [];
+          }
+        }
+        const index = credentials.findIndex((cred) => cred.token === token);
+        if (index === -1) {
+          credentials.push(newCredential);
+        } else {
+          credentials[index] = newCredential;
+        }
+        fs.writeFileSync(credentialFilePath, JSON.stringify(credentials), "utf-8");
+      }
       client.destroy();
-      resolve(true);
-    }).catch(() => {
-      resolve(false);
+      resolve({ valid: true, username });
+    }).catch((err) => {
+      console.error("Invalid token:", err);
+      resolve({ valid: false });
     });
   });
 }

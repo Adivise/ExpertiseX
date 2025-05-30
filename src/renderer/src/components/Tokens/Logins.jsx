@@ -2,26 +2,71 @@ import { useState, useEffect } from "react";
 import MarkdownRenderer from "../../module/MDRender";
 import "../../assets/Style.css";
 
-const Login = ({ setIsLoggedIn }) => {
+const Login = ({ onLoginSuccess }) => {
     const [token, setToken] = useState("");
     const [port, setPort] = useState(3000);
-    const [saveToken, setSaveToken] = useState(false);
+    const [saveCredentials, setSaveCredentials] = useState(false);
     const [response, setResponse] = useState("");
     const [isCooldown, setIsCooldown] = useState(false);
+    const [savedCredentials, setSavedCredentials] = useState([]);
+    const [selectedIndex, setSelectedIndex] = useState(-1);
 
     useEffect(() => {
         const storedPort = sessionStorage.getItem("port");
         if (storedPort) setPort(storedPort);
 
-        window.electronAPI.getToken().then((storedToken) => {
-            if (storedToken) {
-                setToken(storedToken);
-                setSaveToken(true);
+        window.electronAPI.getCredentials().then((data) => {
+            if (data && Array.isArray(data)) {
+            setSavedCredentials(data);
+            if (data.length > 0) {
+                    // Auto-select the first saved credential by default.
+                    setSelectedIndex(0);
+                    setToken(data[0].token);
+                }
             }
         }).catch((error) => {
             //
         });
     }, []);
+
+    const handleCredentialSelect = (event) => {
+        const index = parseInt(event.target.value, 10);
+        setSelectedIndex(index);
+        if (index >= 0 && savedCredentials[index]) {
+            setToken(savedCredentials[index].token);
+        } else {
+            setToken("");
+        }
+    };
+
+    // New function: Delete the selected credential
+    const handleDeleteCredential = async () => {
+        if (selectedIndex >= 0 && savedCredentials[selectedIndex]) {
+            const userToken = savedCredentials[selectedIndex].token;
+            try {
+                // Call an IPC method to delete the credential persistently.
+                // Ensure you have implemented window.electronAPI.deleteCredential.
+                await window.electronAPI.deleteCredential(userToken);
+
+                // Remove from local state.
+                const updatedCredentials = [...savedCredentials];
+                updatedCredentials.splice(selectedIndex, 1);
+                setSavedCredentials(updatedCredentials);
+                
+                // Reset selected index and token based on new array
+                if (updatedCredentials.length > 0) {
+                    setSelectedIndex(0);
+                    setToken(updatedCredentials[0].token);
+                } else {
+                    setSelectedIndex(-1);
+                    setToken("");
+                }
+            } catch (error) {
+                console.error("Error deleting credential:", error);
+                setResponse("Error deleting credential");
+            }
+        }
+    };
 
     const handleLogin = async () => {
         setResponse("");
@@ -31,8 +76,8 @@ const Login = ({ setIsLoggedIn }) => {
 
             try {
                 // Validate token format
-                const checkToken = await window.electronAPI.checkToken(token);
-                if (!checkToken) {
+                const tokenResult = await window.electronAPI.checkToken(token, saveCredentials);
+                if (!tokenResult.valid) {
                     setResponse("Invalid token! Please check your self bot token.");
                     return;
                 }
@@ -43,14 +88,9 @@ const Login = ({ setIsLoggedIn }) => {
                     return;
                 };
 
-                // ✅ Store port and token, then start bot
                 sessionStorage.setItem("port", port);
-                setIsLoggedIn(true);
                 window.electronAPI.startBot(token, port); // ✅ Call Electron to run bot
-                
-                if (saveToken) {
-                    window.electronAPI.storeToken(token);
-                }
+                onLoginSuccess(tokenResult.username); // ✅ Notify parent component of successful login
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
             }
@@ -99,18 +139,38 @@ Enter the details below to login
                         }
                     }}
                 />
-                <div style={{ marginTop: "10px" }}>
+                {savedCredentials.length > 0 && (
+                    <div className="credential-select-container">
+                        <label htmlFor="credentialSelect">Select Saved Bot:</label>
+                        <div className="credential-select-wrapper">
+                        <select
+                            id="credentialSelect"
+                            value={selectedIndex}
+                            onChange={handleCredentialSelect}
+                        >
+                            {savedCredentials.map((cred, index) => (
+                            <option key={index} value={index}>
+                                {cred.username ? cred.username : "Unknown"} ({cred.token.slice(0, 10)}...)
+                            </option>
+                            ))}
+                            <option value={-1}>Add New</option>
+                        </select>
+                        <button type="button" className="delete-credential-button" onClick={handleDeleteCredential}>🗑️</button>
+                        </div>
+                    </div>
+                )}
+                <div style={{ marginTop: "1px" }}>
                     <input
                         type="checkbox"
                         id="saveToken"
-                        checked={saveToken}
-                        onChange={(e) => setSaveToken(e.target.checked)}
+                        checked={saveCredentials}
+                        onChange={(e) => setSaveCredentials(e.target.checked)}
                     />
                     <label htmlFor="saveToken">
-                        <pre>Save Token (Auto Put)</pre>
+                        <pre>Save Bot</pre>
                     </label>
                 </div>
-                <div style={{ marginTop: "20px" }}>
+                <div style={{ marginTop: "10px" }}>
                     <button type="button" onClick={handleLogin} disabled={isCooldown} id="b1">
                         {isCooldown ? "Loading..." : "Login"}
                     </button>

@@ -28,21 +28,18 @@ if (process.contextIsolated) {
     electron.contextBridge.exposeInMainWorld("electronAPI", {
       onWindowClose: (callback) => electron.ipcRenderer.on("window-closing", callback),
       startBot: (token, port) => electron.ipcRenderer.send("start-bot", token, port),
-      checkToken: (token) => electron.ipcRenderer.invoke("invalid-token", token),
+      checkToken: (token, shouldSave) => electron.ipcRenderer.invoke("invalid-token", token, shouldSave),
       getBotLogs: () => electron.ipcRenderer.invoke("get-bot-logs"),
       getEnv: () => ({ ip: process.env.IP || "localhost" }),
       checkPort: (port) => electron.ipcRenderer.invoke("check-port", port),
       removeListener: (channel, callback) => electron.ipcRenderer.removeListener(channel, callback),
-      storeToken: (token) => electron.ipcRenderer.invoke("store-token", token),
-      getToken: () => electron.ipcRenderer.invoke("get-token"),
+      getCredentials: () => electron.ipcRenderer.invoke("get-credentials"),
+      deleteCredential: (token) => electron.ipcRenderer.invoke("delete-credential", token),
       checkFFmpeg: () => electron.ipcRenderer.invoke("check-ffmpeg"),
       downloadFFmpeg: () => electron.ipcRenderer.invoke("download-ffmpeg")
     });
   } catch (error) {
     console.error("Error exposing Electron API:", error);
   }
-} else {
-  window.electron = preload.electronAPI;
-  window.api = api;
 }
 electron.ipcRenderer.setMaxListeners(20);

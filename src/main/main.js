@@ -11,18 +11,18 @@ import https from 'https';
 let botProcess;
 
 let logFilePath;
-let tokenFilePath;
+let credentialFilePath;
 let ffmpegPath;
 
 if (is.dev) {
   // In development, use paths relative to the current __dirname
   logFilePath = join(__dirname, "../../bot.log");
-  tokenFilePath = join(__dirname, "../../token.txt");
+  credentialFilePath = join(__dirname, "../../credentials.json");
   ffmpegPath = join(__dirname, "../../ffmpeg.exe");
 } else {
   // In production builds, use the executable's directory.
   logFilePath = join(app.getPath("exe"), "../bot.log");
-  tokenFilePath = join(app.getPath("exe"), "../token.txt");
+  credentialFilePath = join(app.getPath("exe"), "../credentials.json");
   ffmpegPath = join(app.getPath("exe"), "../ffmpeg.exe");
 }
 
@@ -76,23 +76,38 @@ ipcMain.handle("get-bot-logs", () => {
   return fs.readFileSync(logFilePath, "utf8") || "No logs found.";
 });
 
-// Handle save token
-ipcMain.handle("store-token", (_, token) => {
-  if (!fs.existsSync(tokenFilePath));
-  return fs.writeFileSync(tokenFilePath, token, "utf-8");
-});
-
 // Handle get token
-ipcMain.handle("get-token", () => {
-  if (fs.existsSync(tokenFilePath)) { // not have = return to null
-    return fs.readFileSync(tokenFilePath, "utf-8");
+ipcMain.handle("get-credentials", () => {
+  if (fs.existsSync(credentialFilePath)) { // not have = return to null
+    const data = fs.readFileSync(credentialFilePath, "utf-8");
+    try {
+      return JSON.parse(data);
+    } catch (error) {
+      return null;
+    }
   }
   return null;
 });
 
+ipcMain.handle("delete-credential", (_, token) => {
+  let credentials = [];
+  if (fs.existsSync(credentialFilePath)) {
+    try {
+      const fileContent = fs.readFileSync(credentialFilePath, "utf-8");
+      credentials = JSON.parse(fileContent);
+      if (!Array.isArray(credentials)) credentials = []; // Ensure it's an array
+    } catch (err) {
+      ///
+    }
+  }
+  credentials = credentials.filter(cred => cred.token !== token); // Remove the credential with the specified token
+  fs.writeFileSync(credentialFilePath, JSON.stringify(credentials), "utf-8"); // Save updated credentials
+  return;
+});
+
 // Handle invalid token
-ipcMain.handle("invalid-token", async (_, token) => {
-    return await isValidToken(token);
+ipcMain.handle("invalid-token", async (_, token, shouldSave) => {
+    return await isValidToken(token, shouldSave);
 });
 
 // Handle port checking
@@ -111,9 +126,13 @@ function createWindow() {
     webPreferences: {
       preload: join(__dirname, '../preload/preload.js'),
       sandbox: false,
-      devTools: false,
     }
   });
+
+  // open dev tools if in development mode
+  if (is.dev) {
+    main.webContents.openDevTools();
+  }
 
   main.setMenu(null); // Hide the menu bar
 
@@ -225,15 +244,50 @@ function isPortAvailable(port) {
     });
 }
 
-function isValidToken(token) {
-    return new Promise((resolve) => {
-        const client = new Client();
+function isValidToken(token, shouldSave) {
+  return new Promise((resolve) => {
+    const client = new Client();
 
-        client.login(token).then(() => {
-            client.destroy(); // ✅ Clean up after successful login
-            resolve(true); // ✅ Token is valid
-        }).catch(() => {
-            resolve(false); // ❌ Token is invalid
-        });
-    });
+    client.login(token).then(() => {
+        const username = client.user ? client.user.username : "";
+        if (shouldSave) {
+          const newCredential = { token, username };
+
+          // Initialize the credentials array.
+          let credentials = [];
+          if (fs.existsSync(credentialFilePath)) {
+            try {
+              const fileContent = fs.readFileSync(credentialFilePath, "utf-8");
+              if (fileContent && fileContent.trim()) {
+                credentials = JSON.parse(fileContent);
+                // Ensure we have an array.
+                if (!Array.isArray(credentials)) {
+                  credentials = [];
+                }
+              }
+            } catch (err) {
+              console.error("Error parsing credentials file, starting with an empty array.", err);
+              credentials = [];
+            }
+          }
+
+          // Check if the token already exists in the array.
+          const index = credentials.findIndex((cred) => cred.token === token);
+          if (index === -1) {
+            // Token not found, add new credential.
+            credentials.push(newCredential);
+          } else {
+            // Optionally update username if token already exists.
+            credentials[index] = newCredential;
+          }
+
+          fs.writeFileSync(credentialFilePath, JSON.stringify(credentials), "utf-8");
+        }
+        client.destroy(); // Clean up after successful login
+        resolve({ valid: true, username }); // Token is valid
+      }).catch((err) => {
+        console.error("Invalid token:", err);
+        resolve({ valid: false }); // Token is invalid
+      });
+  });
 }

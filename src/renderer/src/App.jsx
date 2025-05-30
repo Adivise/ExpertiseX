@@ -8,6 +8,7 @@ import axios from 'axios';
 const App = () => {
     const [activeComponent, setActiveComponent] = useState('logins');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [username, setUsername] = useState('');
 
     useEffect(() => {
         // Logout handler
@@ -29,22 +30,23 @@ const App = () => {
         }
     }, []);
 
-    const handleLoginSuccess = () => {
-        setIsLoggedIn(true); // User is now logged in
-        sessionStorage.setItem('isLoggedIn', 'true'); // Save login state
-        setActiveComponent('join') // Set default active component after login
+    const handleLoginSuccess = (loggedInUsername) => {
+        setIsLoggedIn(true);
+        sessionStorage.setItem('isLoggedIn', 'true');
+        setActiveComponent('join');
+        setUsername(loggedInUsername);
+
+        window.electronAPI.openPopupWindow(loggedInUsername); // Open popup window on successful login
     };
 
     return (
         <div className="App">
-            <Navbar />
+            <Navbar username={username} setIsLoggedIn={setIsLoggedIn} />
             <div className="dashboard">
                 {isLoggedIn && <Sidebar setActiveComponent={setActiveComponent} setIsLoggedIn={setIsLoggedIn} />}
                 
                 <div className="main-content">
-                    {/* Pass login state setter function to Logins */}
-                    {!isLoggedIn && <Logins setIsLoggedIn={handleLoginSuccess} />}
-
+                    {!isLoggedIn && <Logins onLoginSuccess={handleLoginSuccess} />}
                     {isLoggedIn && (
                         <div className="logged-in-content">
                             {activeComponent === 'console' && <Console />}

@@ -8,7 +8,6 @@ const Console = () => {
             const logs = await window.electronAPI.getBotLogs();
             setBotLogs(logs);
         }
-
         fetchLogs();
     }, []);
 
