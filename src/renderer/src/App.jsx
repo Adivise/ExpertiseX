@@ -14,9 +14,8 @@ const App = () => {
         // Logout handler
         window.electronAPI.onWindowClose( async() => {
             const port = sessionStorage.getItem('port');
-            const env = window.electronAPI.getEnv();
             if (port) {
-                await axios.post(`http://${env.ip}:${port}/logout`); // Destroy bot!
+                await axios.post(`http://localhost:${port}/logout`); // Destroy bot!
                 sessionStorage.removeItem('isLoggedIn'); // Clear login state
                 sessionStorage.removeItem('port');
             }
@@ -35,8 +34,6 @@ const App = () => {
         sessionStorage.setItem('isLoggedIn', 'true');
         setActiveComponent('join');
         setUsername(loggedInUsername);
-
-        window.electronAPI.openPopupWindow(loggedInUsername); // Open popup window on successful login
     };
 
     return (

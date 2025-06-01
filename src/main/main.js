@@ -10,21 +10,41 @@ import https from 'https';
 
 let botProcess;
 
-let logFilePath;
-let credentialFilePath;
-let ffmpegPath;
+let logFilePath = join(process.cwd(), "bot.log"); // Default path for log file
+let credentialFilePath = join(process.cwd(), "credentials.json"); // Default path for credentials file
+let ffmpegPath = join(process.cwd(), "ffmpeg.exe"); // Default path for ffmpeg executable
+let configPath = join(process.cwd(), "config.json"); // Default path for config file
 
-if (is.dev) {
-  // In development, use paths relative to the current __dirname
-  logFilePath = join(__dirname, "../../bot.log");
-  credentialFilePath = join(__dirname, "../../credentials.json");
-  ffmpegPath = join(__dirname, "../../ffmpeg.exe");
-} else {
-  // In production builds, use the executable's directory.
-  logFilePath = join(app.getPath("exe"), "../bot.log");
-  credentialFilePath = join(app.getPath("exe"), "../credentials.json");
-  ffmpegPath = join(app.getPath("exe"), "../ffmpeg.exe");
-}
+// Handle loading the config file
+ipcMain.handle('load-config', async () => {
+  if (fs.existsSync(configPath)) {
+    try {
+      const data = fs.readFileSync(configPath, 'utf-8');
+      return JSON.parse(data);
+    } catch (error) {
+      console.error("Error parsing config file:", error);
+      return null;
+    }
+  } else {
+    return null;
+  }
+});
+
+// Handle saving the config file
+ipcMain.handle('save-config', (_, config) => {
+  try {
+    fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf-8');
+    return true; // Indicate success
+  } catch (error) {
+    console.error("Error saving config file:", error);
+    return false; // Indicate failure
+  }
+});
+
+// Handle checking config file
+ipcMain.handle('check-config', () => {
+  return fs.existsSync(configPath);
+});
 
 // Handle for check ffmpeg.exe
 ipcMain.handle("check-ffmpeg", async () => {

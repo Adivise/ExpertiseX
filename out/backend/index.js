@@ -3,6 +3,7 @@ const { Connectors } = require("shoukaku");
 const { Kazagumo } = require("kazagumo");
 const express = require('express');
 const cors = require('cors');
+const { join } = require('path');
 
 const client = new Client();
 
@@ -10,7 +11,7 @@ process.on("exit", () => console.log("⚠️ Bot is shutting down."));
 process.on("uncaughtException", (err) => console.error("❌ Bot Error:", err));
 process.on("unhandledRejection", (reason) => console.error("❌ Promise Rejection:", reason));
 
-client.config = require("./settings/config.js");
+client.config = require(join(process.cwd(), "config.json"));
 client.app = express();
 client.app.use(cors());
 client.stated = "none";
@@ -27,7 +28,7 @@ client.manager = new Kazagumo({
         const guild = client.guilds.cache.get(guildId);
         if (guild) guild.shard.send(payload);
     }
-}, new Connectors.DiscordJS(client), client.config.NODES);
+}, new Connectors.DiscordJS(client), client.config.nodes);
 
 ["loadEvent", "loadPlayer", "loadTrack", "loadEndpoint"].forEach(x => require(`./handlers/${x}`)(client));
 

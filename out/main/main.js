@@ -9,18 +9,35 @@ const discord_jsSelfbotV13 = require("discord.js-selfbot-v13");
 const https = require("https");
 const icon = path.join(__dirname, "../../resources/icon.png");
 let botProcess;
-let logFilePath;
-let credentialFilePath;
-let ffmpegPath;
-if (utils.is.dev) {
-  logFilePath = path.join(__dirname, "../../bot.log");
-  credentialFilePath = path.join(__dirname, "../../credentials.json");
-  ffmpegPath = path.join(__dirname, "../../ffmpeg.exe");
-} else {
-  logFilePath = path.join(electron.app.getPath("exe"), "../bot.log");
-  credentialFilePath = path.join(electron.app.getPath("exe"), "../credentials.json");
-  ffmpegPath = path.join(electron.app.getPath("exe"), "../ffmpeg.exe");
-}
+let logFilePath = path.join(process.cwd(), "bot.log");
+let credentialFilePath = path.join(process.cwd(), "credentials.json");
+let ffmpegPath = path.join(process.cwd(), "ffmpeg.exe");
+let configPath = path.join(process.cwd(), "config.json");
+electron.ipcMain.handle("load-config", async () => {
+  if (fs.existsSync(configPath)) {
+    try {
+      const data = fs.readFileSync(configPath, "utf-8");
+      return JSON.parse(data);
+    } catch (error) {
+      console.error("Error parsing config file:", error);
+      return null;
+    }
+  } else {
+    return null;
+  }
+});
+electron.ipcMain.handle("save-config", (_, config) => {
+  try {
+    fs.writeFileSync(configPath, JSON.stringify(config, null, 2), "utf-8");
+    return true;
+  } catch (error) {
+    console.error("Error saving config file:", error);
+    return false;
+  }
+});
+electron.ipcMain.handle("check-config", () => {
+  return fs.existsSync(configPath);
+});
 electron.ipcMain.handle("check-ffmpeg", async () => {
   return fs.existsSync(ffmpegPath);
 });

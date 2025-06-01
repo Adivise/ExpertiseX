@@ -16,9 +16,10 @@
 - **If you break the Discord TOS or guidelines while using this selfbot, I am not responsible if you get banned from Discord or any guilds, If you do not agree with the above, don't use it.**
 
 ## 📑 Feature
-- [x] Token Login Save and Select
+- [x] Token Login/Save/Select
 - [x] Choose Port (Max: 999 Ports/Bots)
-- [x] Console Logs in WebUI
+- [x] Console Logs (Realtime Update)
+- [x] Setting Load/Save
 - [x] Go Live
 - [x] Play Music
 - [x] Sound Filters
@@ -34,10 +35,10 @@
 - LavaLink **[Click Here](https://lavalink.dev/getting-started/index.html)** or **[My Config](https://github.com/Adivise/ExpertiseX/releases/download/v2.1.0/LavaLink.zip)**
 
 # 🚩 Normal User
-- *Single Executable* `(Desktop PC)` **[Lastest](https://github.com/Adivise/ExpertiseX/releases/download/v2.2.0/expertisex-2.2.0-single.exe)**
+- *Single Executable* `(Desktop PC)` **[Lastest](https://github.com/Adivise/ExpertiseX/releases/download/v2.3.0/expertisex-2.3.0-single.exe)**
 > *`when your close executable your config or anything will be reset to default`*
 
-- *Installer Executable* `(Desktop PC)` **[Lastest](https://github.com/Adivise/ExpertiseX/releases/download/v2.2.0/expertisex-2.2.0-setup.exe)**
+- *Installer Executable* `(Desktop PC)` **[Lastest](https://github.com/Adivise/ExpertiseX/releases/download/v2.3.0/expertisex-2.3.0-setup.exe)**
 > *`your can setting config .env, just do open executable file location`*
 
 - *Installer Executable* `(MacOS)` **Not Unavailable**
@@ -60,23 +61,7 @@ $ npm run build:win-portable
 ```
 
 For some reason i cant build for `mac` and `linux` user just try by your self
-
-## 📄 Configuration for Development
-
-Goto `.env` and fill out the values:
-
-```env
-# When build will use this config file
-IP=localhost
-LEAVE_EMPTY=12000
-
-# LavaLink Nodes
-NODE_NAME=ExpertiseX
-NODE_URL=localhost:5555
-NODE_AUTH=youshallnotpass
-```
-
-After installation you can use `$ npm run dev` or `$ npm run start` to start.
+After installation you can use `$ npm run dev` to start.
 
 
 ## ❤️ Contributors

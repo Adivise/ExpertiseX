@@ -28,8 +28,7 @@ const Join = () => {
             try {
                 sessionStorage.setItem('guildId', guildId);
                 sessionStorage.setItem('voiceId', voiceId);
-                const env = await window.electronAPI.getEnv();
-                const { data } = await axios.post(`http://${env.ip}:${port}/join`, { guildId, voiceId });
+                const { data } = await axios.post(`http://localhost:${port}/join`, { guildId, voiceId });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);

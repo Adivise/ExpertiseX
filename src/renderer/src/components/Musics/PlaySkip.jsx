@@ -27,8 +27,7 @@ const PlaySkip = () => {
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
                 sessionStorage.setItem('guildId', guildId);
-                const env = await window.electronAPI.getEnv();
-                const { data } = await axios.post(`http://${env.ip}:${port}/playskip`, { guildId, songName });
+                const { data } = await axios.post(`http://localhost:${port}/playskip`, { guildId, songName });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
@@ -44,8 +43,7 @@ const PlaySkip = () => {
 
     const fetchSearch = async ({ value }) => {
         try {
-            const env = await window.electronAPI.getEnv();
-            const { data } = await axios.get(`http://${env.ip}:3000/search?q=${value}`);
+            const { data } = await axios.get(`http://localhost:3000/search?q=${value}`);
             const limitedSuggestions = data.songs.slice(0, 5);
             setSuggestions(limitedSuggestions);
         } catch (error) {

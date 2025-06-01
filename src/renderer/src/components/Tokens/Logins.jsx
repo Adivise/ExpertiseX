@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import MarkdownRenderer from "../../module/MDRender";
 import "../../assets/Style.css";
+import Settings from "./Settings";
 
 const Login = ({ onLoginSuccess }) => {
     const [token, setToken] = useState("");
@@ -10,6 +11,10 @@ const Login = ({ onLoginSuccess }) => {
     const [isCooldown, setIsCooldown] = useState(false);
     const [savedCredentials, setSavedCredentials] = useState([]);
     const [selectedIndex, setSelectedIndex] = useState(-1);
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+    const openSettings = () => setIsSettingsOpen(true);
+    const closeSettings = () => setIsSettingsOpen(false);
 
     useEffect(() => {
         const storedPort = sessionStorage.getItem("port");
@@ -25,9 +30,14 @@ const Login = ({ onLoginSuccess }) => {
                 }
             }
         }).catch((error) => {
-            //
+            // console.error("Error fetching saved credentials:", error);
+            setResponse("Error fetching saved credentials");
         });
     }, []);
+
+    const handleSaveSettings = async (settings) => {
+        console.log("Settings saved:", settings);
+    }
 
     const handleCredentialSelect = (event) => {
         const index = parseInt(event.target.value, 10);
@@ -62,7 +72,7 @@ const Login = ({ onLoginSuccess }) => {
                     setToken("");
                 }
             } catch (error) {
-                console.error("Error deleting credential:", error);
+                // console.error("Error deleting credential:", error);
                 setResponse("Error deleting credential");
             }
         }
@@ -87,6 +97,13 @@ const Login = ({ onLoginSuccess }) => {
                     setResponse("Port is already in use! Please choose another port.");
                     return;
                 };
+
+                // verify config.json
+                const configCheck = await window.electronAPI.checkConfig();
+                if (!configCheck) {
+                    setResponse("Configuration file is missing. You cannot log in until you setup in settings.");
+                    return;
+                }
 
                 sessionStorage.setItem("port", port);
                 window.electronAPI.startBot(token, port); // ✅ Call Electron to run bot
@@ -116,6 +133,11 @@ Enter the details below to login
                 <h2>Self Bot Logins</h2>
                 <MarkdownRenderer content={markdownContent} />
             </div>
+            <Settings
+                isOpen={isSettingsOpen}
+                onClose={closeSettings}
+                onSave={handleSaveSettings}
+            />
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input
                     type="password"
@@ -171,8 +193,13 @@ Enter the details below to login
                     </label>
                 </div>
                 <div style={{ marginTop: "10px" }}>
-                    <button type="button" onClick={handleLogin} disabled={isCooldown} id="b1">
+                    <button type="button" onClick={handleLogin} disabled={isCooldown}>
                         {isCooldown ? "Loading..." : "Login"}
+                    </button>
+                </div>
+                <div style={{ marginTop: "10px" }}>
+                    <button type="button" onClick={openSettings}>
+                        Settings
                     </button>
                 </div>
             </form>

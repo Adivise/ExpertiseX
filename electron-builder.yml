@@ -7,12 +7,12 @@ files:
   - "!src/**"
   - "!.env"
   - "!bot.log"
-  - "!token.txt"
+  - "!credentials.json"
+  - "!config.json"
+  - "!README.md"
+  - "!ffmpeg.exe"
 asarUnpack:
   - "resources/**"
-extraFiles:
-  - from: ".env"
-    to: ".env"
 win:
   publisherName: Adivise
   target:

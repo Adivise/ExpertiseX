@@ -31,8 +31,7 @@ const Play = () => {
             try {
                 sessionStorage.setItem('guildId', guildId);
                 sessionStorage.setItem('voiceId', voiceId);
-                const env = await window.electronAPI.getEnv();
-                const { data } = await axios.post(`http://${env.ip}:${port}/play`, { guildId, voiceId, songName });
+                const { data } = await axios.post(`http://localhost:${port}/play`, { guildId, voiceId, songName });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
@@ -48,8 +47,7 @@ const Play = () => {
 
     const fetchSearch = async ({ value }) => {
         try {
-            const env = await window.electronAPI.getEnv();
-            const { data } = await axios.get(`http://${env.ip}:3000/search?q=${value}`);
+            const { data } = await axios.get(`http://localhost:3000/search?q=${value}`);
             const limitedSuggestions = data.songs.slice(0, 5);
             setSuggestions(limitedSuggestions);
         } catch (error) {

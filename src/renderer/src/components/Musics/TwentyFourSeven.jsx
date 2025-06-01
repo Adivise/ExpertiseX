@@ -26,8 +26,7 @@ const TwentyFourSeven = () => {
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
                 sessionStorage.setItem('guildId', guildId);
-                const env = await window.electronAPI.getEnv();
-                const { data } = await axios.post(`http://${env.ip}:${port}/twentyfourseven`, { guildId, twentyfourseven: twentyfourseven.value });
+                const { data } = await axios.post(`http://localhost:${port}/twentyfourseven`, { guildId, twentyfourseven: twentyfourseven.value });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);

@@ -24,8 +24,7 @@ const EightD = () => {
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown 
             try {
                 sessionStorage.setItem('guildId', guildId);
-                const env = await window.electronAPI.getEnv();
-                const { data } = await axios.post(`http://${env.ip}:${port}/eightd`, { guildId });
+                const { data } = await axios.post(`http://localhost:${port}/eightd`, { guildId });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
