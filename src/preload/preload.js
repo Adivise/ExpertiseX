@@ -1,12 +1,9 @@
 import { contextBridge, ipcRenderer } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
 
-const api = {};
-
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld("electron", electronAPI);
-    contextBridge.exposeInMainWorld("api", api);
     contextBridge.exposeInMainWorld("electronAPI", {
       onWindowClose: (callback) => ipcRenderer.on("window-closing", callback),
       startBot: (token, port) => ipcRenderer.send("start-bot", token, port),
@@ -21,6 +18,7 @@ if (process.contextIsolated) {
       loadConfig: () => ipcRenderer.invoke("load-config"),
       saveConfig: (config) => ipcRenderer.invoke("save-config", config),
       checkConfig: () => ipcRenderer.invoke("check-config"),
+      getVersion: () => process.env.npm_package_version || '2.4.0'
     });
   } catch (error) {
     console.error("Error exposing Electron API:", error);

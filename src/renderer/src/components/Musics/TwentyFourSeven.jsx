@@ -56,51 +56,85 @@ Enter the details below to toggle 24/7 mode.
     const customStyles = {
         control: (provided) => ({
             ...provided,
-            backgroundColor: '#222831',
-            border: '1px solid #00adb5',
-            color: '#00adb5',
-            borderRadius: '8px', // Increased border radius for a smoother look
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Slightly increased shadow for better depth
-            transition: 'border-color 0.3s, box-shadow 0.3s',
+            backgroundColor: 'var(--bg-darker)',
+            border: '1px solid var(--border-color)',
+            color: 'var(--text-light)',
+            borderRadius: '4px',
+            minHeight: '36px',
+            boxShadow: 'none',
+            transition: 'all var(--transition-fast)',
             '&:hover': {
-                borderColor: '#00fff5',
-                boxShadow: '0 0 12px #00fff5', // Increased shadow on hover for a more pronounced effect
+                borderColor: 'var(--primary)',
+                boxShadow: '0 0 0 2px rgba(59, 130, 246, 0.2)',
             },
         }),
         menu: (provided) => ({
             ...provided,
-            backgroundColor: '#222831',
-            color: '#00adb5',
-            padding: '10px',
-            borderRadius: '8px', // Increased border radius for a smoother look
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Slightly increased shadow for better depth
+            backgroundColor: 'var(--bg-darker)',
+            padding: '4px',
+            color: 'var(--text-light)',
+            borderRadius: '4px',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+            border: '1px solid var(--border-color)',
+            marginTop: '4px',
         }),
         option: (provided, state) => ({
             ...provided,
-            backgroundColor: state.isFocused ? '#00adb5' : '#222831',
-            color: state.isFocused ? '#ffffff' : '#00adb5',
-            padding: '12px', // Increased padding for better spacing
-            transition: 'background-color 0.3s, color 0.3s',
+            backgroundColor: state.isFocused ? 'var(--hover-bg)' : 'transparent',
+            color: state.isFocused ? 'var(--text-light)' : 'var(--text-gray)',
+            padding: '6px 8px',
+            transition: 'all var(--transition-fast)',
+            borderRadius: '3px',
+            cursor: 'pointer',
+            fontSize: '0.875rem',
             '&:active': {
-                backgroundColor: '#00fff5',
-                color: '#ffffff',
+                backgroundColor: 'var(--primary)',
+                color: 'var(--text-light)',
             },
         }),
         singleValue: (provided) => ({
             ...provided,
-            color: '#00adb5',
-            fontWeight: 'bold', // Added bold font weight for better emphasis
+            color: 'var(--text-light)',
+            fontWeight: '500',
+            fontSize: '0.875rem',
         }),
         placeholder: (provided) => ({
             ...provided,
-            color: '#00adb5', // Styled the placeholder text
-            fontStyle: 'italic', // Added italic style for the placeholder text
+            color: 'var(--text-gray)',
+            fontStyle: 'normal',
+            fontSize: '0.875rem',
         }),
         dropdownIndicator: (provided) => ({
             ...provided,
-            color: '#00adb5', // Styled the dropdown indicator
+            color: 'var(--text-gray)',
+            padding: '0 4px',
+            transition: 'all var(--transition-fast)',
             '&:hover': {
-                color: '#00fff5', // Changed color on hover for the dropdown indicator
+                color: 'var(--text-light)',
+            },
+        }),
+        input: (provided) => ({
+            ...provided,
+            color: 'var(--text-light)',
+            fontSize: '0.875rem',
+            margin: '0',
+            padding: '0',
+        }),
+        valueContainer: (provided) => ({
+            ...provided,
+            padding: '2px 6px',
+        }),
+        indicatorsContainer: (provided) => ({
+            ...provided,
+            padding: '0 2px',
+        }),
+        clearIndicator: (provided) => ({
+            ...provided,
+            color: 'var(--text-gray)',
+            padding: '0 4px',
+            transition: 'all var(--transition-fast)',
+            '&:hover': {
+                color: 'var(--text-light)',
             },
         }),
     };

@@ -8,136 +8,208 @@ import fs from 'fs';
 import { Client } from 'discord.js-selfbot-v13';
 import https from 'https';
 
-let botProcess;
+// Constants
+const PATHS = {
+  LOG: join(process.cwd(), "bot.log"),
+  CREDENTIALS: join(process.cwd(), "credentials.json"),
+  FFMPEG: join(process.cwd(), "ffmpeg.exe"),
+  CONFIG: join(process.cwd(), "config.json")
+};
 
-let logFilePath = join(process.cwd(), "bot.log"); // Default path for log file
-let credentialFilePath = join(process.cwd(), "credentials.json"); // Default path for credentials file
-let ffmpegPath = join(process.cwd(), "ffmpeg.exe"); // Default path for ffmpeg executable
-let configPath = join(process.cwd(), "config.json"); // Default path for config file
+// State
+let botProcess = null;
+let mainWindow = null;
 
-// Handle loading the config file
-ipcMain.handle('load-config', async () => {
-  if (fs.existsSync(configPath)) {
+// Utility Functions
+const writeLog = (message) => {
+  const timestamp = new Date().toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  });
+  fs.appendFileSync(PATHS.LOG, `[${timestamp}] | ${message}`);
+};
+
+const isPortAvailable = (port) => {
+  return new Promise((resolve) => {
+    const server = net.createServer();
+    server.once("error", (err) => {
+      if (err.code === "EADDRINUSE") resolve(false);
+      else resolve(true);
+    });
+    server.once("listening", () => {
+      server.close();
+      resolve(true);
+    });
+    server.listen(port);
+  });
+};
+
+const isValidToken = async (token, shouldSave) => {
+  const client = new Client();
+  try {
+    await client.login(token);
+    const username = client.user?.username || "";
+    
+    if (shouldSave) {
+      await saveCredential(token, username);
+    }
+    
+    return { valid: true, username };
+  } catch (err) {
+    console.error("Invalid token:", err);
+    return { valid: false };
+  } finally {
+    client.destroy();
+  }
+};
+
+const saveCredential = async (token, username) => {
+  let credentials = [];
+  try {
+    if (fs.existsSync(PATHS.CREDENTIALS)) {
+      const fileContent = fs.readFileSync(PATHS.CREDENTIALS, "utf-8");
+      if (fileContent?.trim()) {
+        credentials = JSON.parse(fileContent);
+        if (!Array.isArray(credentials)) credentials = [];
+      }
+    }
+  } catch (err) {
+    console.error("Error reading credentials file:", err);
+  }
+
+  const index = credentials.findIndex((cred) => cred.token === token);
+  const newCredential = { token, username };
+  
+  if (index === -1) {
+    credentials.push(newCredential);
+  } else {
+    credentials[index] = newCredential;
+  }
+
+  fs.writeFileSync(PATHS.CREDENTIALS, JSON.stringify(credentials), "utf-8");
+};
+
+// IPC Handlers
+const setupIpcHandlers = () => {
+  // Config handlers
+  ipcMain.handle('load-config', async () => {
     try {
-      const data = fs.readFileSync(configPath, 'utf-8');
-      return JSON.parse(data);
+      if (fs.existsSync(PATHS.CONFIG)) {
+        const data = fs.readFileSync(PATHS.CONFIG, 'utf-8');
+        return JSON.parse(data);
+      }
     } catch (error) {
       console.error("Error parsing config file:", error);
-      return null;
     }
-  } else {
     return null;
-  }
-});
+  });
 
-// Handle saving the config file
-ipcMain.handle('save-config', (_, config) => {
-  try {
-    fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf-8');
-    return true; // Indicate success
-  } catch (error) {
-    console.error("Error saving config file:", error);
-    return false; // Indicate failure
-  }
-});
+  ipcMain.handle('save-config', (_, config) => {
+    try {
+      fs.writeFileSync(PATHS.CONFIG, JSON.stringify(config, null, 2), 'utf-8');
+      return true;
+    } catch (error) {
+      console.error("Error saving config file:", error);
+      return false;
+    }
+  });
 
-// Handle checking config file
-ipcMain.handle('check-config', () => {
-  return fs.existsSync(configPath);
-});
+  ipcMain.handle('check-config', () => fs.existsSync(PATHS.CONFIG));
 
-// Handle for check ffmpeg.exe
-ipcMain.handle("check-ffmpeg", async () => {
-  return fs.existsSync(ffmpegPath);
-});
+  // FFmpeg handlers
+  ipcMain.handle("check-ffmpeg", () => fs.existsSync(PATHS.FFMPEG));
 
-// Handler to download FFmpeg if missing
-ipcMain.handle("download-ffmpeg", async () => {
-  const initialUrl = "https://github.com/Adivise/ExpertiseX/releases/download/v2.0.0/ffmpeg.exe";
-
-  // Recursive function to follow redirects.
-  const downloadFile = (url) => {
-    return new Promise((resolve, reject) => {
-      https.get(url, (response) => {
-          // If redirect status code detected and there's a location header, follow it.
-          if (
-            response.statusCode >= 300 &&
-            response.statusCode < 400 &&
-            response.headers.location
-          ) {
+  ipcMain.handle("download-ffmpeg", async () => {
+    const initialUrl = "https://github.com/Adivise/ExpertiseX/releases/download/v2.0.0/ffmpeg.exe";
+    
+    const downloadFile = (url) => {
+      return new Promise((resolve, reject) => {
+        https.get(url, (response) => {
+          if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
             return resolve(downloadFile(response.headers.location));
-          } else if (response.statusCode !== 200) {
-            return reject(
-              new Error(`Failed to download ffmpeg.exe. Status code: ${response.statusCode}`)
-            );
+          }
+          
+          if (response.statusCode !== 200) {
+            return reject(new Error(`Failed to download ffmpeg.exe. Status code: ${response.statusCode}`));
           }
 
-          // Download the file
-          const fileStream = fs.createWriteStream(ffmpegPath);
+          const fileStream = fs.createWriteStream(PATHS.FFMPEG);
           response.pipe(fileStream);
           fileStream.on("finish", () => {
             fileStream.close();
             resolve(true);
           });
-        })
-        .on("error", (err) => {
-          // Clean up the file if any error occurred.
-          fs.unlink(ffmpegPath, () => reject(err));
+        }).on("error", (err) => {
+          fs.unlink(PATHS.FFMPEG, () => reject(err));
         });
-    });
-  };
+      });
+    };
 
-  return downloadFile(initialUrl);
-});
+    return downloadFile(initialUrl);
+  });
 
-// Handle bot logs retrieval
-ipcMain.handle("get-bot-logs", () => {
-  if (!fs.existsSync(logFilePath));
-  return fs.readFileSync(logFilePath, "utf8") || "No logs found.";
-});
+  // Log handlers
+  ipcMain.handle("get-bot-logs", () => {
+    if (!fs.existsSync(PATHS.LOG)) return "No logs found.";
+    return fs.readFileSync(PATHS.LOG, "utf8");
+  });
 
-// Handle get token
-ipcMain.handle("get-credentials", () => {
-  if (fs.existsSync(credentialFilePath)) { // not have = return to null
-    const data = fs.readFileSync(credentialFilePath, "utf-8");
+  // Credential handlers
+  ipcMain.handle("get-credentials", () => {
     try {
-      return JSON.parse(data);
+      if (fs.existsSync(PATHS.CREDENTIALS)) {
+        const data = fs.readFileSync(PATHS.CREDENTIALS, "utf-8");
+        return JSON.parse(data);
+      }
     } catch (error) {
-      return null;
+      console.error("Error reading credentials:", error);
     }
-  }
-  return null;
-});
+    return null;
+  });
 
-ipcMain.handle("delete-credential", (_, token) => {
-  let credentials = [];
-  if (fs.existsSync(credentialFilePath)) {
+  ipcMain.handle("delete-credential", (_, token) => {
     try {
-      const fileContent = fs.readFileSync(credentialFilePath, "utf-8");
-      credentials = JSON.parse(fileContent);
-      if (!Array.isArray(credentials)) credentials = []; // Ensure it's an array
-    } catch (err) {
-      ///
+      let credentials = [];
+      if (fs.existsSync(PATHS.CREDENTIALS)) {
+        const fileContent = fs.readFileSync(PATHS.CREDENTIALS, "utf-8");
+        credentials = JSON.parse(fileContent);
+        if (!Array.isArray(credentials)) credentials = [];
+      }
+      credentials = credentials.filter(cred => cred.token !== token);
+      fs.writeFileSync(PATHS.CREDENTIALS, JSON.stringify(credentials), "utf-8");
+    } catch (error) {
+      console.error("Error deleting credential:", error);
     }
-  }
-  credentials = credentials.filter(cred => cred.token !== token); // Remove the credential with the specified token
-  fs.writeFileSync(credentialFilePath, JSON.stringify(credentials), "utf-8"); // Save updated credentials
-  return;
-});
+  });
 
-// Handle invalid token
-ipcMain.handle("invalid-token", async (_, token, shouldSave) => {
-    return await isValidToken(token, shouldSave);
-});
+  ipcMain.handle("invalid-token", (_, token, shouldSave) => isValidToken(token, shouldSave));
+  ipcMain.handle('check-port', (_, port) => isPortAvailable(port));
 
-// Handle port checking
-ipcMain.handle('check-port', async (_, port) => {
-  return await isPortAvailable(port);
-});
+  // Bot control handlers
+  ipcMain.on('start-bot', (event, token, port) => {
+    const backendPath = join(__dirname, '../../out/backend/index.js');
+    botProcess = fork(backendPath, [token, port], {
+      stdio: ['pipe', 'pipe', 'pipe', 'ipc']
+    });
 
-function createWindow() {
-  // Create the browser window.
-  const main = new BrowserWindow({
+    if (botProcess.stdout) {
+      botProcess.stdout.on("data", (data) => writeLog(`[🟢] ${data.toString()}`));
+    }
+
+    if (botProcess.stderr) {
+      botProcess.stderr.on("data", (data) => writeLog(`[❌] ${data.toString()}`));
+    }
+
+    botProcess.on("close", (code) => writeLog(`[🛑] ${code}`));
+    botProcess.on("error", (err) => writeLog(`[❌] ${err}`));
+  });
+};
+
+// Window Management
+const createWindow = () => {
+  mainWindow = new BrowserWindow({
     width: 1235,
     height: 900,
     show: true,
@@ -149,165 +221,51 @@ function createWindow() {
     }
   });
 
-  // open dev tools if in development mode
   if (is.dev) {
-    main.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
   }
 
-  main.setMenu(null); // Hide the menu bar
+  mainWindow.setMenu(null);
 
-  main.on('ready-to-show', () => {
-    main.show();
+  mainWindow.on('ready-to-show', () => {
+    mainWindow.show();
   });
 
-  // Load the index.html of the app.
   if (is.dev) {
-    main.loadURL(process.env['ELECTRON_RENDERER_URL']);
+    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL']);
   } else {
-    main.loadFile(join(__dirname, '../../out/renderer/index.html'));
-  };
+    mainWindow.loadFile(join(__dirname, '../../out/renderer/index.html'));
+  }
 
-  fs.writeFileSync(logFilePath, ""); // Clear logs on startup
+  fs.writeFileSync(PATHS.LOG, ""); // Clear logs on startup
 
-  ipcMain.on('start-bot', (event, token, port) => {
-    const backendPath = join(__dirname, '../../out/backend/index.js');
-    botProcess = fork(backendPath, [token, port], {
-      stdio: ['pipe', 'pipe', 'pipe', 'ipc']
-    });
-
-    function writeLog(message) {
-      const timestamp = new Date().toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-      });
-
-      fs.appendFileSync(logFilePath, `[${timestamp}] | ${message}`);
-    }
-
-    if (botProcess.stdout) {
-      botProcess.stdout.on("data", (data) => {
-        writeLog(`[🟢] ${data.toString()}`);
-      });
-    } else {
-      console.error("botProcess.stdout is null");
-    }
-
-    if (botProcess.stderr) {
-      botProcess.stderr.on("data", (data) => {
-        writeLog(`[❌] ${data.toString()}`);
-      });
-    } else {
-      console.error("botProcess.stderr is null");
-    }
-
-    botProcess.on("close", (code) => {
-      writeLog(`[🛑] ${code}`);
-    });
-
-    botProcess.on("error", (err) => {
-      writeLog(`[❌] ${err}`);
-    });
+  mainWindow.on('close', () => {
+    mainWindow.webContents.send('window-closing');
   });
-  
-  // Handle window closing
-  main.on('close', () => {
-    main.webContents.send('window-closing');
-  });
-}
+};
 
-// This method will be called when Electron has finished
+// App Lifecycle
 app.whenReady().then(() => {
   electronApp.setAppUserModelId('com.expertise');
+  setupIpcHandlers();
   createWindow();
-  app.on('activate', function () {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
 });
 
-// Open links in the default browser
 app.on("web-contents-created", (_, contents) => {
-    contents.on("will-navigate", (event, url) => {
-        event.preventDefault(); // ✅ Prevent Electron from navigating internally
-        shell.openExternal(url); // ✅ Open link in default web browser
-    });
+  contents.on("will-navigate", (event, url) => {
+    event.preventDefault();
+    shell.openExternal(url);
+  });
 
-    contents.setWindowOpenHandler(() => {
-        return { action: "deny" }; // ✅ Block new windows entirely
-    });
+  contents.setWindowOpenHandler(() => ({ action: "deny" }));
 });
 
-// Quit when all windows are closed, except on macOS
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
-})
-
-// Check if port is available
-function isPortAvailable(port) {
-    return new Promise((resolve) => {
-        const server = net.createServer();
-
-        server.once("error", (err) => {
-            if (err.code === "EADDRINUSE") resolve(false); // ❌ Port is taken
-            else resolve(true);
-        });
-
-        server.once("listening", () => {
-            server.close();
-            resolve(true); // ✅ Port is free
-        });
-
-        server.listen(port);
-    });
-}
-
-function isValidToken(token, shouldSave) {
-  return new Promise((resolve) => {
-    const client = new Client();
-
-    client.login(token).then(() => {
-        const username = client.user ? client.user.username : "";
-        if (shouldSave) {
-          const newCredential = { token, username };
-
-          // Initialize the credentials array.
-          let credentials = [];
-          if (fs.existsSync(credentialFilePath)) {
-            try {
-              const fileContent = fs.readFileSync(credentialFilePath, "utf-8");
-              if (fileContent && fileContent.trim()) {
-                credentials = JSON.parse(fileContent);
-                // Ensure we have an array.
-                if (!Array.isArray(credentials)) {
-                  credentials = [];
-                }
-              }
-            } catch (err) {
-              console.error("Error parsing credentials file, starting with an empty array.", err);
-              credentials = [];
-            }
-          }
-
-          // Check if the token already exists in the array.
-          const index = credentials.findIndex((cred) => cred.token === token);
-          if (index === -1) {
-            // Token not found, add new credential.
-            credentials.push(newCredential);
-          } else {
-            // Optionally update username if token already exists.
-            credentials[index] = newCredential;
-          }
-
-          fs.writeFileSync(credentialFilePath, JSON.stringify(credentials), "utf-8");
-        }
-        client.destroy(); // Clean up after successful login
-        resolve({ valid: true, username }); // Token is valid
-      }).catch((err) => {
-        console.error("Invalid token:", err);
-        resolve({ valid: false }); // Token is invalid
-      });
-  });
-}
+});

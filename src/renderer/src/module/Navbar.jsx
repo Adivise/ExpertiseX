@@ -1,12 +1,19 @@
 import '../assets/Style.css';
 
-const Navbar = ({ username, setIsLoggedIn }) => (
-  <div className="navbar">
-    <h1>Advanced SelfBot - Music</h1>
-    {username && (
-      <div className="user-info">Logged in as: <span className="username">{username}</span></div>
-    )}
-  </div>
-);
+const Navbar = ({ username }) => {
+  const version = window.electronAPI.getVersion();
+  
+  return (
+    <div className="navbar">
+      <div className="navbar-left">
+        <h1>Advanced SelfBot - Music</h1>
+        <span className="version-badge">v{version}</span>
+      </div>
+      {username && (
+        <div className="user-info">Logged in as: <span className="username">{username}</span></div>
+      )}
+    </div>
+  );
+};
 
 export default Navbar;

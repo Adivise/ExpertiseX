@@ -1,91 +1,101 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import '../assets/Style.css';
 
-
-const Sidebar = ({ setActiveComponent }) => {
+const Sidebar = ({ setActiveComponent, activeComponent }) => {
     const [isSpecialCollapsed, setIsSpecialCollapsed] = useState(false);
     const [isMusicCollapsed, setIsMusicCollapsed] = useState(false);
     const [isFilterCollapsed, setIsFilterCollapsed] = useState(false);
 
-    useEffect(() => {
-        //
-    }, []);
+    const categories = [
+        {
+            name: "Special Control",
+            isCollapsed: isSpecialCollapsed,
+            setIsCollapsed: setIsSpecialCollapsed,
+            items: [
+                { id: 'console', label: 'Console', icon: '📊' },
+                { id: 'golive', label: 'GoLive', icon: '🎥' },
+                { id: 'endlive', label: 'EndLive', icon: '⏹️' }
+            ]
+        },
+        {
+            name: "Music Control",
+            isCollapsed: isMusicCollapsed,
+            setIsCollapsed: setIsMusicCollapsed,
+            items: [
+                { id: 'autoplay', label: 'AutoPlay', icon: '▶️' },
+                { id: 'join', label: 'Join', icon: '🎵' },
+                { id: 'leave', label: 'Leave', icon: '🚪' },
+                { id: 'play', label: 'Play', icon: '🎧' },
+                { id: 'playskip', label: 'PlaySkip', icon: '⏭️' },
+                { id: 'playtop', label: 'PlayTop', icon: '⏫' },
+                { id: 'skip', label: 'Skip', icon: '⏩' },
+                { id: 'queue', label: 'Queue', icon: '📋' },
+                { id: 'clear', label: 'Clear', icon: '🗑️' },
+                { id: 'replay', label: 'Replay', icon: '🔄' },
+                { id: 'previous', label: 'Previous', icon: '⏮️' },
+                { id: 'loop', label: 'Loop', icon: '🔁' },
+                { id: 'shuffle', label: 'Shuffle', icon: '🔀' },
+                { id: 'volume', label: 'Volume', icon: '🔊' },
+                { id: 'pause', label: 'Pause', icon: '⏸️' },
+                { id: 'twentyfourseven', label: '24/7', icon: '⏰' }
+            ]
+        },
+        {
+            name: "Filter Control",
+            isCollapsed: isFilterCollapsed,
+            setIsCollapsed: setIsFilterCollapsed,
+            items: [
+                { id: 'normal', label: 'Normal', icon: '🎚️' },
+                { id: 'earrape', label: 'Earrape', icon: '🔊' },
+                { id: 'bass', label: 'Bass', icon: '🎵' },
+                { id: 'bassboost', label: 'BassBoost', icon: '🎵' },
+                { id: 'nightcore', label: 'Nightcore', icon: '🌙' },
+                { id: 'vaporwave', label: 'Vaporwave', icon: '🌊' },
+                { id: 'pop', label: 'Pop', icon: '🎵' },
+                { id: 'china', label: 'China', icon: '🇨🇳' },
+                { id: 'chipmunk', label: 'Chipmunk', icon: '🐿️' },
+                { id: 'dance', label: 'Dance', icon: '💃' },
+                { id: 'darthvader', label: 'Darthvader', icon: '⚫' },
+                { id: 'eightd', label: '8D', icon: '🎧' },
+                { id: 'jazz', label: 'Jazz', icon: '🎷' },
+                { id: 'slowmotion', label: 'SlowMotion', icon: '⏱️' },
+                { id: 'soft', label: 'Soft', icon: '🎵' },
+                { id: 'superbass', label: 'SuperBass', icon: '🎵' },
+                { id: 'television', label: 'Television', icon: '📺' },
+                { id: 'treblebass', label: 'TrebleBass', icon: '🎵' },
+                { id: 'tremolo', label: 'Tremolo', icon: '🎵' },
+                { id: 'vibrate', label: 'Vibrate', icon: '📳' },
+                { id: 'vibrato', label: 'Vibrato', icon: '🎵' }
+            ]
+        }
+    ];
 
     return (
-        <div className="sidebar">
-            <div className="category">
-                <h2>Special Control</h2>
-                <button className="collapse-button" onClick={() => setIsSpecialCollapsed(!isSpecialCollapsed)}>
-                    {isSpecialCollapsed ? '>' : 'v'}
-                </button>
+        <aside className="sidebar">
+            <div className="sidebar-content">
+                {categories.map((category, index) => (
+                    <div key={index} className="sidebar-category">
+                        <div className="category-header" onClick={() => category.setIsCollapsed(!category.isCollapsed)}>
+                            <h2>{category.name}</h2><span className="collapse-icon">{category.isCollapsed ? '▶' : '▼'}</span>
+                        </div>
+                        {!category.isCollapsed && (
+                            <div className="category-items">
+                                {category.items.map((item) => (
+                                    <button
+                                        key={item.id}
+                                        className={`sidebar-button ${activeComponent === item.id ? 'active' : ''}`}
+                                        onClick={() => setActiveComponent(item.id)}
+                                    >
+                                        <span className="button-icon">{item.icon}</span>
+                                        <span className="button-label">{item.label}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                ))}
             </div>
-            {!isSpecialCollapsed && (
-                <>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('console')}>Console</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('golive')}>GoLive</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('endlive')}>EndLive</button>
-                </>
-            )}
-
-            <div className="category">
-                <h2>Music Control</h2>
-                <button className="collapse-button" onClick={() => setIsMusicCollapsed(!isMusicCollapsed)}>
-                    {isMusicCollapsed ? '>' : 'v'}
-                </button>
-            </div>
-            {!isMusicCollapsed && (
-                <>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('autoplay')}>AutoPlay</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('join')}>Join</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('leave')}>Leave</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('play')}>Play</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('playskip')}>PlaySkip</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('playtop')}>PlayTop</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('skip')}>Skip</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('queue')}>Queue</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('clear')}>Clear</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('replay')}>Replay</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('previous')}>Previous</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('loop')}>Loop</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('shuffle')}>Shuffle</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('volume')}>Volume</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('pause')}>Pause</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('twentyfourseven')}>TwentyFourSeven</button>
-                </>
-            )}
-
-            <div className="category">
-                <h2>Filter Control</h2>
-                <button className="collapse-button" onClick={() => setIsFilterCollapsed(!isFilterCollapsed)}>
-                    {isFilterCollapsed ? '>' : 'v'}
-                </button>
-            </div>
-            {!isFilterCollapsed && (
-                <>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('normal')}>Normal</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('earrape')}>Earrape</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('bass')}>Bass</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('bassboost')}>BassBoost</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('nightcore')}>Nightcore</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('vaporwave')}>Vaporwave</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('pop')}>Pop</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('china')}>China</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('chipmunk')}>Chipmunk</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('dance')}>Dance</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('darthvader')}>Darthvader</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('eightd')}>8D</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('jazz')}>Jazz</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('slowmotion')}>SlowMotion</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('soft')}>Soft</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('superbass')}>SuperBass</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('television')}>Television</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('treblebass')}>TrebleBass</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('tremolo')}>Tremolo</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('vibrate')}>Vibrate</button>
-                    <button className="sidebar-button" onClick={() => setActiveComponent('vibrato')}>Vibrato</button>
-                </>
-            )}
-        </div>
+        </aside>
     );
 };
 

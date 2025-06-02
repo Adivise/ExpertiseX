@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import MarkdownRenderer from "../../module/MDRender";
 
 const Settings = ({ isOpen, onClose, onSave }) => {
-  // Define default values.
-  const defaultSettings = {
-    leave_empty: "12000", // Default leave empty time in milliseconds
+  // Constants
+  const DEFAULT_SETTINGS = {
+    leave_empty: "12000",
     nodes: [
       {
         name: "ExpertiseX",
@@ -14,51 +14,138 @@ const Settings = ({ isOpen, onClose, onSave }) => {
     ]
   };
 
-  // Initialize state from defaults or from local storage.
-  const [formValues, setFormValues] = useState(defaultSettings);
+  // State management
+  const [formValues, setFormValues] = useState(DEFAULT_SETTINGS);
 
+  // Effects
   useEffect(() => {
-    window.electronAPI.loadConfig().then((config) => {
-      if (config) {
-        setFormValues(config);
-      } else {
-        setFormValues(defaultSettings);
-      }
-    });
+    loadConfig();
   }, []);
 
-  // Handle any field change.
+  // Initialization functions
+  const loadConfig = async () => {
+    try {
+      const config = await window.electronAPI.loadConfig();
+      setFormValues(config || DEFAULT_SETTINGS);
+    } catch (error) {
+      console.error("Error loading config:", error);
+      setFormValues(DEFAULT_SETTINGS);
+    }
+  };
+
+  // Event handlers
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormValues((prev) => ({ ...prev, [name]: value }));
+    setFormValues(prev => ({ ...prev, [name]: value }));
   };
 
   const handleNodeChange = (field, value) => {
-    const newNodes = [...formValues.nodes];
-    newNodes[0] = { ...newNodes[0], [field]: value };
-    setFormValues((prev) => ({ ...prev, nodes: newNodes }));
-  }
+    setFormValues(prev => ({
+      ...prev,
+      nodes: prev.nodes.map((node, index) => 
+        index === 0 ? { ...node, [field]: value } : node
+      )
+    }));
+  };
 
-  // Reset fields to the default settings.
   const handleResetToDefault = () => {
-    setFormValues(defaultSettings);
+    setFormValues(DEFAULT_SETTINGS);
   };
 
-  // When the form is submitted, save the settings.
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formValues.leave_empty.trim()) {
-      formValues.leave_empty = defaultSettings.leave_empty;
-    }
-    window.electronAPI.saveConfig(formValues).then(() => {
-        if (onSave) {
-          onSave(formValues);
-        }
-        onClose();
-    }).catch((error) => {
+    
+    try {
+      const valuesToSave = {
+        ...formValues,
+        leave_empty: formValues.leave_empty.trim() || DEFAULT_SETTINGS.leave_empty
+      };
+
+      await window.electronAPI.saveConfig(valuesToSave);
+      onSave?.(valuesToSave);
+      onClose();
+    } catch (error) {
       console.error("Error saving settings:", error);
-    });
+    }
   };
+
+  // Render helpers
+  const renderBotSettings = () => (
+    <>
+      <MarkdownRenderer content="**Bot Settings:**" />
+      <div style={modalStyles.formGroup}>
+        <label>Leave Voice Empty:</label>
+        <input 
+          type="number" 
+          name="leave_empty" 
+          value={formValues.leave_empty} 
+          placeholder={DEFAULT_SETTINGS.leave_empty}
+          onChange={handleChange} 
+        />
+      </div>
+    </>
+  );
+
+  const renderLavaLinkSettings = () => (
+    <>
+      <MarkdownRenderer content="**LavaLink Settings**" />
+      <div style={modalStyles.formGroup}>
+        <label>Node Name:</label>
+        <input 
+          type="text" 
+          name="node_name" 
+          value={formValues.nodes[0].name}
+          placeholder={DEFAULT_SETTINGS.nodes[0].name}
+          onChange={(e) => handleNodeChange("name", e.target.value)}
+        />
+      </div>
+      <div style={modalStyles.formGroup}>
+        <label>Node Host/Port:</label>
+        <input 
+          type="text" 
+          name="node_host" 
+          value={formValues.nodes[0].url}
+          placeholder={DEFAULT_SETTINGS.nodes[0].url}
+          onChange={(e) => handleNodeChange("url", e.target.value)}
+        />
+      </div>
+      <div style={modalStyles.formGroup}>
+        <label>Node Password:</label>
+        <input 
+          type="password" 
+          name="node_password" 
+          value={formValues.nodes[0].auth}
+          placeholder={DEFAULT_SETTINGS.nodes[0].auth}
+          onChange={(e) => handleNodeChange("auth", e.target.value)}
+        />
+      </div>
+    </>
+  );
+
+  const renderButtons = () => (
+    <div style={modalStyles.buttonContainer}>
+      <button 
+        type="submit" 
+        style={modalStyles.primaryButton}
+      >
+        Save
+      </button>
+      <button 
+        type="button" 
+        onClick={onClose} 
+        style={modalStyles.secondaryButton}
+      >
+        Cancel
+      </button>
+      <button 
+        type="button" 
+        onClick={handleResetToDefault} 
+        style={modalStyles.primaryButton}
+      >
+        Load Default
+      </button>
+    </div>
+  );
 
   if (!isOpen) return null;
 
@@ -67,53 +154,9 @@ const Settings = ({ isOpen, onClose, onSave }) => {
       <div style={modalStyles.modal}>
         <h2>Settings</h2>
         <form onSubmit={handleSubmit}>
-          <MarkdownRenderer content="**Bot Settings:**" />
-          <div style={modalStyles.formGroup}>
-            <label>Leave Voice Empty:</label>
-            <input 
-                type="number" 
-                name="leave_empty" 
-                value={formValues.leave_empty} 
-                placeholder="12000" 
-                onChange={handleChange} 
-            />
-          </div>
-          <MarkdownRenderer content="**LavaLink Settings**" />
-          <div style={modalStyles.formGroup}>
-            <label>Node Name:</label>
-            <input 
-                type="text" 
-                name="node_name" 
-                value={formValues.nodes[0].name}
-                placeholder="ExpertiseX"
-                onChange={(e) => handleNodeChange("name", e.target.value)}
-            />
-          </div>
-          <div style={modalStyles.formGroup}>
-            <label>Node Host/Port:</label>
-            <input 
-                type="text" 
-                name="node_host" 
-                value={formValues.nodes[0].url}
-                placeholder="localhost:5555"
-                onChange={(e) => handleNodeChange("url", e.target.value)}
-            />
-          </div>
-          <div style={modalStyles.formGroup}>
-            <label>Node Password:</label>
-            <input 
-                type="password" 
-                name="node_password" 
-                value={formValues.nodes[0].auth}
-                placeholder="youshallnotpass"
-                onChange={(e) => handleNodeChange("auth", e.target.value)}
-            />
-          </div>
-          <div style={modalStyles.buttonContainer}>
-            <button type="submit" style={modalStyles.button}>Save</button>
-            <button type="button" onClick={onClose} style={modalStyles.button}>Cancel</button>
-            <button type="button" onClick={handleResetToDefault} style={modalStyles.button}>Load Default</button>
-          </div>
+          {renderBotSettings()}
+          {renderLavaLinkSettings()}
+          {renderButtons()}
         </form>
       </div>
     </div>
@@ -127,32 +170,61 @@ const modalStyles = {
     left: 0,
     right: 0,
     bottom: 0,
-    background: "rgba(0,0,0,0.5)",
+    background: "rgba(15, 23, 42, 0.7)",
+    backdropFilter: "blur(4px)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    zIndex: 1000
+    zIndex: 1000,
+    animation: "fadeIn 0.2s ease-out"
   },
   modal: {
-    background: "#393e46",
-    padding: "20px",
+    background: "var(--bg-darker)",
+    padding: "1.5rem",
     borderRadius: "8px",
     width: "400px",
-    maxWidth: "90%"
+    maxWidth: "90%",
+    border: "1px solid var(--border-color)",
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+    animation: "slideIn 0.2s ease-out"
   },
   formGroup: {
-    marginBottom: "15px",
+    marginBottom: "1rem",
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    gap: "0.5rem"
   },
   buttonContainer: {
     display: "flex",
-    justifyContent: "space-between",
-    gap: "8px"
+    justifyContent: "flex-end",
+    gap: "0.75rem",
+    marginTop: "1.5rem"
   },
   button: {
-    padding: "8px 16px",
-    fontSize: "16px"
+    padding: "0.5rem 1rem",
+    fontSize: "0.875rem",
+    fontWeight: "500",
+    borderRadius: "4px",
+    cursor: "pointer",
+    transition: "all var(--transition-fast)",
+    border: "none"
+  },
+  primaryButton: {
+    background: "var(--primary)",
+    color: "var(--text-light)",
+    "&:hover": {
+      background: "var(--primary-dark)"
+    }
+  },
+  secondaryButton: {
+    background: "transparent",
+    color: "var(--text-gray)",
+    border: "1px solid var(--border-color)",
+    "&:hover": {
+      background: "var(--hover-bg)",
+      color: "var(--text-light)",
+      borderColor: "var(--primary)"
+    }
   }
 };
 

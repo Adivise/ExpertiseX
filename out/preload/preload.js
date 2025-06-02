@@ -1,11 +1,9 @@
 "use strict";
 const electron = require("electron");
 const preload = require("@electron-toolkit/preload");
-const api = {};
 if (process.contextIsolated) {
   try {
     electron.contextBridge.exposeInMainWorld("electron", preload.electronAPI);
-    electron.contextBridge.exposeInMainWorld("api", api);
     electron.contextBridge.exposeInMainWorld("electronAPI", {
       onWindowClose: (callback) => electron.ipcRenderer.on("window-closing", callback),
       startBot: (token, port) => electron.ipcRenderer.send("start-bot", token, port),
@@ -19,7 +17,8 @@ if (process.contextIsolated) {
       downloadFFmpeg: () => electron.ipcRenderer.invoke("download-ffmpeg"),
       loadConfig: () => electron.ipcRenderer.invoke("load-config"),
       saveConfig: (config) => electron.ipcRenderer.invoke("save-config", config),
-      checkConfig: () => electron.ipcRenderer.invoke("check-config")
+      checkConfig: () => electron.ipcRenderer.invoke("check-config"),
+      getVersion: () => process.env.npm_package_version || "2.4.0"
     });
   } catch (error) {
     console.error("Error exposing Electron API:", error);

@@ -15,6 +15,7 @@ declare global {
       loadConfig: () => Promise<Record<string, any> | null>;
       saveConfig: (config: Record<string, any>) => Promise<boolean>;
       checkConfig: () => Promise<boolean>;
+      getVersion: () => string;
     };
   }
 }
