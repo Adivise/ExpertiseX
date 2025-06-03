@@ -3,18 +3,18 @@ import axios from 'axios';
 import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
 
-const Television = () => {
+const Television = ({ userId }) => {
     const [guildId, setGuildId] = useState('');
     const [response, setResponse] = useState('');
     const [isCooldown, setIsCooldown] = useState(false);
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem('guildId');
-        const storedPort = sessionStorage.getItem('port');
+        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
         if (storedGuildId) setGuildId(storedGuildId);
         if (storedPort) setPort(storedPort);
-    }, []);
+    }, [userId]);
     const handleTelevision = async (event) => {
         event.preventDefault();
         setResponse(''); // Clear the old response
@@ -22,7 +22,7 @@ const Television = () => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown 
             try {
-                sessionStorage.setItem('guildId', guildId);
+                sessionStorage.setItem(`guildId_${userId}`, guildId);
                 const { data } = await axios.post(`http://localhost:${port}/television`, { guildId });
                 setResponse(data.content);
             } catch (error) {
@@ -37,17 +37,16 @@ const Television = () => {
         }
     };
 
-const markdownContent = `
-Enter the details below to set the television filter.
-
-- **Guild ID**
-`;
-
     return (
         <div id="television" className="content">
             <div className="markdown-container">
                 <h2>Television</h2>
-                <MarkdownRenderer content={markdownContent} />
+                <div className="description">
+                    <p>Enter the details below to set the television filter.</p>
+                    <ul>
+                        <li>Guild ID (ex: 1234567890)</li>
+                    </ul>
+                </div>
             </div>
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input

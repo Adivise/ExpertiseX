@@ -72,7 +72,10 @@ const Settings = ({ isOpen, onClose, onSave }) => {
   // Render helpers
   const renderBotSettings = () => (
     <>
-      <MarkdownRenderer content="**Bot Settings:**" />
+
+      <div className="description">
+          <p>Bot Settings</p>
+      </div>
       <div style={modalStyles.formGroup}>
         <label>Leave Voice Empty:</label>
         <input 
@@ -88,7 +91,9 @@ const Settings = ({ isOpen, onClose, onSave }) => {
 
   const renderLavaLinkSettings = () => (
     <>
-      <MarkdownRenderer content="**LavaLink Settings**" />
+      <div className="description">
+          <p>LavaLink Settings</p>
+      </div>
       <div style={modalStyles.formGroup}>
         <label>Node Name:</label>
         <input 
@@ -152,7 +157,9 @@ const Settings = ({ isOpen, onClose, onSave }) => {
   return (
     <div style={modalStyles.overlay}>
       <div style={modalStyles.modal}>
-        <h2>Settings</h2>
+        <div className='markdown-container'>
+          <h2>Settings</h2>
+        </div>
         <form onSubmit={handleSubmit}>
           {renderBotSettings()}
           {renderLavaLinkSettings()}

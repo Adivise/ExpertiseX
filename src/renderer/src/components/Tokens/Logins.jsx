@@ -22,17 +22,8 @@ const Login = ({ onLoginSuccess }) => {
 
     // Effects
     useEffect(() => {
-        initializeForm();
         loadSavedCredentials();
     }, []);
-
-    // Initialization functions
-    const initializeForm = () => {
-        const storedPort = sessionStorage.getItem("port");
-        if (storedPort) {
-            setFormData(prev => ({ ...prev, port: parseInt(storedPort, 10) }));
-        }
-    };
 
     const loadSavedCredentials = async () => {
         try {
@@ -110,9 +101,16 @@ const Login = ({ onLoginSuccess }) => {
             const { token, port, saveCredentials } = formData;
 
             // Validate token
-            const tokenResult = await window.electronAPI.checkToken(token, saveCredentials);
-            if (!tokenResult.valid) {
+            const creds = await window.electronAPI.checkToken(token, saveCredentials);
+            if (!creds.valid) {
                 setResponse("Invalid token! Please check your self bot token.");
+                return;
+            }
+
+            // Check if user is already logged in
+            const activeBots = await window.electronAPI.getActiveBots();
+            if (activeBots && activeBots.includes(creds.id)) {
+                setResponse("This account is already logged in. Please close the existing session first.");
                 return;
             }
 
@@ -130,10 +128,12 @@ const Login = ({ onLoginSuccess }) => {
                 return;
             }
 
-            // Save port and start bot
-            sessionStorage.setItem("port", port);
-            window.electronAPI.startBot(token, port);
-            onLoginSuccess(tokenResult.username);
+            // Start bot and notify parent
+            window.electronAPI.startBot(token, port, creds.id);
+            onLoginSuccess(creds.username, creds.id, port);
+            
+            // Clear form
+            setFormData(prev => ({ ...prev, token: "" }));
         } catch (error) {
             setResponse(`Error: ${error.response?.data || error.message}`);
         }
@@ -177,18 +177,17 @@ const Login = ({ onLoginSuccess }) => {
         );
     };
 
-    const markdownContent = `
-Enter the details below to login
-
-- **Self Bot Token** (ex: \`NzY4NTQ0NjA2NzE3OTI5MjQ1.X3v7Xg.*****\`)
-- **Port** (ex: \`3000\` - \`3999\`)
-`;
-
     return (
         <div id="logins" className="content">
             <div className="markdown-container">
                 <h2>Self Bot Logins</h2>
-                <MarkdownRenderer content={markdownContent} />
+                <div className="description">
+                    <p>Enter the details below to login</p>
+                    <ul>
+                        <li>Self Bot Token (ex: NzY4NTQ0NjA2NzE3OTI5MjQ1.X3v7Xg.*****)</li>
+                        <li>Port (ex: 3000 - 3999) </li>
+                    </ul>
+                </div>
             </div>
 
             <Settings

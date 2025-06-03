@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
 
-const BassBoost = () => {
+const BassBoost = ({ userId }) => {
     const [guildId, setGuildId] = useState('');
     const [bassboost, setBassBoost] = useState(5);
     const [response, setResponse] = useState('');
@@ -11,11 +11,11 @@ const BassBoost = () => {
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem('guildId');
-        const storedPort = sessionStorage.getItem('port');
+        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
         if (storedGuildId) setGuildId(storedGuildId);
         if (storedPort) setPort(storedPort);
-    }, []);
+    }, [userId]);
 
     const handleBassBoost = async (event) => {
         event.preventDefault();
@@ -24,7 +24,7 @@ const BassBoost = () => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown 
             try {
-                sessionStorage.setItem('guildId', guildId);
+                sessionStorage.setItem(`guildId_${userId}`, guildId);
                 const { data } = await axios.post(`http://localhost:${port}/bassboost`, { guildId, bassboost });
                 setResponse(data.content);
             } catch (error) {
@@ -53,18 +53,16 @@ const BassBoost = () => {
         }
     };
 
-    const markdownContent = `
-Enter the details below to set the bassboost filter.
-
-- **Guild ID**
-- **BassBoost (-10 to 10)**
-`;
-
     return (
         <div id="bassboost" className="content">
             <div className="markdown-container">
                 <h2>BassBoost</h2>
-                <MarkdownRenderer content={markdownContent} />
+                <div className="description">
+                    <p>Enter the details below to set the bassboost filter.</p>
+                    <ul>
+                        <li>Guild ID (ex: 1234567890)</li>
+                    </ul>
+                </div>
             </div>
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input

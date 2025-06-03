@@ -4,7 +4,7 @@ import Autosuggest from 'react-autosuggest';
 import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
 
-const PlayTop = () => {
+const PlayTop = ({ userId }) => {
     const [guildId, setGuildId] = useState('');
     const [songName, setSongName] = useState('');
     const [suggestions, setSuggestions] = useState([]);
@@ -13,11 +13,11 @@ const PlayTop = () => {
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem('guildId');
-        const storedPort = sessionStorage.getItem('port');
+        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
         if (storedGuildId) setGuildId(storedGuildId);
         if (storedPort) setPort(storedPort);
-    }, []);
+    }, [userId]);
 
     const handlePlayTop = async (event) => {
         event.preventDefault();
@@ -26,7 +26,7 @@ const PlayTop = () => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
-                sessionStorage.setItem('guildId', guildId);
+                sessionStorage.setItem(`guildId_${userId}`, guildId);
                 const { data } = await axios.post(`http://localhost:${port}/playtop`, { guildId, songName });
                 setResponse(data.content);
             } catch (error) {
@@ -63,18 +63,17 @@ const PlayTop = () => {
         </button>
     );
 
-    const markdownContent = `
-Enter the details below to queue song to the top.
-
-- **Guild ID**
-- **Song/Url**
-`;
-
     return (
         <div id="playtop" className="content">
             <div className="markdown-container">
                 <h2>PlayTop</h2>
-                <MarkdownRenderer content={markdownContent} />
+                <div className="description">
+                    <p>Enter the details below to queue song to the top.</p>
+                    <ul>
+                        <li>Guild ID (ex: 1234567890)</li>
+                        <li>Song/Url (ex: https://www.youtube.com/watch?v=dQw4w9WgXcQ)</li>
+                    </ul>
+                </div>
             </div>
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input

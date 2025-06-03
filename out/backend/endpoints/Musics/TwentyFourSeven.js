@@ -12,11 +12,11 @@ module.exports = (client) => {
             if (!twentyfourseven) { // get undefined = turn on + set data
                 await player.data.set("stay", false);
     
-                return res.send({ content: "*24/7 is now:** `Off`" });
+                return res.send({ content: "**24/7 is now:** `Off`" });
             } else {
                 await player.data.set("stay", true);
     
-                return res.send({ content: "*24/7 is now:** `On`" });
+                return res.send({ content: "**24/7 is now:** `On`" });
             }
         } catch (error) {
             console.error('Error:', error);

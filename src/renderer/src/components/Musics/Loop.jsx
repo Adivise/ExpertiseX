@@ -4,7 +4,7 @@ import Select from 'react-select';
 import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
 
-const Loop = () => {
+const Loop = ({ userId }) => {
     const [guildId, setGuildId] = useState('');
     const [loop, setLoop] = useState({ value: "track", label: 'Current' });
     const [response, setResponse] = useState('');
@@ -12,11 +12,11 @@ const Loop = () => {
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem('guildId');
-        const storedPort = sessionStorage.getItem('port');
+        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
         if (storedGuildId) setGuildId(storedGuildId);
         if (storedPort) setPort(storedPort);
-    }, []);
+    }, [userId]);
 
     const handleLoop = async (event) => {
         event.preventDefault();
@@ -25,7 +25,7 @@ const Loop = () => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
-                sessionStorage.setItem('guildId', guildId);
+                sessionStorage.setItem(`guildId_${userId}`, guildId);
                 const { data } = await axios.post(`http://localhost:${port}/loop`, { guildId, loop: loop.value });
                 setResponse(data.content);
             } catch (error) {
@@ -39,13 +39,6 @@ const Loop = () => {
             handleLoop(event);
         }
     };
-
-    const markdownContent = `
-Enter the details below to loop the current track or queue.
-
-- **Guild ID**
-- **Select Type Mode**
-`;
 
     const loopOption = [
         { value: "track", label: 'Current' },
@@ -143,7 +136,13 @@ Enter the details below to loop the current track or queue.
         <div id="loop" className="content">
             <div className="markdown-container">
                 <h2>Loop</h2>
-                <MarkdownRenderer content={markdownContent} />
+                <div className="description">
+                    <p>Enter the details below to loop the current track or queue.</p>
+                    <ul>
+                        <li>Guild ID (ex: 1234567890)</li>
+                        <li>Select Type Mode (ex: Current or Queue)</li>
+                    </ul>
+                </div>
             </div>
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input

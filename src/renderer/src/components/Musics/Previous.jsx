@@ -3,18 +3,18 @@ import axios from 'axios';
 import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
 
-const Previous = () => {
+const Previous = ({ userId }) => {
     const [guildId, setGuildId] = useState('');
     const [response, setResponse] = useState('');
     const [isCooldown, setIsCooldown] = useState(false);
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem('guildId');
-        const storedPort = sessionStorage.getItem('port');
+        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
         if (storedGuildId) setGuildId(storedGuildId);
         if (storedPort) setPort(storedPort);
-    }, []);
+    }, [userId]);
 
     const handlePrevious = async (event) => {
         event.preventDefault();
@@ -23,7 +23,7 @@ const Previous = () => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown 
             try {
-                sessionStorage.setItem('guildId', guildId);
+                sessionStorage.setItem(`guildId_${userId}`, guildId);
                 const { data } = await axios.post(`http://localhost:${port}/previous`, { guildId });
                 setResponse(data.content);
             } catch (error) {
@@ -38,17 +38,16 @@ const Previous = () => {
         }
     };
 
-const markdownContent = `
-Enter the details below to go back to the previous song.
-
-- **Guild ID**
-`;
-
     return (
         <div id="previous" className="content">
             <div className="markdown-container">
                 <h2>Previous</h2>
-                <MarkdownRenderer content={markdownContent} />
+                <div className="description">
+                    <p>Enter the details below to go back to the previous song.</p>
+                    <ul>
+                        <li>Guild ID (ex: 1234567890)</li>
+                    </ul>
+                </div>
             </div>
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input

@@ -4,7 +4,7 @@ import Autosuggest from 'react-autosuggest';
 import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
 
-const PlaySkip = () => {
+const PlaySkip = ({ userId }) => {
     const [guildId, setGuildId] = useState('');
     const [songName, setSongName] = useState('');
     const [suggestions, setSuggestions] = useState([]);
@@ -13,11 +13,11 @@ const PlaySkip = () => {
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem('guildId');
-        const storedPort = sessionStorage.getItem('port');
+        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
         if (storedGuildId) setGuildId(storedGuildId);
         if (storedPort) setPort(storedPort);
-    }, []);
+    }, [userId]);
 
     const handlePlaySkip = async (event) => {
         event.preventDefault();
@@ -26,7 +26,7 @@ const PlaySkip = () => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
-                sessionStorage.setItem('guildId', guildId);
+                sessionStorage.setItem(`guildId_${userId}`, guildId);
                 const { data } = await axios.post(`http://localhost:${port}/playskip`, { guildId, songName });
                 setResponse(data.content);
             } catch (error) {
@@ -63,18 +63,17 @@ const PlaySkip = () => {
         </button>
     );
 
-    const markdownContent = `
-Enter the details below to play and skip to the song.
-
-- **Guild ID**
-- **Song/Url**
-`;
-
     return (
         <div id="playskip" className="content">
             <div className="markdown-container">
                 <h2>PlaySkip</h2>
-                <MarkdownRenderer content={markdownContent} />
+                <div className="description">
+                    <p>Enter the details below to play and skip to the song.</p>
+                    <ul>
+                        <li>Guild ID (ex: 1234567890)</li>
+                        <li>Song/Url (ex: https://www.youtube.com/watch?v=dQw4w9WgXcQ)</li>
+                    </ul>
+                </div>
             </div>
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input

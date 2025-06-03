@@ -4,7 +4,7 @@ import Autosuggest from 'react-autosuggest';
 import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
 
-const Play = () => {
+const Play = ({ userId }) => {
     const [guildId, setGuildId] = useState('');
     const [voiceId, setVoiceId] = useState('');
     const [songName, setSongName] = useState('');
@@ -14,13 +14,13 @@ const Play = () => {
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem('guildId');
-        const storedVoiceId = sessionStorage.getItem('voiceId');
-        const storedPort = sessionStorage.getItem('port');
+        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+        const storedVoiceId = sessionStorage.getItem(`voiceId_${userId}`);
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
         if (storedGuildId) setGuildId(storedGuildId);
         if (storedVoiceId) setVoiceId(storedVoiceId);
         if (storedPort) setPort(storedPort);
-    }, []);
+    }, [userId]);
 
     const handlePlay = async (event) => {
         event.preventDefault();
@@ -29,8 +29,8 @@ const Play = () => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
-                sessionStorage.setItem('guildId', guildId);
-                sessionStorage.setItem('voiceId', voiceId);
+                sessionStorage.setItem(`guildId_${userId}`, guildId);
+                sessionStorage.setItem(`voiceId_${userId}`, voiceId);
                 const { data } = await axios.post(`http://localhost:${port}/play`, { guildId, voiceId, songName });
                 setResponse(data.content);
             } catch (error) {
@@ -66,20 +66,19 @@ const Play = () => {
             {suggestion.name}
         </button>
     );
-
-    const markdownContent = `
-Enter the details below to play a song in a voice channel in your server.
-
-- **Guild ID**
-- **Voice Channel ID**
-- **Song/Url**
-`;
-
+    
     return (
         <div id="play" className="content">
             <div className="markdown-container">
                 <h2>Play</h2>
-                <MarkdownRenderer content={markdownContent} />
+                <div className="description">
+                    <p>Enter the details below to play a song in a voice channel in your server.</p>
+                    <ul>
+                        <li>Guild ID (ex: 1234567890)</li>
+                        <li>Voice Channel ID (ex: 1234567890)</li>
+                        <li>Song/Url (ex: https://www.youtube.com/watch?v=dQw4w9WgXcQ)</li>
+                    </ul>
+                </div>
             </div>
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input

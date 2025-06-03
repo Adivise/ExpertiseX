@@ -3,18 +3,18 @@ import axios from 'axios';
 import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
 
-const Shuffle = () => {
+const Shuffle = ({ userId }) => {
     const [guildId, setGuildId] = useState('');
     const [response, setResponse] = useState('');
     const [isCooldown, setIsCooldown] = useState(false);
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem('guildId');
-        const storedPort = sessionStorage.getItem('port');
+        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
         if (storedGuildId) setGuildId(storedGuildId);
         if (storedPort) setPort(storedPort);
-    }, []);
+    }, [userId]);
 
     const handleShuffle = async (event) => {
         event.preventDefault();
@@ -23,7 +23,7 @@ const Shuffle = () => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown 
             try {
-                sessionStorage.setItem('guildId', guildId);
+                sessionStorage.setItem(`guildId_${userId}`, guildId);
                 const { data } = await axios.post(`http://localhost:${port}/shuffle`, { guildId });
                 setResponse(data.content);
             } catch (error) {
@@ -38,17 +38,16 @@ const Shuffle = () => {
         }
     };
 
-const markdownContent = `
-Enter the details below to shuffle the queue.
-
-- **Guild ID**
-`;
-
     return (
         <div id="shuffle" className="content">
             <div className="markdown-container">
                 <h2>Shuffle</h2>
-                <MarkdownRenderer content={markdownContent} />
+                <div className="description">
+                    <p>Enter the details below to shuffle the queue.</p>
+                    <ul>
+                        <li>Guild ID (ex: 1234567890)</li>
+                    </ul>
+                </div>
             </div>
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input

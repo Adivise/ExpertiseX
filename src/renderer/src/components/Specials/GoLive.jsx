@@ -3,7 +3,7 @@ import axios from 'axios';
 import MarkdownRenderer from '../../module/MDRender';
 import '../../assets/Style.css';
 
-const GoLive = () => {
+const GoLive = ({ userId }) => {
     const [voiceId, setVoiceId] = useState('');
     const [linkUrl, setlinkUrl] = useState('');
     const [response, setResponse] = useState('');
@@ -11,15 +11,14 @@ const GoLive = () => {
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedVoiceId = sessionStorage.getItem('voiceId');
-        const storedPort = sessionStorage.getItem('port');
+        const storedVoiceId = sessionStorage.getItem(`voiceId_${userId}`);
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
         if (storedPort) setPort(storedPort);
         if (storedVoiceId) setVoiceId(storedVoiceId);
-    }, []);
+    }, [userId]);
 
     const handleGoLive = async () => {
         setResponse(''); // Clear the old response
-
         try { // check and download ffmpeg.exe
             const hasFFmpeg = await window.electronAPI.checkFFmpeg();
             if (!hasFFmpeg) {
@@ -36,7 +35,7 @@ const GoLive = () => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
-                sessionStorage.setItem('voiceId', voiceId);
+                sessionStorage.setItem(`voiceId_${userId}`, voiceId);
                 const { data } = await axios.post(`http://localhost:${port}/golive`, { voiceId, linkUrl });
                 setResponse(data.content);
             } catch (error) {
@@ -51,18 +50,17 @@ const GoLive = () => {
         }
     };
 
-    const markdownContent = `
-Enter the details below to start streaming
-
-- **Voice Channel ID**
-- **linkUrl** (ex: \`http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4\`)
-`;
-
     return (
         <div id="golive" className="content">
             <div className="markdown-container">
                 <h2>GoLive</h2>
-                <MarkdownRenderer content={markdownContent} />
+                <div className="description">
+                    <p>Enter the details below to start streaming</p>
+                    <ul>
+                        <li>Voice Channel ID (ex: 1234567890)</li>
+                        <li>linkUrl (ex: https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4)</li>
+                    </ul>
+                </div>
             </div>
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input

@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
 
-const Join = () => {
+const Join = ({ userId }) => {
     const [guildId, setGuildId] = useState('');
     const [voiceId, setVoiceId] = useState('');
     const [response, setResponse] = useState('');
@@ -11,13 +11,13 @@ const Join = () => {
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem('guildId');
-        const storedVoiceId = sessionStorage.getItem('voiceId');
-        const storedPort = sessionStorage.getItem('port');
+        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+        const storedVoiceId = sessionStorage.getItem(`voiceId_${userId}`);
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
         if (storedGuildId) setGuildId(storedGuildId);
         if (storedVoiceId) setVoiceId(storedVoiceId);
         if (storedPort) setPort(storedPort);
-    }, []);
+    }, [userId]);
 
     const handleJoin = async (event) => {
         event.preventDefault();
@@ -26,8 +26,8 @@ const Join = () => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
-                sessionStorage.setItem('guildId', guildId);
-                sessionStorage.setItem('voiceId', voiceId);
+                sessionStorage.setItem(`guildId_${userId}`, guildId);
+                sessionStorage.setItem(`voiceId_${userId}`, voiceId);
                 const { data } = await axios.post(`http://localhost:${port}/join`, { guildId, voiceId });
                 setResponse(data.content);
             } catch (error) {
@@ -42,18 +42,17 @@ const Join = () => {
         }
     };
 
-const markdownContent = `
-Enter the details below to join a voice channel in your server.
-
-- **Guild ID**
-- **Voice Channel ID**
-`;
-
     return (
         <div id="join" className="content">
             <div className="markdown-container">
                 <h2>Join</h2>
-                <MarkdownRenderer content={markdownContent} />
+                <div className="description">
+                    <p>Enter the details below to join a voice channel in your server.</p>
+                    <ul>
+                        <li>Guild ID (ex: 1234567890)</li>
+                        <li>Voice Channel ID (ex: 1234567890)</li>
+                    </ul>
+                </div>
             </div>
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input

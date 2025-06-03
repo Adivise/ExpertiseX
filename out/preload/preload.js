@@ -6,9 +6,11 @@ if (process.contextIsolated) {
     electron.contextBridge.exposeInMainWorld("electron", preload.electronAPI);
     electron.contextBridge.exposeInMainWorld("electronAPI", {
       onWindowClose: (callback) => electron.ipcRenderer.on("window-closing", callback),
-      startBot: (token, port) => electron.ipcRenderer.send("start-bot", token, port),
+      startBot: (token, port, userId) => electron.ipcRenderer.send("start-bot", token, port, userId),
+      stopBot: (userId) => electron.ipcRenderer.send("stop-bot", userId),
+      getActiveBots: () => electron.ipcRenderer.invoke("get-active-bots"),
       checkToken: (token, shouldSave) => electron.ipcRenderer.invoke("invalid-token", token, shouldSave),
-      getBotLogs: () => electron.ipcRenderer.invoke("get-bot-logs"),
+      getBotLogs: (userId) => electron.ipcRenderer.invoke("get-bot-logs", userId),
       checkPort: (port) => electron.ipcRenderer.invoke("check-port", port),
       removeListener: (channel, callback) => electron.ipcRenderer.removeListener(channel, callback),
       getCredentials: () => electron.ipcRenderer.invoke("get-credentials"),
@@ -18,7 +20,7 @@ if (process.contextIsolated) {
       loadConfig: () => electron.ipcRenderer.invoke("load-config"),
       saveConfig: (config) => electron.ipcRenderer.invoke("save-config", config),
       checkConfig: () => electron.ipcRenderer.invoke("check-config"),
-      getVersion: () => process.env.npm_package_version || "2.4.0"
+      getVersion: () => process.env.npm_package_version || "2.5.0"
     });
   } catch (error) {
     console.error("Error exposing Electron API:", error);

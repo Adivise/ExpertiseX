@@ -1,5 +1,28 @@
-@import './fonts.css';
-
+/* Inter font faces */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./Inter-Regular-YtgfLPRn.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    src: url('./Inter-Medium-DfX5FI9E.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    src: url('./Inter-SemiBold-BvOeHRLc.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    src: url('./Inter-Bold-Bj1B9WKG.woff2') format('woff2');
+}
 /* Reset default styles */
 * {
     margin: 0;
@@ -7,7 +30,6 @@
     box-sizing: border-box;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-
 :root {
   /* Primary Colors */
   --primary: #3B82F6;
@@ -47,7 +69,6 @@
   --transition-normal: 200ms ease;
   --transition-slow: 300ms ease;
 }
-
 body {
   background-color: var(--bg-dark);
   color: var(--text-light);
@@ -57,16 +78,13 @@ body {
   overflow: hidden;
   line-height: 1.5;
 }
-
 /* App.css */
-
 .App {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100vh;
 }
-
 @keyframes fadeInLeft {
     from {
         opacity: 0;
@@ -77,7 +95,6 @@ body {
         transform: translateX(0);
     }
 }
-
 @keyframes fadeInDown {
     from {
         opacity: 0;
@@ -88,7 +105,6 @@ body {
         transform: translateY(0);
     }
 }
-
 @keyframes pulse {
     0% {
         text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 30px var(--primary);
@@ -100,7 +116,6 @@ body {
         text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 30px var(--primary);
     }
 }
-
 .dashboard {
     display: flex;
     flex: 1;
@@ -109,7 +124,6 @@ body {
     overflow: hidden;
     padding-bottom: 60px;
 }
-
 .sidebar {
     background-color: var(--bg-darker);
     color: var(--text-light);
@@ -122,11 +136,9 @@ body {
     height: 100%;
     overflow-y: auto;
 }
-
 .sidebar-category {
     margin-bottom: 1.5rem;
 }
-
 .category-header {
     display: flex;
     justify-content: space-between;
@@ -136,11 +148,9 @@ body {
     color: var(--text-gray);
     transition: color var(--transition-fast);
 }
-
 .category-header:hover {
     color: var(--text-light);
 }
-
 .category-header h2 {
     font-size: 0.9rem;
     font-weight: 600;
@@ -148,12 +158,10 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
-
 .collapse-icon {
     font-size: 0.8rem;
     transition: transform 0.2s;
 }
-
 .sidebar-button {
     display: flex;
     align-items: center;
@@ -168,26 +176,21 @@ body {
     border-radius: 4px;
     text-align: left;
 }
-
 .sidebar-button:hover {
     background: var(--hover-bg);
     color: var(--text-light);
 }
-
 .sidebar-button.active {
     background: var(--primary);
     color: var(--text-light);
     font-weight: 500;
 }
-
 .sidebar-button.active:hover {
     background: var(--primary-dark);
 }
-
 .button-icon {
     font-size: 1.1rem;
 }
-
 .main-content {
     flex: 2;;
     padding: 2rem;
@@ -197,26 +200,21 @@ body {
     box-sizing: border-box;
     padding-bottom: 60px; /* Add padding to prevent content from being hidden behind footer */
 }
-
 /* Custom scrollbar for the sidebar */
 .man-content::-webkit-scrollbar {
     width: 12px; /* Width of the scrollbar */
 }
-
 .main-content::-webkit-scrollbar-track {
     background: #222831; /* Background color of the scrollbar track */
 }
-
 .main-content::-webkit-scrollbar-thumb {
     background-color: #00adb5; /* Color of the scrollbar thumb */
     border-radius: 10px; /* Roundness of the scrollbar thumb */
     border: 3px solid #222831; /* Padding around the scrollbar thumb */
 }
-
 .main-content::-webkit-scrollbar-thumb:hover {
     background-color: #00fff5; /* Color of the scrollbar thumb on hover */
 }
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -225,14 +223,12 @@ body {
         opacity: 1;
     }
 }
-
 h2 {
     color: var(--text-light);
     font-weight: 800;
     animation: slideInLeft 0.5s ease-out, fadeIn 0.5s ease-out;
     text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
 }
-
 @keyframes slideInLeft {
     from {
         opacity: 0;
@@ -243,7 +239,6 @@ h2 {
         transform: translateX(0);
     }
 }
-
 form {
     background-color: #222831;
     padding: 20px;
@@ -254,7 +249,6 @@ form {
     box-sizing: border-box;
     animation: fadeIn 0.5s ease-out;
 }
-
 input {
     width: 100%;
     padding: 10px;
@@ -266,7 +260,6 @@ input {
     color: #ffffff;
     animation: fadeIn 0.5s ease-out;
 }
-
 button {
     width: 100%;
     padding: 10px;
@@ -280,13 +273,11 @@ button {
     transition: background-color 0.3s, transform 0.3s;
     animation: fadeIn 0.5s ease-out;
 }
-
 button:hover {
     background-color: var(--primary-dark);
     transform: scale(1.05);
     box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
 }
-
 p {
     background-color: var(--primary);
     color: var(--text-light);
@@ -296,7 +287,6 @@ p {
     animation: fadeInUp 0.5s ease-out, fadeIn 0.5s ease-out;
     text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
 }
-
 a {
     background-color: var(--primary-dark);
     color: var(--text-light);
@@ -305,7 +295,6 @@ a {
     font-size: 1rem;
     text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
 }
-
 .header-box {
     background-color: #1f2937;
     color: white;
@@ -317,7 +306,6 @@ a {
     font-size: 0.875rem; /* Adjusted font size for smaller text */
     animation: fadeIn 0.5s ease-out;
 }
-
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -328,7 +316,6 @@ a {
         transform: translateY(0);
     }
 }
-
 /* Specific styles for Play component fields */
 .field-box {
     background-color: #1f2937;
@@ -341,7 +328,6 @@ a {
     font-size: 0.875rem; /* Adjusted font size for smaller text */
     animation: fadeIn 0.5s ease-out;
 }
-
 .styled-form {
     display: flex;
     flex-direction: column;
@@ -354,7 +340,6 @@ a {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
     animation: fadeIn 0.5s ease-out;
 }
-
 .styled-form input {
     width: 100%;
     padding: 0.75rem 1rem;
@@ -366,13 +351,11 @@ a {
     font-size: 0.9rem;
     transition: all var(--transition-fast);
 }
-
 .styled-form input:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
-
 .styled-form button {
     background-color: var(--primary);
     color: var(--text-light);
@@ -384,11 +367,9 @@ a {
     cursor: pointer;
     transition: all var(--transition-fast);
 }
-
 .styled-form button:hover {
     background-color: var(--primary-dark);
 }
-
 .response-container {
     margin-top: 1.5rem;
     background-color: var(--bg-darker);
@@ -400,7 +381,6 @@ a {
     position: relative;
     overflow: hidden;
 }
-
 .response-container::before {
     content: '';
     position: absolute;
@@ -411,35 +391,29 @@ a {
     background: var(--primary);
     animation: neonLine 2s infinite alternate;
 }
-
 .response-container .markdown-content {
     color: var(--text-light);
     line-height: 1.6;
     padding-left: 1rem;
 }
-
 .response-container .markdown-content p {
     margin: 0.5rem 0;
     color: var(--primary-light);
     font-weight: 500;
 }
-
 .response-container .markdown-content strong {
     color: var(--primary);
     font-weight: 600;
     text-shadow: 0 0 5px var(--primary);
 }
-
 .response-container .markdown-content ul,
 .response-container .markdown-content ol {
     margin: 0.5rem 0 0.5rem 1.5rem;
 }
-
 .response-container .markdown-content li {
     margin-bottom: 0.5rem;
     color: var(--primary-light);
 }
-
 .response-container .markdown-content code {
     background-color: var(--bg-lighter);
     padding: 0.2rem 0.4rem;
@@ -448,30 +422,25 @@ a {
     font-size: 0.9em;
     color: var(--primary-light);
 }
-
 .markdown-paragraph {
     margin: 0.5rem 0;
     color: var(--primary-light);
     font-weight: 500;
     line-height: 1.6;
 }
-
 .markdown-strong {
     color: var(--primary);
     font-weight: 600;
     text-shadow: 0 0 5px var(--primary);
 }
-
 .markdown-list {
     margin: 0.5rem 0 0.5rem 1.5rem;
     list-style-type: disc;
 }
-
 .markdown-list-item {
     margin-bottom: 0.5rem;
     color: var(--primary-light);
 }
-
 .markdown-inline-code {
     background-color: var(--bg-lighter);
     padding: 0.2rem 0.4rem;
@@ -480,7 +449,6 @@ a {
     font-size: 0.9em;
     color: var(--primary-light);
 }
-
 .markdown-code-block {
     background-color: var(--bg-lighter);
     padding: 1rem;
@@ -492,13 +460,11 @@ a {
     overflow-x: auto;
     margin: 1rem 0;
 }
-
 .markdown-pre {
     margin: 0;
     padding: 0;
     background: none;
 }
-
 .markdown-blockquote {
     border-left: 4px solid var(--primary);
     margin: 1rem 0;
@@ -507,19 +473,16 @@ a {
     background-color: var(--bg-darker);
     border-radius: 0 4px 4px 0;
 }
-
 .markdown-link {
     color: var(--primary);
     text-decoration: none;
     text-shadow: 0 0 5px var(--primary);
     transition: all var(--transition-fast);
 }
-
 .markdown-link:hover {
     color: var(--primary-light);
     text-shadow: 0 0 8px var(--primary);
 }
-
 @keyframes neonLine {
     0% {
         box-shadow: 0 0 2px var(--primary), 0 0 4px var(--primary), 0 0 8px var(--primary), 0 0 16px var(--primary);
@@ -531,26 +494,21 @@ a {
         box-shadow: 0 0 2px var(--primary), 0 0 4px var(--primary), 0 0 8px var(--primary), 0 0 16px var(--primary);
     }
 }
-
 /* Custom scrollbar for the sidebar */
 .sidebar::-webkit-scrollbar {
     width: 12px; /* Width of the scrollbar */
 }
-
 .sidebar::-webkit-scrollbar-track {
     background: #222831; /* Background color of the scrollbar track */
 }
-
 .sidebar::-webkit-scrollbar-thumb {
     background-color: var(--primary);
     border-radius: 10px;
     border: 3px solid var(--bg-darker);
 }
-
 .sidebar::-webkit-scrollbar-thumb:hover {
     background-color: var(--primary-light);
 }
-
 .markdown-container {
     background-color: var(--bg-lighter);
     padding: 1rem;
@@ -559,7 +517,6 @@ a {
     animation: fadeIn 0.5s ease-out, neonLine 2s infinite alternate;
     border: 2px solid var(--primary);
 }
-
 .markdown-container .description {
     background-color: var(--bg-darker);
     padding: 1rem;
@@ -570,23 +527,19 @@ a {
     font-weight: 500;
     line-height: 1.6;
 }
-
 .markdown-container .description p {
     margin: 0;
     background: none;
     padding: 0;
     text-shadow: none;
 }
-
 .markdown-container .description ul,
 .markdown-container .description ol {
     margin: 0.5rem 0 0.5rem 1.5rem;
 }
-
 .markdown-container .description li {
     margin-bottom: 0.5rem;
 }
-
 .suggestion-item {
     cursor: pointer;
     background-color: var(--bg-darker);
@@ -600,17 +553,14 @@ a {
     border-radius: 4px;
     transition: background-color 0.3s, color 0.3s;
 }
-
 .suggestion-item:hover {
     background-color: var(--primary);
     color: var(--text-light);
 }
-
 /* Hide default checkbox */
 input[type="checkbox"] {
   display: none;
 }
-
 /* Custom checkbox container */
 input[type="checkbox"] + label {
   display: flex;
@@ -620,7 +570,6 @@ input[type="checkbox"] + label {
   font-size: 16px;
   color: #ffffff;
 }
-
 /* Custom checkbox appearance */
 input[type="checkbox"] + label::before {
     content: "";
@@ -634,7 +583,6 @@ input[type="checkbox"] + label::before {
     justify-content: center;
     transition: all 0.3s ease;
 }
-
 input[type="checkbox"]:checked + label::before {
     content: "✔";
     font-size: 14px;
@@ -642,7 +590,6 @@ input[type="checkbox"]:checked + label::before {
     background: var(--primary);
     border-color: var(--primary-dark);
 }
-
 .navbar {
   background-color: var(--bg-darker);
   padding: 1rem 2rem;
@@ -652,13 +599,11 @@ input[type="checkbox"]:checked + label::before {
   border-bottom: 1px solid var(--border-color);
   box-shadow: 0 1px 3px var(--shadow-sm);
 }
-
 .navbar-left {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
-
 .navbar h1 {
     color: var(--text-light);
     font-size: 1.5rem;
@@ -667,7 +612,6 @@ input[type="checkbox"]:checked + label::before {
     text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
     margin: 0;
 }
-
 .version-badge {
   background: var(--primary);
   color: var(--text-light);
@@ -677,18 +621,15 @@ input[type="checkbox"]:checked + label::before {
   font-weight: 500;
   animation: fadeIn 0.5s ease-out;
 }
-
 /* User info section styles */
 .user-info {
   color: var(--text-gray);
   font-size: 0.9rem;
 }
-
 .user-info .username {
   color: var(--primary-light);
   font-weight: 500;
 }
-
 /* Credential select container styled similar to .field-box and .styled-form fields */
 .credential-select-container {
   background-color: #1f2937;           /* Dark background similar to other fields */
@@ -701,7 +642,6 @@ input[type="checkbox"]:checked + label::before {
   max-width: 400px;                   /* Limit width to match other form fields */
   animation: fadeIn 0.5s ease-out;     /* Fade-in animation for consistency */
 }
-
 /* Label style for the credentials area */
 .credential-select-container label {
   font-size: 0.875rem;                /* Slightly smaller font size */
@@ -710,7 +650,6 @@ input[type="checkbox"]:checked + label::before {
   margin-bottom: 0.5rem;
   display: block;
 }
-
 /* Style for the <select> element mimicking styled input fields */
 .credential-select-container select {
   width: 100%;
@@ -724,14 +663,12 @@ input[type="checkbox"]:checked + label::before {
   transition: border-color 0.3s, box-shadow 0.3s;
   animation: fadeIn 0.5s ease-out;
 }
-
 /* Focus state for the select element */
 .credential-select-container select:focus {
   outline: none;
   border-color: #00fff5;
   box-shadow: 0 0 10px #00fff5;       /* Same glow effect as inputs */
 }
-
 /* Container to display select and delete button inline */
 .credential-select-wrapper {
   display: flex;
@@ -739,7 +676,6 @@ input[type="checkbox"]:checked + label::before {
   gap: 0.5rem;
   width: 100%;
 }
-
 /* Short, compact delete button styling */
 .delete-credential-button {
   width: 28px;
@@ -756,12 +692,10 @@ input[type="checkbox"]:checked + label::before {
   justify-content: center;
   transition: all var(--transition-fast);
 }
-
 .delete-credential-button:hover {
   background-color: #DC2626;
   transform: scale(1.05);
 }
-
 /* Settings Styles */
 .settings-overlay {
   position: fixed;
@@ -775,7 +709,6 @@ input[type="checkbox"]:checked + label::before {
   justify-content: center;
   z-index: 1000;
 }
-
 .settings-modal {
   background-color: var(--bg-darker);
   border-radius: 8px;
@@ -785,7 +718,6 @@ input[type="checkbox"]:checked + label::before {
   max-height: 90vh;
   overflow-y: auto;
 }
-
 .settings-header {
   padding: 1.5rem;
   border-bottom: 1px solid var(--border-color);
@@ -793,13 +725,11 @@ input[type="checkbox"]:checked + label::before {
   justify-content: space-between;
   align-items: center;
 }
-
 .settings-header h2 {
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0;
 }
-
 .close-button {
   background: transparent;
   border: none;
@@ -809,33 +739,27 @@ input[type="checkbox"]:checked + label::before {
   padding: 0.5rem;
   line-height: 1;
 }
-
 .settings-form {
   padding: 1.5rem;
 }
-
 .settings-section {
   margin-bottom: 2rem;
 }
-
 .settings-section h3 {
   font-size: 1rem;
   font-weight: 600;
   color: var(--text-light);
   margin: 0 0 1rem 0;
 }
-
 .form-group {
   margin-bottom: 1rem;
 }
-
 .form-group label {
   display: block;
   font-size: 0.9rem;
   color: var(--text-gray);
   margin-bottom: 0.5rem;
 }
-
 .settings-input {
   width: 100%;
   padding: 0.75rem 1rem;
@@ -845,13 +769,11 @@ input[type="checkbox"]:checked + label::before {
   color: var(--text-light);
   font-size: 0.9rem;
 }
-
 .settings-actions {
   display: flex;
   gap: 1rem;
   margin-top: 2rem;
 }
-
 .settings-button {
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
@@ -860,53 +782,43 @@ input[type="checkbox"]:checked + label::before {
   cursor: pointer;
   transition: all 0.2s;
 }
-
 .settings-button.primary {
   background-color: var(--primary);
   color: var(--text-light);
   border: none;
 }
-
 .settings-button.secondary {
   background-color: transparent;
   color: var(--text-light);
   border: 1px solid var(--border-color);
 }
-
 .settings-button:hover {
   opacity: 0.9;
 }
-
 /* Scrollbar Styles */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: var(--bg-darker);
 }
-
 ::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: var(--border-light);
 }
-
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
 @keyframes slideIn {
   from { transform: translateY(10px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
-
 /* Utility Classes */
 .mt-1 { margin-top: 0.5rem; }
 .mt-2 { margin-top: 1rem; }
@@ -914,7 +826,6 @@ input[type="checkbox"]:checked + label::before {
 .mb-1 { margin-bottom: 0.5rem; }
 .mb-2 { margin-bottom: 1rem; }
 .mb-3 { margin-bottom: 1.5rem; }
-
 /* Console Styles */
 .console-header {
   display: flex;
@@ -922,14 +833,12 @@ input[type="checkbox"]:checked + label::before {
   align-items: center;
   margin-bottom: 1rem;
 }
-
 .console-header h2 {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--text-light);
 }
-
 .console-clear-button {
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
@@ -941,13 +850,11 @@ input[type="checkbox"]:checked + label::before {
   cursor: pointer;
   transition: all var(--transition-fast);
 }
-
 .console-clear-button:hover {
   color: var(--text-light);
   background: var(--hover-bg);
   border-color: var(--primary);
 }
-
 .console-output {
   background: var(--bg-darker);
   border: 1px solid var(--border-color);
@@ -959,44 +866,36 @@ input[type="checkbox"]:checked + label::before {
   font-size: 0.875rem;
   line-height: 1.2;
 }
-
 .log-entry {
   display: flex;
   gap: 1rem;
   padding: 0.25rem 0;
   color: var(--text-gray);
 }
-
 .log-timestamp {
   color: var(--text-muted);
   font-size: 0.75rem;
   white-space: nowrap;
 }
-
 .log-content {
   color: var(--text-light);
   word-break: break-word;
 }
-
 /* Custom scrollbar for console */
 .console-output::-webkit-scrollbar {
   width: 8px;
 }
-
 .console-output::-webkit-scrollbar-track {
   background: var(--bg-darker);
   border-radius: 4px;
 }
-
 .console-output::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 4px;
 }
-
 .console-output::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
-
 /* Tabs Styles */
 .tabs-container {
     display: flex;
@@ -1006,7 +905,6 @@ input[type="checkbox"]:checked + label::before {
     border-bottom: 1px solid var(--border-color);
     overflow-x: auto;
 }
-
 .tab {
     display: flex;
     align-items: center;
@@ -1021,24 +919,20 @@ input[type="checkbox"]:checked + label::before {
     min-width: 120px;
     max-width: 200px;
 }
-
 .tab.active {
     background-color: var(--primary);
     border-color: var(--primary);
     color: var(--text-light);
 }
-
 .tab:hover:not(.active) {
     background-color: var(--hover-bg);
     border-color: var(--primary-light);
 }
-
 .tab span {
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 .close-tab {
     width: 20px;
     height: 20px;
@@ -1054,12 +948,10 @@ input[type="checkbox"]:checked + label::before {
     border-radius: 50%;
     transition: all var(--transition-fast);
 }
-
 .close-tab:hover {
     background-color: rgba(255, 255, 255, 0.1);
     transform: scale(1.1);
 }
-
 /* Footer Tabs Styles */
 .footer-tabs {
     position: fixed;
@@ -1071,7 +963,6 @@ input[type="checkbox"]:checked + label::before {
     padding: 8px 16px;
     z-index: 100;
 }
-
 .tabs-container {
     display: flex;
     align-items: center;
@@ -1081,20 +972,16 @@ input[type="checkbox"]:checked + label::before {
     scrollbar-color: var(--primary) var(--bg-darker);
     padding-bottom: 4px;
 }
-
 .tabs-container::-webkit-scrollbar {
     height: 4px;
 }
-
 .tabs-container::-webkit-scrollbar-track {
     background: var(--bg-darker);
 }
-
 .tabs-container::-webkit-scrollbar-thumb {
     background-color: var(--primary);
     border-radius: 4px;
 }
-
 .tab {
     display: flex;
     align-items: center;
@@ -1109,28 +996,23 @@ input[type="checkbox"]:checked + label::before {
     min-width: 120px;
     max-width: 200px;
 }
-
 .tab span {
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 0.9rem;
     color: var(--text-gray);
 }
-
 .tab.active {
     background: var(--primary);
     border-color: var(--primary);
 }
-
 .tab.active span {
     color: var(--text-light);
 }
-
 .tab:hover:not(.active) {
     background: var(--hover-bg);
     border-color: var(--primary-light);
 }
-
 .close-tab {
     display: flex;
     align-items: center;
@@ -1144,17 +1026,14 @@ input[type="checkbox"]:checked + label::before {
     opacity: 0.6;
     transition: opacity var(--transition-fast);
 }
-
 .close-tab:hover {
     opacity: 1;
 }
-
 .close-tab-text {
     font-size: 16px;
     line-height: 1;
     color: inherit;
 }
-
 .new-tab-button {
     display: flex;
     align-items: center;
@@ -1169,25 +1048,21 @@ input[type="checkbox"]:checked + label::before {
     width: 24px;
     height: 24px;
 }
-
 .new-tab-button:hover {
     background: var(--hover-bg);
     border-color: var(--primary-light);
     color: var(--text-light);
 }
-
 .new-tab-icon {
     font-size: 1.1rem;
     font-weight: 500;
     line-height: 1;
 }
-
 .markdown-content {
     color: var(--text-light);
     line-height: 1.6;
     padding: 0.5rem;
 }
-
 .markdown-content p {
     margin-bottom: 1rem;
     background: none;
@@ -1196,24 +1071,20 @@ input[type="checkbox"]:checked + label::before {
     color: var(--primary-light);
     font-weight: 500;
 }
-
 .markdown-content ul, 
 .markdown-content ol {
     margin-left: 1.5rem;
     margin-bottom: 1rem;
 }
-
 .markdown-content li {
     margin-bottom: 0.5rem;
     color: var(--primary-light);
 }
-
 .markdown-content strong {
     color: var(--primary);
     font-weight: 600;
     text-shadow: 0 0 5px var(--primary);
 }
-
 .markdown-content h1,
 .markdown-content h2,
 .markdown-content h3,
@@ -1227,7 +1098,6 @@ input[type="checkbox"]:checked + label::before {
     background: none;
     padding: 0;
 }
-
 .markdown-content code {
     background-color: var(--bg-darker);
     padding: 0.2rem 0.4rem;
@@ -1236,7 +1106,6 @@ input[type="checkbox"]:checked + label::before {
     font-size: 0.9em;
     color: var(--primary-light);
 }
-
 .markdown-content pre {
     background-color: var(--bg-darker);
     padding: 1rem;
@@ -1245,12 +1114,10 @@ input[type="checkbox"]:checked + label::before {
     margin: 1rem 0;
     border: 1px solid var(--primary);
 }
-
 .markdown-content pre code {
     background: none;
     padding: 0;
 }
-
 .markdown-content blockquote {
     border-left: 4px solid var(--primary);
     margin: 1rem 0;
@@ -1259,7 +1126,6 @@ input[type="checkbox"]:checked + label::before {
     background-color: var(--bg-darker);
     border-radius: 0 4px 4px 0;
 }
-
 .markdown-content a {
     color: var(--primary);
     text-decoration: none;
@@ -1268,7 +1134,6 @@ input[type="checkbox"]:checked + label::before {
     text-shadow: 0 0 5px var(--primary);
     transition: all var(--transition-fast);
 }
-
 .markdown-content a:hover {
     color: var(--primary-light);
     text-shadow: 0 0 8px var(--primary);

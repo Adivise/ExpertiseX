@@ -3,12 +3,14 @@ declare global {
   interface Window {
     electronAPI: {
       onWindowClose: (callback: (event: any) => void) => void;
-      startBot: (token: string, port: string) => void;
-      getBotLogs: () => Promise<string>;
-      checkToken: (token: string, shouldSave: boolean) => Promise<{ valid: boolean; username: string }>;
+      startBot: (token: string, port: string, userId: string) => void;
+      stopBot: (userId: string) => Promise<void>;
+      getActiveBots: () => Promise<string[]>;
+      getBotLogs: (userId: string) => Promise<string>;
+      checkToken: (token: string, shouldSave: boolean) => Promise<{ valid: boolean; username: string; id: string }>;
+      getCredentials: () => Promise<Array<{ token: string; username: string; id: string }>>;
       checkPort: (port: number) => Promise<boolean>;
       removeListener: (channel: string, callback: (...args: any[]) => void) => void;
-      getCredentials: () => Promise<Array<{ token: string; username: string }>>;
       deleteCredential: (token: string) => Promise<void>;
       checkFFmpeg: () => Promise<boolean>;
       downloadFFmpeg: () => Promise<void>;

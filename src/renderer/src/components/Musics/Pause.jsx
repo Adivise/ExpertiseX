@@ -4,7 +4,7 @@ import Select from 'react-select';
 import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
 
-const Pause = () => {
+const Pause = ({ userId }) => {
     const [guildId, setGuildId] = useState('');
     const [pause, setPause] = useState({ value: true, label: 'Paused' });
     const [response, setResponse] = useState('');
@@ -12,11 +12,11 @@ const Pause = () => {
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem('guildId');
-        const storedPort = sessionStorage.getItem('port');
+        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
         if (storedGuildId) setGuildId(storedGuildId);
         if (storedPort) setPort(storedPort);
-    }, []);
+    }, [userId]);
 
     const handlePause = async (event) => {
         event.preventDefault();
@@ -25,7 +25,7 @@ const Pause = () => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
-                sessionStorage.setItem('guildId', guildId);
+                sessionStorage.setItem(`guildId_${userId}`, guildId);
                 const { data } = await axios.post(`http://localhost:${port}/pause`, { guildId, pause: pause.value });
                 setResponse(data.content);
             } catch (error) {
@@ -39,13 +39,6 @@ const Pause = () => {
             handlePause(event);
         }
     };
-
-    const markdownContent = `
-Enter the details below to pause or resume the song.
-
-- **Guild ID**
-- **Select Type Mode**
-`;
 
     const PauseOption = [
         { value: true, label: 'Paused' },
@@ -143,7 +136,13 @@ Enter the details below to pause or resume the song.
         <div id="pause" className="content">
             <div className="markdown-container">
                 <h2>Pause</h2>
-                <MarkdownRenderer content={markdownContent} />
+                <div className="description">
+                    <p>Enter the details below to pause or resume the song.</p>
+                    <ul>
+                        <li>Guild ID (ex: 1234567890)</li>
+                        <li>Select Type Mode (ex: Paused or Resumed)</li>
+                    </ul>
+                </div>
             </div>
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input

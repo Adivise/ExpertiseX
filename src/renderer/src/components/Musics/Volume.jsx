@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
 
-const Volume = () => {
+const Volume = ({ userId }) => {
     const [guildId, setGuildId] = useState('');
     const [volume, setVolume] = useState(50);
     const [response, setResponse] = useState('');
@@ -11,11 +11,11 @@ const Volume = () => {
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem('guildId');
-        const storedPort = sessionStorage.getItem('port');
+        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
         if (storedGuildId) setGuildId(storedGuildId);
         if (storedPort) setPort(storedPort);
-    }, []);
+    }, [userId]);
 
     const handleVolume = async (event) => {
         event.preventDefault();
@@ -24,7 +24,7 @@ const Volume = () => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
-                sessionStorage.setItem('guildId', guildId);
+                sessionStorage.setItem(`guildId_${userId}`, guildId);
                 const { data } = await axios.post(`http://localhost:${port}/volume`, { guildId, volume });
                 setResponse(data.content);
             } catch (error) {
@@ -52,18 +52,17 @@ const Volume = () => {
         }
     };
 
-const markdownContent = `
-Enter the details below to change the volume of the bot.
-
-- **Guild ID**
-- **Volume (1 to 100)**
-`;
-
     return (
         <div id="volume" className="content">
             <div className="markdown-container">
                 <h2>Volume</h2>
-                <MarkdownRenderer content={markdownContent} />
+                <div className="description">
+                    <p>Enter the details below to change the volume of the bot.</p>
+                    <ul>
+                        <li>Guild ID (ex: 1234567890)</li>
+                        <li>Volume (1 to 100)</li>
+                    </ul>
+                </div>
             </div>
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input

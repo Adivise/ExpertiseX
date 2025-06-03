@@ -33,6 +33,7 @@
 - 🎵 **Music Player** - Play your favorite tracks
 - 🎚️ **Sound Filters** - Customize your audio experience
 - 🔍 **Auto Suggest** - Smart music recommendations
+- 🤖 **Multiple Bots** - Easy adding selfbot to other tabs
 - 🎮 **User-Friendly** - Intuitive interface
 
 ## 📋 Requirements
@@ -47,9 +48,9 @@
 ### For Regular Users
 
 #### Windows Users
-- **Single Executable** (Portable) - [Download Latest](https://github.com/Adivise/ExpertiseX/releases/download/v2.4.0/expertisex-2.4.0-single.exe)
+- **Single Executable** (Portable) - [Download Latest](https://github.com/Adivise/ExpertiseX/releases/download/v2.5.0/expertisex-2.5.0-single.exe)
   > *Note: Settings reset when closing the application*
-- **Installer** - [Download Latest](https://github.com/Adivise/ExpertiseX/releases/download/v2.4.0/expertisex-2.4.0-setup.exe)
+- **Installer** - [Download Latest](https://github.com/Adivise/ExpertiseX/releases/download/v2.5.0/expertisex-2.5.0-setup.exe)
   > *Note: All configuration will saved*
 
 #### MacOS & Linux Users

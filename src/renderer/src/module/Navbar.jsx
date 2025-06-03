@@ -1,6 +1,6 @@
 import '../assets/Style.css';
 
-const Navbar = ({ username }) => {
+const Navbar = ({ username, userId }) => {
   const version = window.electronAPI.getVersion();
   
   return (
@@ -10,7 +10,7 @@ const Navbar = ({ username }) => {
         <span className="version-badge">v{version}</span>
       </div>
       {username && (
-        <div className="user-info">Logged in as: <span className="username">{username}</span></div>
+        <div className="user-info">Logged in as: <span className="username">{username} ({userId})</span></div>
       )}
     </div>
   );

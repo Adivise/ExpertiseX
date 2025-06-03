@@ -1,64 +1,70 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
 
-const TrebleBass = ({ userId }) => {
-    const [guildId, setGuildId] = useState('');
+const DirectMessage = ({ userId }) => {
+    const [toUserId, settoUserId] = useState('');
+    const [message, setMessage] = useState('');
     const [response, setResponse] = useState('');
     const [isCooldown, setIsCooldown] = useState(false);
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
         const storedPort = sessionStorage.getItem(`port_${userId}`);
-        if (storedGuildId) setGuildId(storedGuildId);
         if (storedPort) setPort(storedPort);
     }, [userId]);
 
-    const handleTrebleBass = async (event) => {
-        event.preventDefault();
+    const handleDirectMessage = async () => {
         setResponse(''); // Clear the old response
         if (!isCooldown) {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown 
             try {
-                sessionStorage.setItem(`guildId_${userId}`, guildId);
-                const { data } = await axios.post(`http://localhost:${port}/treblebass`, { guildId });
+                const { data } = await axios.post(`http://localhost:${port}/directmessage`, { toUserId, message });
                 setResponse(data.content);
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
             }
         }
-    };
+    }
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
-            handleTrebleBass(event);
+            handleDirectMessage();
         }
-    };
+    }
+
+    const markdownContent = `
+Enter the details below to send a direct message to a user.
+
+- **User ID**
+- **Message**
+    `
 
     return (
-        <div id="treblebass" className="content">
+        <div id="directmessage" className="content">
             <div className="markdown-container">
-                <h2>TrebleBass</h2>
-                <div className="description">
-                    <p>Enter the details below to set the treblebass filter.</p>
-                    <ul>
-                        <li>Guild ID (ex: 1234567890)</li>
-                    </ul>
-                </div>
+                <h2>Direct Message</h2>
+                <MarkdownRenderer content={markdownContent} />
             </div>
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input
                     type="text"
-                    placeholder="Guild ID"
-                    value={guildId}
-                    onChange={(e) => setGuildId(e.target.value)}
+                    placeholder="User ID"
+                    value={toUserId}
+                    onChange={(e) => settoUserId(e.target.value)}
+                    required={true}
+                />
+                <textarea
+                    placeholder="Message"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    required={true}
                 />
                 <div style={{ marginTop: '20px' }}>
-                    <button type="button" onClick={handleTrebleBass} disabled={isCooldown}>
-                        {isCooldown ? 'Cooldown...' : 'Submit'}
+                    <button type="button" onClick={handleDirectMessage} disabled={isCooldown}>
+                        {isCooldown ? 'Sending...' : 'Submit'}
                     </button>
                 </div>
             </form>
@@ -68,7 +74,7 @@ const TrebleBass = ({ userId }) => {
                 </div>
             )}
         </div>
-    );
-};
+    )
+}
 
-export default TrebleBass;
+export default DirectMessage;

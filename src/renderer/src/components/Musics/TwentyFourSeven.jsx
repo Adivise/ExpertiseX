@@ -4,7 +4,7 @@ import Select from 'react-select';
 import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
 
-const TwentyFourSeven = () => {
+const TwentyFourSeven = ({ userId }) => {
     const [guildId, setGuildId] = useState('');
     const [twentyfourseven, setTwentyFourSeven] = useState({ value: true, label: 'Active' });
     const [response, setResponse] = useState('');
@@ -12,11 +12,11 @@ const TwentyFourSeven = () => {
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem('guildId');
-        const storedPort = sessionStorage.getItem('port');
+        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
         if (storedGuildId) setGuildId(storedGuildId);
         if (storedPort) setPort(storedPort);
-    }, []);
+    }, [userId]);
 
     const handleTwentyFourSeven = async (event) => {
         event.preventDefault();
@@ -25,7 +25,7 @@ const TwentyFourSeven = () => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
-                sessionStorage.setItem('guildId', guildId);
+                sessionStorage.setItem(`guildId_${userId}`, guildId);
                 const { data } = await axios.post(`http://localhost:${port}/twentyfourseven`, { guildId, twentyfourseven: twentyfourseven.value });
                 setResponse(data.content);
             } catch (error) {
@@ -39,13 +39,6 @@ const TwentyFourSeven = () => {
             handleTwentyFourSeven(event);
         }
     };
-
-    const markdownContent = `
-Enter the details below to toggle 24/7 mode.
-
-- **Guild ID**
-- **Select Type Mode**
-`;
 
     const TwentyFourSevenOption = [
         { value: true, label: 'Active' },
@@ -143,7 +136,13 @@ Enter the details below to toggle 24/7 mode.
         <div id="twentyfourseven" className="content">
             <div className="markdown-container">
                 <h2>TwentyFourSeven</h2>
-                <MarkdownRenderer content={markdownContent} />
+                <div className="description">
+                    <p>Enter the details below to toggle 24/7 mode.</p>
+                    <ul>
+                        <li>Guild ID (ex: 1234567890)</li>
+                        <li>Select Type Mode (ex: Active or Deactive)</li>
+                    </ul>
+                </div>
             </div>
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input
