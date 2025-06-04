@@ -72,12 +72,13 @@ const discordClient = {
       await client.login(token);
       const username = client.user?.username || "";
       const id = client.user?.id || "";
+      const avatar = client.user?.avatarURL() || "";
       
       if (shouldSave) {
-        await credentialsManager.saveCredential(token, username, id);
+        await credentialsManager.saveCredential(token, username, id, avatar);
       }
       
-      return { valid: true, username: username, id: id };
+      return { valid: true, username: username, id: id, avatar: avatar };
     } catch (err) {
       console.error("Invalid token:", err);
       return { valid: false };
@@ -89,7 +90,7 @@ const discordClient = {
 
 // Credentials Manager
 const credentialsManager = {
-  saveCredential: async (token, username, id) => {
+  saveCredential: async (token, username, id, avatar) => {
     let credentials = [];
     try {
       if (fs.existsSync(PATHS.CREDENTIALS)) {
@@ -104,7 +105,7 @@ const credentialsManager = {
     }
 
     const index = credentials.findIndex((cred) => cred.id === id);
-    const newCredential = { token, username, id };
+    const newCredential = { token, username, id, avatar };
     
     if (index === -1) {
       credentials.push(newCredential);
@@ -293,25 +294,10 @@ const createWindow = () => {
     }
   });
 
-  // Set Content Security Policy
-  mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
-    callback({
-      responseHeaders: {
-        ...details.responseHeaders,
-        'Content-Security-Policy': [
-          "default-src 'self'",
-          "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-          "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-          "font-src 'self' https://fonts.gstatic.com",
-          "img-src 'self' data: https:",
-          "connect-src 'self' http://localhost:*"
-        ].join('; ')
-      }
-    });
-  });
-
   if (is.dev) {
     mainWindow.webContents.openDevTools();
+    // Disable React DevTools warning
+    process.env.NODE_ENV = 'production';
   }
 
   mainWindow.setMenu(null);

@@ -1,0 +1,83 @@
+/* Hover Animation Base */
+.hover-sweep {
+    position: relative;
+    overflow: hidden;
+}
+
+.hover-sweep::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.hover-sweep:hover::before {
+    transform: translateX(100%);
+}
+
+/* Interactive Elements */
+button:not(.close-tab):not(.new-tab-button):not(.collapse-icon),
+.sidebar-button,
+.settings-button,
+.console-clear-button,
+.delete-credential-button,
+.close-button {
+    position: relative;
+    overflow: hidden;
+}
+
+button:not(.close-tab):not(.new-tab-button):not(.collapse-icon)::before,
+.sidebar-button::before,
+.settings-button::before,
+.console-clear-button::before,
+.delete-credential-button::before,
+.close-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+button:not(.close-tab):not(.new-tab-button):not(.collapse-icon):hover::before,
+.sidebar-button:hover::before,
+.settings-button:hover::before,
+.console-clear-button:hover::before,
+.delete-credential-button:hover::before,
+.close-button:hover::before {
+    transform: translateX(100%);
+}
+
+/* Form Elements */
+.styled-form input:focus,
+.settings-input:focus {
+    position: relative;
+    overflow: hidden;
+}
+
+.styled-form input:focus::before,
+.settings-input:focus::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.styled-form input:focus::before,
+.settings-input:focus::before {
+    transform: translateX(100%);
+} 

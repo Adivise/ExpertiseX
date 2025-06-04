@@ -1,0 +1,135 @@
+/* Markdown Content */
+.markdown-content {
+    color: var(--text-light);
+    line-height: 1.6;
+    padding: 0.5rem;
+}
+
+.markdown-content p {
+    margin-bottom: 1rem;
+    background: none;
+    padding: 0;
+    text-shadow: none;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.markdown-content ul, 
+.markdown-content ol {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.markdown-content li {
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+}
+
+.markdown-content strong {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+    color: var(--text-light);
+    margin: 1.5rem 0 1rem;
+    font-weight: 600;
+}
+
+.markdown-content code {
+    background-color: var(--bg-darker);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
+    color: var(--text-light);
+}
+
+.markdown-content pre {
+    background-color: var(--bg-darker);
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 1rem 0;
+    border: 1px solid var(--primary);
+}
+
+.markdown-content pre code {
+    background: none;
+    padding: 0;
+    color: var(--text-light);
+}
+
+.markdown-content blockquote {
+    border-left: 4px solid var(--primary);
+    margin: 1rem 0;
+    padding: 0.5rem 0 0.5rem 1rem;
+    color: var(--text-light);
+    background-color: var(--bg-darker);
+    border-radius: 0 4px 4px 0;
+}
+
+.markdown-content a {
+    color: var(--text-light);
+    text-decoration: none;
+    background: none;
+    padding: 0;
+    text-shadow: none;
+    transition: all var(--transition-fast);
+}
+
+.markdown-content a:hover {
+    color: var(--text-light);
+    opacity: 0.8;
+}
+
+/* Markdown Container */
+.markdown-container {
+    background-color: var(--bg-lighter);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    animation: fadeIn 0.5s ease-out, neonLine 2s infinite alternate;
+    border: 2px solid var(--primary);
+}
+
+.markdown-container h2 {
+    color: var(--text-light);
+    font-weight: 800;
+    animation: slideInLeft 0.5s ease-out, fadeIn 0.5s ease-out;
+    text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
+}
+
+.markdown-container .description {
+    background-color: var(--bg-darker);
+    padding: 1rem;
+    border-radius: 6px;
+    margin: 1rem 0;
+    border-left: 4px solid var(--primary);
+    color: var(--text-light);
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.markdown-container .description p {
+    margin: 0;
+    background: none;
+    padding: 0;
+    text-shadow: none;
+    color: var(--text-light);
+}
+
+.markdown-container .description ul,
+.markdown-container .description ol {
+    margin: 0.5rem 0 0.5rem 1.5rem;
+}
+
+.markdown-container .description li {
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+} 

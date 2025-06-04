@@ -9,7 +9,8 @@ module.exports = (client) => {
             const songs = result.tracks.map(track => ({
                 name: track.title,
                 url: track.uri,
-                duration: track.length
+                duration: track.length,
+                thumbnail: track.thumbnail || track.displayThumbnail('maxresdefault') || track.displayThumbnail('hqdefault')
             }));
 
             res.send({ songs });

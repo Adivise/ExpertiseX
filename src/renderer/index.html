@@ -8,21 +8,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <title>ExpertiseX v2</title>
+    <title>ExpertiseX</title>
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta
       http-equiv="Content-Security-Policy"
       content="
-        default-src 'self'; 
-        script-src 'self'; 
-        style-src 'self' 'unsafe-inline'; 
-        img-src 'self' data:; 
-        connect-src *"
+        default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https: https://cdn.discordapp.com;
+        connect-src 'self' http://localhost:*;
+        worker-src 'self';
+        child-src 'self';
+        frame-src 'self'"
     />
   </head>
 
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="/src/Main.jsx"></script>
   </body>
 </html>

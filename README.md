@@ -27,14 +27,16 @@
 ## ✨ Features
 
 - 🎯 **Token Login** - Secure and easy authentication
+- 🔐 **Token Saver** - Secure token management and storage
 - 🔄 **Port Selection** - Support for up to 999 ports/bots
 - 📝 **WebUI Console** - Real-time logging and monitoring
 - 🎥 **Go Live** - Stream your screen with ease
 - 🎵 **Music Player** - Play your favorite tracks
 - 🎚️ **Sound Filters** - Customize your audio experience
 - 🔍 **Auto Suggest** - Smart music recommendations
-- 🤖 **Multiple Bots** - Easy adding selfbot to other tabs
 - 🎮 **User-Friendly** - Intuitive interface
+- 🤖 **Multiple Bots Support** - Run multiple instances simultaneously
+- ⚙️ **Easy Configuration** - Simple and intuitive setup in one click
 
 ## 📋 Requirements
 

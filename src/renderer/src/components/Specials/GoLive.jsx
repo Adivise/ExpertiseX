@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import MarkdownRenderer from '../../module/MDRender';
-import '../../assets/Style.css';
 
 const GoLive = ({ userId }) => {
     const [voiceId, setVoiceId] = useState('');

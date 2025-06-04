@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import Autosuggest from 'react-autosuggest';
-import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
 
 const Play = ({ userId }) => {
@@ -12,6 +10,8 @@ const Play = ({ userId }) => {
     const [response, setResponse] = useState('');
     const [isCooldown, setIsCooldown] = useState(false);
     const [port, setPort] = useState('');
+    const [showSuggestions, setShowSuggestions] = useState(false);
+    const suggestionsRef = useRef(null);
 
     useEffect(() => {
         const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
@@ -21,6 +21,19 @@ const Play = ({ userId }) => {
         if (storedVoiceId) setVoiceId(storedVoiceId);
         if (storedPort) setPort(storedPort);
     }, [userId]);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (suggestionsRef.current && !suggestionsRef.current.contains(event.target)) {
+                setShowSuggestions(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const handlePlay = async (event) => {
         event.preventDefault();
@@ -45,25 +58,46 @@ const Play = ({ userId }) => {
         }
     };
 
-    const fetchSearch = async ({ value }) => {
+    const fetchSearch = async (value) => {
+        if (!value.trim()) {
+            setSuggestions([]);
+            return;
+        }
         try {
-            const { data } = await axios.get(`http://localhost:3000/search?q=${value}`);
+            const { data } = await axios.get(`http://localhost:${port}/search?q=${value}`);
             const limitedSuggestions = data.songs.slice(0, 5);
             setSuggestions(limitedSuggestions);
+            setShowSuggestions(true);
         } catch (error) {
             console.error('Error fetching suggestions:', error);
         }
     };
 
-    const fetchSuccess = () => {
-        setSuggestions([]);
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        setSongName(value);
+        fetchSearch(value);
     };
 
-    const getSuggestionValue = (suggestion) => suggestion.url;
+    const handleSuggestionClick = (suggestion) => {
+        setSongName(suggestion.url);
+        setShowSuggestions(false);
+    };
 
     const renderSuggestion = (suggestion) => (
-        <button className="suggestion-item">
-            {suggestion.name}
+        <button 
+            className="suggestion-item"
+            onClick={() => handleSuggestionClick(suggestion)}
+        >
+            <div className="suggestion-thumbnail">
+                <img src={suggestion.thumbnail} alt={suggestion.name} />
+            </div>
+            <div className="suggestion-content">
+                <div className="suggestion-title">{suggestion.name}</div>
+                <div className="suggestion-subtitle">
+                    {suggestion.duration ? `${Math.floor(suggestion.duration / 60000)}:${((suggestion.duration % 60000) / 1000).toFixed(0).padStart(2, '0')}` : ''}
+                </div>
+            </div>
         </button>
     );
     
@@ -93,19 +127,24 @@ const Play = ({ userId }) => {
                     value={voiceId}
                     onChange={(e) => setVoiceId(e.target.value)}
                 />
-                <Autosuggest
-                    suggestions={suggestions}
-                    onSuggestionsFetchRequested={fetchSearch}
-                    onSuggestionsClearRequested={fetchSuccess}
-                    getSuggestionValue={getSuggestionValue}
-                    renderSuggestion={renderSuggestion}
-                    inputProps={{
-                        placeholder: 'Song/Url',
-                        value: songName,
-                        type: 'search',
-                        onChange: (e, { newValue }) => setSongName(newValue)
-                    }}
-                />
+                <div className="autosuggest-container" ref={suggestionsRef}>
+                    <input
+                        type="search"
+                        placeholder="Song/Url"
+                        value={songName}
+                        onChange={handleInputChange}
+                        onFocus={() => setShowSuggestions(true)}
+                    />
+                    {showSuggestions && suggestions.length > 0 && (
+                        <div className="suggestions-list">
+                            {suggestions.map((suggestion, index) => (
+                                <div key={index} className="suggestion-wrapper">
+                                    {renderSuggestion(suggestion)}
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
                 <div style={{ marginTop: '20px' }}>
                     <button type="button" onClick={handlePlay} disabled={isCooldown}>
                         {isCooldown ? 'Cooldown...' : 'Submit'}

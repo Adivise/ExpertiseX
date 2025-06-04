@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../../assets/Style.css';
 import MarkdownRenderer from '../../module/MDRender';
 
 const Skip = ({ userId }) => {

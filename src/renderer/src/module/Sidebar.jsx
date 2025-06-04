@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import '../assets/Style.css';
 
 const Sidebar = ({ setActiveComponent, activeComponent }) => {
     const [isSpecialCollapsed, setIsSpecialCollapsed] = useState(false);

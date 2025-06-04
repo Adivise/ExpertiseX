@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import '../assets/Style.css';
 
 const Footer = ({ tabs, currentTab, onTabSwitch, onTabClose, onNewTab }) => {
     const tabsContainerRef = useRef(null);

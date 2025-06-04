@@ -1,0 +1,100 @@
+/* Sidebar Styles */
+.sidebar {
+    background-color: var(--bg-darker);
+    color: var(--text-light);
+    padding: 1.5rem;
+    width: 280px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+    height: 100%;
+    overflow-y: auto;
+}
+
+.sidebar-category {
+    margin-bottom: 1.5rem;
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    color: var(--text-gray);
+    transition: color var(--transition-fast);
+}
+
+.category-header:hover {
+    color: var(--text-light);
+}
+
+.category-header h2 {
+    color: var(--text-light);
+    font-weight: 800;
+    animation: slideInLeft 0.5s ease-out, fadeIn 0.5s ease-out;
+    text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
+    font-size: 0.9rem;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.collapse-icon {
+    font-size: 0.8rem;
+    transition: transform 0.2s;
+}
+
+.sidebar-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text-gray);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border-radius: 4px;
+    text-align: left;
+}
+
+.sidebar-button:hover {
+    background: var(--hover-bg);
+    color: var(--text-light);
+}
+
+.sidebar-button.active {
+    background: var(--primary);
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.sidebar-button.active:hover {
+    background: var(--primary-dark);
+}
+
+.button-icon {
+    font-size: 1.1rem;
+}
+
+/* Custom scrollbar for the sidebar */
+.sidebar::-webkit-scrollbar {
+    width: 12px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #222831;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 10px;
+    border: 3px solid var(--bg-darker);
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-light);
+} 

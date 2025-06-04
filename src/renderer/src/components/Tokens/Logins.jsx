@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import MarkdownRenderer from "../../module/MDRender";
-import "../../assets/Style.css";
-import Settings from "./Settings";
 
 const Login = ({ onLoginSuccess }) => {
     // State management
@@ -14,7 +12,6 @@ const Login = ({ onLoginSuccess }) => {
     const [isCooldown, setIsCooldown] = useState(false);
     const [savedCredentials, setSavedCredentials] = useState([]);
     const [selectedIndex, setSelectedIndex] = useState(-1);
-    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
     // Constants
     const COOLDOWN_DURATION = 3000;
@@ -129,8 +126,8 @@ const Login = ({ onLoginSuccess }) => {
             }
 
             // Start bot and notify parent
-            window.electronAPI.startBot(token, port, creds.id);
-            onLoginSuccess(creds.username, creds.id, port);
+            window.electronAPI.startBot(token, port, creds.id, creds.avatar);
+            onLoginSuccess(creds.username, creds.id, port, creds.avatar);
             
             // Clear form
             setFormData(prev => ({ ...prev, token: "" }));
@@ -190,12 +187,6 @@ const Login = ({ onLoginSuccess }) => {
                 </div>
             </div>
 
-            <Settings
-                isOpen={isSettingsOpen}
-                onClose={() => setIsSettingsOpen(false)}
-                onSave={console.log}
-            />
-
             <form className="styled-form" onKeyDown={handleKeyPress}>
                 <input
                     type="password"
@@ -237,15 +228,6 @@ const Login = ({ onLoginSuccess }) => {
                         disabled={isCooldown}
                     >
                         {isCooldown ? "Loading..." : "Login"}
-                    </button>
-                </div>
-
-                <div style={{ marginTop: "10px" }}>
-                    <button 
-                        type="button" 
-                        onClick={() => setIsSettingsOpen(true)}
-                    >
-                        Settings
                     </button>
                 </div>
             </form>
