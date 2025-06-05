@@ -15,6 +15,7 @@ client.config = require(join(process.cwd(), "config.json"));
 client.app = express();
 client.app.use(cors());
 client.stated = "none";
+client.currentSong = null;
 
 const token = process.argv[2];
 const port = process.argv[3];
@@ -30,7 +31,7 @@ client.manager = new Kazagumo({
     }
 }, new Connectors.DiscordJS(client), client.config.nodes);
 
-["loadEvent", "loadPlayer", "loadTrack", "loadEndpoint"].forEach(x => require(`./handlers/${x}`)(client));
+["loadEvent", "loadPlayer", "loadTrack", "loadEndpoint", "loadSSE"].forEach(x => require(`./handlers/${x}`)(client));
 
 client.app.listen(port);
 client.login(token);

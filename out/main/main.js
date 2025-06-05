@@ -1,161 +1,53 @@
 "use strict";
 const electron = require("electron");
-const path = require("path");
-const utils$1 = require("@electron-toolkit/utils");
-const child_process = require("child_process");
-const net = require("net");
+const utils = require("@electron-toolkit/utils");
 const fs = require("fs");
-const discord_jsSelfbotV13 = require("discord.js-selfbot-v13");
+const path = require("path");
+const net = require("net");
 const https = require("https");
-const icon = path.join(__dirname, "../../resources/icon.png");
+const discord_jsSelfbotV13 = require("discord.js-selfbot-v13");
+const child_process = require("child_process");
+const clearAllLogs = () => {
+  try {
+    const files = fs.readdirSync(process.cwd());
+    files.forEach((file) => {
+      if (file.endsWith(".log")) {
+        fs.writeFileSync(path.join(process.cwd(), file), "");
+      }
+    });
+  } catch (err) {
+    console.error("Error clearing logs:", err);
+  }
+};
+const writeLog = (message, userId) => {
+  if (!userId) return;
+  const timestamp = (/* @__PURE__ */ new Date()).toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  });
+  const logPath = path.join(process.cwd(), `${userId}.log`);
+  fs.appendFileSync(logPath, `[${timestamp}] | ${message}`);
+};
+const isPortAvailable = (port) => {
+  return new Promise((resolve) => {
+    const server = net.createServer();
+    server.once("error", (err) => {
+      if (err.code === "EADDRINUSE") resolve(false);
+      else resolve(true);
+    });
+    server.once("listening", () => {
+      server.close();
+      resolve(true);
+    });
+    server.listen(port);
+  });
+};
 const PATHS = {
   CREDENTIALS: path.join(process.cwd(), "credentials.json"),
   FFMPEG: path.join(process.cwd(), "ffmpeg.exe"),
   CONFIG: path.join(process.cwd(), "config.json")
-};
-let botProcesses = /* @__PURE__ */ new Map();
-let mainWindow = null;
-const utils = {
-  clearAllLogs: () => {
-    try {
-      const files = fs.readdirSync(process.cwd());
-      files.forEach((file) => {
-        if (file.endsWith(".log")) {
-          fs.writeFileSync(path.join(process.cwd(), file), "");
-        }
-      });
-    } catch (err) {
-      console.error("Error clearing logs:", err);
-    }
-  },
-  writeLog: (message, userId) => {
-    if (!userId) return;
-    const timestamp = (/* @__PURE__ */ new Date()).toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false
-    });
-    const logPath = path.join(process.cwd(), `${userId}.log`);
-    fs.appendFileSync(logPath, `[${timestamp}] | ${message}`);
-  },
-  isPortAvailable: (port) => {
-    return new Promise((resolve) => {
-      const server = net.createServer();
-      server.once("error", (err) => {
-        if (err.code === "EADDRINUSE") resolve(false);
-        else resolve(true);
-      });
-      server.once("listening", () => {
-        server.close();
-        resolve(true);
-      });
-      server.listen(port);
-    });
-  }
-};
-const discordClient = {
-  isValidToken: async (token, shouldSave) => {
-    const client = new discord_jsSelfbotV13.Client();
-    try {
-      await client.login(token);
-      const username = client.user?.username || "";
-      const id = client.user?.id || "";
-      const avatar = client.user?.avatarURL() || "";
-      if (shouldSave) {
-        await credentialsManager.saveCredential(token, username, id, avatar);
-      }
-      return { valid: true, username, id, avatar };
-    } catch (err) {
-      console.error("Invalid token:", err);
-      return { valid: false };
-    } finally {
-      client.destroy();
-    }
-  }
-};
-const credentialsManager = {
-  saveCredential: async (token, username, id, avatar) => {
-    let credentials = [];
-    try {
-      if (fs.existsSync(PATHS.CREDENTIALS)) {
-        const fileContent = fs.readFileSync(PATHS.CREDENTIALS, "utf-8");
-        if (fileContent?.trim()) {
-          credentials = JSON.parse(fileContent);
-          if (!Array.isArray(credentials)) credentials = [];
-        }
-      }
-    } catch (err) {
-      console.error("Error reading credentials file:", err);
-    }
-    const index = credentials.findIndex((cred) => cred.id === id);
-    const newCredential = { token, username, id, avatar };
-    if (index === -1) {
-      credentials.push(newCredential);
-    } else {
-      credentials[index] = newCredential;
-    }
-    fs.writeFileSync(PATHS.CREDENTIALS, JSON.stringify(credentials, null, 2), "utf-8");
-  },
-  getCredentials: () => {
-    try {
-      if (fs.existsSync(PATHS.CREDENTIALS)) {
-        const data = fs.readFileSync(PATHS.CREDENTIALS, "utf-8");
-        return JSON.parse(data);
-      }
-    } catch (error) {
-      console.error("Error reading credentials:", error);
-    }
-    return null;
-  },
-  deleteCredential: (token) => {
-    try {
-      let credentials = [];
-      if (fs.existsSync(PATHS.CREDENTIALS)) {
-        const fileContent = fs.readFileSync(PATHS.CREDENTIALS, "utf-8");
-        credentials = JSON.parse(fileContent);
-        if (!Array.isArray(credentials)) credentials = [];
-      }
-      credentials = credentials.filter((cred) => cred.token !== token);
-      fs.writeFileSync(PATHS.CREDENTIALS, JSON.stringify(credentials), "utf-8");
-    } catch (error) {
-      console.error("Error deleting credential:", error);
-    }
-  }
-};
-const botManager = {
-  startBot: (token, port, userId) => {
-    const backendPath = path.join(__dirname, "../../out/backend/index.js");
-    const botProcess = child_process.fork(backendPath, [token, port], {
-      stdio: ["pipe", "pipe", "pipe", "ipc"]
-    });
-    botProcesses.set(userId, botProcess);
-    if (userId) {
-      fs.writeFileSync(path.join(process.cwd(), `${userId}.log`), "");
-    }
-    if (botProcess.stdout) {
-      botProcess.stdout.on("data", (data) => utils.writeLog(`[🟢] ${data.toString()}`, userId));
-    }
-    if (botProcess.stderr) {
-      botProcess.stderr.on("data", (data) => utils.writeLog(`[❌] ${data.toString()}`, userId));
-    }
-    botProcess.on("close", (code) => {
-      utils.writeLog(`[🛑] ${code}`, userId);
-      botProcesses.delete(userId);
-    });
-    botProcess.on("error", (err) => {
-      utils.writeLog(`[❌] ${err}`, userId);
-      botProcesses.delete(userId);
-    });
-  },
-  stopBot: (userId) => {
-    const botProcess = botProcesses.get(userId);
-    if (botProcess) {
-      botProcess.kill();
-      botProcesses.delete(userId);
-    }
-  },
-  getActiveBots: () => Array.from(botProcesses.keys())
 };
 const configManager = {
   loadConfig: async () => {
@@ -207,7 +99,111 @@ const ffmpegManager = {
     return downloadFile(initialUrl);
   }
 };
-const setupIpcHandlers = () => {
+const credentialsManager = {
+  saveCredential: async (token, username, id, avatar) => {
+    let credentials = [];
+    try {
+      if (fs.existsSync(PATHS.CREDENTIALS)) {
+        const fileContent = fs.readFileSync(PATHS.CREDENTIALS, "utf-8");
+        if (fileContent?.trim()) {
+          credentials = JSON.parse(fileContent);
+          if (!Array.isArray(credentials)) credentials = [];
+        }
+      }
+    } catch (err) {
+      console.error("Error reading credentials file:", err);
+    }
+    const index = credentials.findIndex((cred) => cred.id === id);
+    const newCredential = { token, username, id, avatar };
+    if (index === -1) {
+      credentials.push(newCredential);
+    } else {
+      credentials[index] = newCredential;
+    }
+    fs.writeFileSync(PATHS.CREDENTIALS, JSON.stringify(credentials, null, 2), "utf-8");
+  },
+  getCredentials: () => {
+    try {
+      if (fs.existsSync(PATHS.CREDENTIALS)) {
+        const data = fs.readFileSync(PATHS.CREDENTIALS, "utf-8");
+        return JSON.parse(data);
+      }
+    } catch (error) {
+      console.error("Error reading credentials:", error);
+    }
+    return null;
+  },
+  deleteCredential: (token) => {
+    try {
+      let credentials = [];
+      if (fs.existsSync(PATHS.CREDENTIALS)) {
+        const fileContent = fs.readFileSync(PATHS.CREDENTIALS, "utf-8");
+        credentials = JSON.parse(fileContent);
+        if (!Array.isArray(credentials)) credentials = [];
+      }
+      credentials = credentials.filter((cred) => cred.token !== token);
+      fs.writeFileSync(PATHS.CREDENTIALS, JSON.stringify(credentials), "utf-8");
+    } catch (error) {
+      console.error("Error deleting credential:", error);
+    }
+  }
+};
+const discordClient = {
+  isValidToken: async (token, shouldSave) => {
+    const client = new discord_jsSelfbotV13.Client();
+    try {
+      await client.login(token);
+      const username = client.user?.username || "";
+      const id = client.user?.id || "";
+      const avatar = client.user?.avatarURL() || "";
+      if (shouldSave) {
+        await credentialsManager.saveCredential(token, username, id, avatar);
+      }
+      return { valid: true, username, id, avatar };
+    } catch (err) {
+      console.error("Invalid token:", err);
+      return { valid: false };
+    } finally {
+      client.destroy();
+    }
+  }
+};
+let botProcesses = /* @__PURE__ */ new Map();
+const botManager = {
+  startBot: (token, port, userId) => {
+    const backendPath = path.join(__dirname, "../../out/backend/index.js");
+    const botProcess = child_process.fork(backendPath, [token, port], {
+      stdio: ["pipe", "pipe", "pipe", "ipc"]
+    });
+    botProcesses.set(userId, botProcess);
+    if (userId) {
+      fs.writeFileSync(path.join(process.cwd(), `${userId}.log`), "");
+    }
+    if (botProcess.stdout) {
+      botProcess.stdout.on("data", (data) => writeLog(`[🟢] ${data.toString()}`, userId));
+    }
+    if (botProcess.stderr) {
+      botProcess.stderr.on("data", (data) => writeLog(`[❌] ${data.toString()}`, userId));
+    }
+    botProcess.on("close", (code) => {
+      writeLog(`[🛑] ${code}`, userId);
+      botProcesses.delete(userId);
+    });
+    botProcess.on("error", (err) => {
+      writeLog(`[❌] ${err}`, userId);
+      botProcesses.delete(userId);
+    });
+  },
+  stopBot: (userId) => {
+    const botProcess = botProcesses.get(userId);
+    if (botProcess) {
+      botProcess.kill();
+      botProcesses.delete(userId);
+    }
+  },
+  getActiveBots: () => Array.from(botProcesses.keys())
+};
+const setupIpcHandlers = (mainWindow2) => {
   electron.ipcMain.handle("load-config", configManager.loadConfig);
   electron.ipcMain.handle("save-config", (_, config) => configManager.saveConfig(config));
   electron.ipcMain.handle("check-config", configManager.checkConfig);
@@ -222,24 +218,44 @@ const setupIpcHandlers = () => {
   electron.ipcMain.handle("get-credentials", credentialsManager.getCredentials);
   electron.ipcMain.handle("delete-credential", (_, token) => credentialsManager.deleteCredential(token));
   electron.ipcMain.handle("invalid-token", (_, token, shouldSave) => discordClient.isValidToken(token, shouldSave));
-  electron.ipcMain.handle("check-port", (_, port) => utils.isPortAvailable(port));
+  electron.ipcMain.handle("check-port", (_, port) => isPortAvailable(port));
   electron.ipcMain.on("start-bot", (_, token, port, userId) => botManager.startBot(token, port, userId));
   electron.ipcMain.on("stop-bot", (_, userId) => botManager.stopBot(userId));
   electron.ipcMain.handle("get-active-bots", () => botManager.getActiveBots());
+  electron.ipcMain.on("window-minimize", () => {
+    if (mainWindow2) mainWindow2.minimize();
+  });
+  electron.ipcMain.on("window-maximize", () => {
+    if (mainWindow2) {
+      if (mainWindow2.isMaximized()) {
+        mainWindow2.unmaximize();
+      } else {
+        mainWindow2.maximize();
+      }
+    }
+  });
+  electron.ipcMain.on("window-close", () => {
+    if (mainWindow2) mainWindow2.close();
+  });
 };
+const icon = path.join(__dirname, "../../resources/icon.png");
+let mainWindow = null;
 const createWindow = () => {
   mainWindow = new electron.BrowserWindow({
     width: 1500,
     height: 1e3,
     show: true,
+    frame: false,
     autoHideMenuBar: true,
     ...process.platform === "linux" ? { icon } : {},
     webPreferences: {
       preload: path.join(__dirname, "../preload/preload.js"),
-      sandbox: false
+      sandbox: false,
+      nodeIntegration: true,
+      contextIsolation: true
     }
   });
-  if (utils$1.is.dev) {
+  if (utils.is.dev) {
     mainWindow.webContents.openDevTools();
     process.env.NODE_ENV = "production";
   }
@@ -247,22 +263,20 @@ const createWindow = () => {
   mainWindow.on("ready-to-show", () => {
     mainWindow.show();
   });
-  if (utils$1.is.dev) {
+  if (utils.is.dev) {
     mainWindow.loadURL(process.env["ELECTRON_RENDERER_URL"]);
   } else {
     mainWindow.loadFile(path.join(__dirname, "../../out/renderer/index.html"));
   }
-  mainWindow.on("close", () => {
-    mainWindow.webContents.send("window-closing");
-  });
+  return mainWindow;
 };
 electron.app.whenReady().then(() => {
-  utils$1.electronApp.setAppUserModelId("com.expertise");
-  utils.clearAllLogs();
-  setupIpcHandlers();
-  createWindow();
+  utils.electronApp.setAppUserModelId("com.expertise");
+  clearAllLogs();
+  const mainWindow2 = createWindow();
+  setupIpcHandlers(mainWindow2);
   electron.app.on("activate", () => {
-    if (electron.BrowserWindow.getAllWindows().length === 0) createWindow();
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
 electron.app.on("web-contents-created", (_, contents) => {

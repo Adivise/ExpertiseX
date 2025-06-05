@@ -5,7 +5,6 @@ if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld("electron", electronAPI);
     contextBridge.exposeInMainWorld("electronAPI", {
-      onWindowClose: (callback) => ipcRenderer.on("window-closing", callback),
       startBot: (token, port, userId, avatar) => ipcRenderer.send("start-bot", token, port, userId, avatar),
       stopBot: (userId) => ipcRenderer.send("stop-bot", userId),
       getActiveBots: () => ipcRenderer.invoke("get-active-bots"),
@@ -20,7 +19,10 @@ if (process.contextIsolated) {
       loadConfig: () => ipcRenderer.invoke("load-config"),
       saveConfig: (config) => ipcRenderer.invoke("save-config", config),
       checkConfig: () => ipcRenderer.invoke("check-config"),
-      getVersion: () => process.env.npm_package_version || '2.6.0'
+      getVersion: () => process.env.npm_package_version || '2.7.0',
+      windowMinimize: () => ipcRenderer.send("window-minimize"),
+      windowMaximize: () => ipcRenderer.send("window-maximize"),
+      windowClose: () => ipcRenderer.send("window-close")
     });
   } catch (error) {
     console.error("Error exposing Electron API:", error);

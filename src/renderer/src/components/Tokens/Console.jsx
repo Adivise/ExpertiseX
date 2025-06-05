@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 
 const Console = ({ userId }) => {
   const [botLogs, setBotLogs] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
   const consoleRef = useRef(null);
 
   useEffect(() => {
@@ -26,6 +27,15 @@ const Console = ({ userId }) => {
     }
   }, [botLogs]);
 
+  useEffect(() => {
+    // Add a small delay before showing the console
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="content">
       <div className="markdown-container">
@@ -34,9 +44,9 @@ const Console = ({ userId }) => {
           <p>You can see the bot console logs in here.</p>
         </div>
       </div>
-      <div className="console-output" ref={consoleRef}>
+      <div className={`console-output ${isVisible ? 'visible' : ''}`} ref={consoleRef}>
         {botLogs.split('\n').map((line, index) => (
-          <div key={index} className="log-entry">
+          <div key={index} className="log-entry" style={{ animationDelay: `${index * 0.05}s` }}>
             <span className="log-content">{line}</span>
           </div>
         ))}

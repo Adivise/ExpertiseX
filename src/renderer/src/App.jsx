@@ -1,13 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Logins } from './components';
 import { COMPONENT_MAP } from './constants/componentMap';
 import { useTabs } from './hooks/useTabs';
 import { useSessionStorage } from './hooks/useSessionStorage';
 import { useBotOperations } from './hooks/useBotOperations';
+import { useSSEConnection } from './hooks/useSSEConnection';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './module/Navbar';
 import Sidebar from './module/Sidebar';
 import Footer from './module/Footer';
-import './assets/styles/main.css';
+import TitleBar from './module/TitleBar';
 
 /**
  * Main App component that manages the application state and layout
@@ -17,31 +20,45 @@ const App = () => {
     // State management
     const [activeComponent, setActiveComponent] = useState('logins');
     const tabs = useTabs();
-    const sessionStorage = useSessionStorage();
+    const sessionStorageSet = useSessionStorage();
     const { handleLogout } = useBotOperations(tabs, tabs.removeTab, tabs.setCurrentTab);
+    const { connect: connectSSE, disconnect: disconnectSSE } = useSSEConnection();
+    const connectSSERef = useRef(connectSSE);
 
-    // Effects
+    // Update ref when connectSSE changes
     useEffect(() => {
-        const setupWindowCloseHandler = () => {
-            window.electronAPI.onWindowClose(async () => {
-                await handleLogout(tabs.currentTab);
-            });
-        };
+        connectSSERef.current = connectSSE;
+    }, [connectSSE]);
 
+    // Load active bots on initial mount
+    useEffect(() => {
+        let isMounted = true;
         const loadActiveBots = async () => {
             try {
                 const activeBots = await window.electronAPI.getActiveBots();
-                if (activeBots && Array.isArray(activeBots)) {
+                if (!isMounted) return;
+                
+                if (activeBots && Array.isArray(activeBots) && activeBots.length > 0) {
                     tabs.setActiveTabs(activeBots);
+                    activeBots.forEach(bot => {
+                        if (bot.userId) {
+                            connectSSERef.current(bot.userId);
+                        }
+                    });
+                } else {
+                    //
                 }
             } catch (error) {
-                console.error('Error loading active bots:', error);
+                if (isMounted) {
+                    //
+                }
             }
         };
-
-        setupWindowCloseHandler();
         loadActiveBots();
-    }, []);
+        return () => {
+            isMounted = false;
+        };
+    }, []); // Empty dependency array since we're using ref
 
     // Event handlers
     const handleLoginSuccess = (loggedInUsername, loggedInUserId, port, avatar) => {
@@ -55,7 +72,8 @@ const App = () => {
 
         tabs.addTab(newTab);
         setActiveComponent('console');
-        sessionStorage.setSessionData(loggedInUserId, loggedInUsername, port, avatar);
+        sessionStorageSet.setSessionData(loggedInUserId, loggedInUsername, port, avatar);
+        connectSSERef.current(loggedInUserId);
     };
 
     const handleNewTab = () => {
@@ -66,6 +84,12 @@ const App = () => {
     const handleTabSwitch = (tabId) => {
         tabs.switchTab(tabId);
         setActiveComponent('console');
+    };
+
+    // Handle logout - unmount SSE connection for the specific bot
+    const handleLogoutWithSSE = async (userId) => {
+        disconnectSSE(userId);
+        await handleLogout(userId);
     };
 
     // Render helpers
@@ -83,6 +107,10 @@ const App = () => {
     
     return (
         <div className="App">
+            <TitleBar 
+                tabs={tabs.tabs}
+                onTabClose={handleLogoutWithSSE}
+            />
             <Navbar 
                 username={currentUsername} 
                 userId={tabs.currentTab}
@@ -90,12 +118,13 @@ const App = () => {
                 removeTab={tabs.removeTab}
                 setCurrentTab={tabs.setCurrentTab}
                 avatar={currentAvatar}
+                onLogout={handleLogoutWithSSE}
             />
             <div className="dashboard">
                 {tabs.currentTab && (
                     <Sidebar 
                         setActiveComponent={setActiveComponent} 
-                        setIsLoggedIn={() => handleLogout(tabs.currentTab)}
+                        setIsLoggedIn={() => handleLogoutWithSSE(tabs.currentTab)}
                         activeComponent={activeComponent}
                     />
                 )}
@@ -107,8 +136,10 @@ const App = () => {
                 tabs={tabs.tabs}
                 currentTab={tabs.currentTab}
                 onTabSwitch={handleTabSwitch}
-                onTabClose={handleLogout}
+                onTabClose={handleLogoutWithSSE}
                 onNewTab={handleNewTab}
+            />
+            <ToastContainer
             />
         </div>
     );

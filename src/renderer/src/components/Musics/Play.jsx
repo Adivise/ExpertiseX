@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import MarkdownRenderer from '../../module/MDRender';
+import { SuggestionItem } from '../../hooks/components/SuggestionItem';
 
 const Play = ({ userId }) => {
     const [guildId, setGuildId] = useState('');
@@ -52,17 +53,12 @@ const Play = ({ userId }) => {
         }
     };
 
-    const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
-            handlePlay(event);
-        }
-    };
-
     const fetchSearch = async (value) => {
         if (!value.trim()) {
             setSuggestions([]);
             return;
         }
+
         try {
             const { data } = await axios.get(`http://localhost:${port}/search?q=${value}`);
             const limitedSuggestions = data.songs.slice(0, 5);
@@ -84,23 +80,6 @@ const Play = ({ userId }) => {
         setShowSuggestions(false);
     };
 
-    const renderSuggestion = (suggestion) => (
-        <button 
-            className="suggestion-item"
-            onClick={() => handleSuggestionClick(suggestion)}
-        >
-            <div className="suggestion-thumbnail">
-                <img src={suggestion.thumbnail} alt={suggestion.name} />
-            </div>
-            <div className="suggestion-content">
-                <div className="suggestion-title">{suggestion.name}</div>
-                <div className="suggestion-subtitle">
-                    {suggestion.duration ? `${Math.floor(suggestion.duration / 60000)}:${((suggestion.duration % 60000) / 1000).toFixed(0).padStart(2, '0')}` : ''}
-                </div>
-            </div>
-        </button>
-    );
-    
     return (
         <div id="play" className="content">
             <div className="markdown-container">
@@ -114,45 +93,101 @@ const Play = ({ userId }) => {
                     </ul>
                 </div>
             </div>
-            <form className="styled-form" onKeyDown={handleKeyPress}>
+
+            <form 
+                className="styled-form" 
+                onSubmit={handlePlay}
+            >
                 <input
                     type="text"
                     placeholder="Guild ID"
                     value={guildId}
                     onChange={(e) => setGuildId(e.target.value)}
+                    aria-label="Guild ID"
                 />
                 <input
                     type="text"
                     placeholder="Voice Channel ID"
                     value={voiceId}
                     onChange={(e) => setVoiceId(e.target.value)}
+                    aria-label="Voice Channel ID"
                 />
-                <div className="autosuggest-container" ref={suggestionsRef}>
+                <div 
+                    className="autosuggest-container" 
+                    ref={suggestionsRef}
+                    style={{ position: 'relative' }}
+                >
                     <input
                         type="search"
                         placeholder="Song/Url"
                         value={songName}
                         onChange={handleInputChange}
                         onFocus={() => setShowSuggestions(true)}
+                        aria-label="Song or URL"
+                        aria-expanded={showSuggestions}
+                        aria-controls="suggestions-list"
+                        role="combobox"
                     />
                     {showSuggestions && suggestions.length > 0 && (
-                        <div className="suggestions-list">
+                        <div 
+                            id="suggestions-list"
+                            className="suggestions-list"
+                            role="listbox"
+                            style={{
+                                position: 'absolute',
+                                top: '100%',
+                                left: 0,
+                                right: 0,
+                                background: 'var(--bg-dark)',
+                                borderRadius: '8px',
+                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+                                zIndex: 1000,
+                                maxHeight: '300px',
+                                overflowY: 'auto',
+                                marginTop: '4px'
+                            }}
+                        >
                             {suggestions.map((suggestion, index) => (
-                                <div key={index} className="suggestion-wrapper">
-                                    {renderSuggestion(suggestion)}
+                                <div 
+                                    key={index} 
+                                    className="suggestion-wrapper"
+                                    role="option"
+                                >
+                                    <SuggestionItem
+                                        suggestion={suggestion}
+                                        onSelect={handleSuggestionClick}
+                                    />
                                 </div>
                             ))}
                         </div>
                     )}
                 </div>
+                
                 <div style={{ marginTop: '20px' }}>
-                    <button type="button" onClick={handlePlay} disabled={isCooldown}>
+                    <button 
+                        type="submit" 
+                        disabled={isCooldown}
+                        style={{
+                            opacity: isCooldown ? 0.7 : 1,
+                            cursor: isCooldown ? 'not-allowed' : 'pointer'
+                        }}
+                    >
                         {isCooldown ? 'Cooldown...' : 'Submit'}
                     </button>
                 </div>
             </form>
+
             {response && (
-                <div className="response-container">
+                <div 
+                    className="response-container"
+                    style={{
+                        marginTop: '20px',
+                        padding: '16px',
+                        background: 'var(--bg-dark)',
+                        borderRadius: '8px',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+                    }}
+                >
                     <MarkdownRenderer content={response} />
                 </div>
             )}
@@ -160,4 +195,4 @@ const Play = ({ userId }) => {
     );
 };
 
-export default Play;
+export default Play; 

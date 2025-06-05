@@ -1,0 +1,88 @@
+.titlebar {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  background: var(--bg-darker);
+  user-select: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  -webkit-app-region: drag;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.titlebar-drag-region {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.window-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-light);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.titlebar-icon {
+  color: var(--primary);
+  filter: drop-shadow(0 0 8px var(--primary));
+}
+
+.window-controls {
+    display: flex;
+    -webkit-app-region: no-drag;
+    height: 100%;
+}
+
+.window-control {
+  width: 46px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: var(--text-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.window-control:hover {
+  background: var(--hover-bg);
+  color: var(--text-light);
+}
+
+.window-control.close:hover {
+  background: var(--error);
+  color: var(--text-light);
+}
+
+.window-control svg {
+  transition: transform var(--transition-fast);
+}
+
+.window-control:hover svg {
+  transform: scale(1.1);
+}
+
+.window-control.close:hover svg {
+  transform: scale(1.1) rotate(90deg);
+}
+
+/* Adjust the main content layout */
+.App {
+  padding-top: 32px; /* Height of the titlebar */
+}
+
+/* Remove the body padding since we're handling it in the App component */
+body {
+  padding-top: 0;
+} 

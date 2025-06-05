@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 
 /**
  * Custom hook for managing tabs in the application
@@ -9,32 +9,42 @@ export const useTabs = () => {
     const [activeTabs, setActiveTabs] = useState([]);
     const [currentTab, setCurrentTab] = useState(null);
 
-    const addTab = (tab) => {
+    const addTab = useCallback((tab) => {
         setTabs(prev => [...prev, tab]);
         setActiveTabs(prev => [...prev, tab.userId]);
         setCurrentTab(tab.userId);
-    };
+    }, []);
 
-    const removeTab = (userId) => {
+    const removeTab = useCallback((userId) => {
         setTabs(prev => prev.filter(tab => tab.userId !== userId));
         setActiveTabs(prev => prev.filter(id => id !== userId));
         if (currentTab === userId) {
             setCurrentTab(null);
         }
-    };
+    }, [currentTab]);
 
-    const switchTab = (tabId) => {
+    const switchTab = useCallback((tabId) => {
         setCurrentTab(tabId);
-    };
+    }, []);
 
-    return {
+    const setActiveTabsCallback = useCallback((newActiveTabs) => {
+        setActiveTabs(newActiveTabs);
+    }, []);
+
+    const setCurrentTabCallback = useCallback((newCurrentTab) => {
+        setCurrentTab(newCurrentTab);
+    }, []);
+
+    const tabState = useMemo(() => ({
         tabs,
         activeTabs,
         currentTab,
         addTab,
         removeTab,
         switchTab,
-        setCurrentTab,
-        setActiveTabs
-    };
+        setCurrentTab: setCurrentTabCallback,
+        setActiveTabs: setActiveTabsCallback
+    }), [tabs, activeTabs, currentTab, addTab, removeTab, switchTab, setCurrentTabCallback, setActiveTabsCallback]);
+
+    return tabState;
 }; 

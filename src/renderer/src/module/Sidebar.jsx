@@ -4,6 +4,7 @@ const Sidebar = ({ setActiveComponent, activeComponent }) => {
     const [isSpecialCollapsed, setIsSpecialCollapsed] = useState(false);
     const [isMusicCollapsed, setIsMusicCollapsed] = useState(false);
     const [isFilterCollapsed, setIsFilterCollapsed] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const categories = [
         {
@@ -69,27 +70,51 @@ const Sidebar = ({ setActiveComponent, activeComponent }) => {
         }
     ];
 
+    const filteredCategories = categories.map(category => ({
+        ...category,
+        items: category.items.filter(item =>
+            item.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.id.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+    }));
+
     return (
         <aside className="sidebar">
             <div className="sidebar-content">
-                {categories.map((category, index) => (
+                <div className="search-container">
+                    <input
+                        type="text"
+                        placeholder="Search components..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="search-input"
+                    />
+                </div>
+                {filteredCategories.map((category, index) => (
                     <div key={index} className="sidebar-category">
-                        <div className="category-header" onClick={() => category.setIsCollapsed(!category.isCollapsed)}>
-                            <h2>{category.name}</h2><span className="collapse-icon">{category.isCollapsed ? '▶' : '▼'}</span>
-                        </div>
-                        {!category.isCollapsed && (
-                            <div className="category-items">
-                                {category.items.map((item) => (
-                                    <button
-                                        key={item.id}
-                                        className={`sidebar-button ${activeComponent === item.id ? 'active' : ''}`}
-                                        onClick={() => setActiveComponent(item.id)}
-                                    >
-                                        <span className="button-icon">{item.icon}</span>
-                                        <span className="button-label">{item.label}</span>
-                                    </button>
-                                ))}
-                            </div>
+                        {category.items.length > 0 && (
+                            <>
+                                <div 
+                                    className="category-header" 
+                                    onClick={() => category.setIsCollapsed(!category.isCollapsed)}
+                                    aria-expanded={!category.isCollapsed}
+                                >
+                                    <h2>{category.name}</h2>
+                                    <span className="collapse-icon">▼</span>
+                                </div>
+                                <div className={`category-items ${!category.isCollapsed ? 'expanded' : ''}`}>
+                                    {category.items.map((item) => (
+                                        <button
+                                            key={item.id}
+                                            className={`sidebar-button ${activeComponent === item.id ? 'active' : ''}`}
+                                            onClick={() => setActiveComponent(item.id)}
+                                        >
+                                            <span className="button-icon">{item.icon}</span>
+                                            <span className="button-label">{item.label}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            </>
                         )}
                     </div>
                 ))}

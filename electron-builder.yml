@@ -6,11 +6,11 @@ files:
   - "**/*"
   - "!src/**"
   - "!.env"
-  - "!bot.log"
   - "!credentials.json"
   - "!config.json"
   - "!README.md"
   - "!ffmpeg.exe"
+  - "!*.log"
 asarUnpack:
   - "resources/**"
 win:

@@ -520,10 +520,10 @@ function requireReact() {
   return react.exports;
 }
 var reactExports = requireReact();
-const index$2 = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
-const React = /* @__PURE__ */ _mergeNamespaces({
+const React = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
+const React$1 = /* @__PURE__ */ _mergeNamespaces({
   __proto__: null,
-  default: index$2
+  default: React
 }, [reactExports]);
 var client = { exports: {} };
 var reactDomClient_production = {};
@@ -863,11 +863,11 @@ function requireReactDom_production() {
       return "use-credentials" === input ? input : "";
   }
   reactDom_production.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE = Internals;
-  reactDom_production.createPortal = function(children, container) {
+  reactDom_production.createPortal = function(children, container2) {
     var key = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : null;
-    if (!container || 1 !== container.nodeType && 9 !== container.nodeType && 11 !== container.nodeType)
+    if (!container2 || 1 !== container2.nodeType && 9 !== container2.nodeType && 11 !== container2.nodeType)
       throw Error(formatProdErrorMessage(299));
-    return createPortal$1(children, container, null, key);
+    return createPortal$1(children, container2, null, key);
   };
   reactDom_production.flushSync = function(fn) {
     var previousTransition = ReactSharedInternals.T, previousUpdatePriority = Internals.p;
@@ -2491,8 +2491,8 @@ function requireReactDomClient_production() {
     if ("input" === domEventName || "change" === domEventName)
       return getInstIfValueChanged(targetInst);
   }
-  function is(x, y) {
-    return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
+  function is(x, y2) {
+    return x === y2 && (0 !== x || 1 / x === 1 / y2) || x !== x && y2 !== y2;
   }
   var objectIs = "function" === typeof Object.is ? Object.is : is;
   function shallowEqual(objA, objB) {
@@ -8555,8 +8555,8 @@ function requireReactDomClient_production() {
     var allEntangledLanes = root3.entangledLanes;
     if (0 !== allEntangledLanes)
       for (root3 = root3.entanglements, allEntangledLanes &= lanes; 0 < allEntangledLanes; ) {
-        var index$22 = 31 - clz32(allEntangledLanes), lane = 1 << index$22;
-        lanes |= root3[index$22];
+        var index$2 = 31 - clz32(allEntangledLanes), lane = 1 << index$2;
+        lanes |= root3[index$2];
         allEntangledLanes &= ~lane;
       }
     entangledRenderLanes = lanes;
@@ -9543,8 +9543,8 @@ function requireReactDomClient_production() {
         if (null === targetInst$jscomp$0) return;
         var nodeTag = targetInst$jscomp$0.tag;
         if (3 === nodeTag || 4 === nodeTag) {
-          var container = targetInst$jscomp$0.stateNode.containerInfo;
-          if (container === targetContainer) break;
+          var container2 = targetInst$jscomp$0.stateNode.containerInfo;
+          if (container2 === targetContainer) break;
           if (4 === nodeTag)
             for (nodeTag = targetInst$jscomp$0.return; null !== nodeTag; ) {
               var grandTag = nodeTag.tag;
@@ -9552,15 +9552,15 @@ function requireReactDomClient_production() {
                 return;
               nodeTag = nodeTag.return;
             }
-          for (; null !== container; ) {
-            nodeTag = getClosestInstanceFromNode(container);
+          for (; null !== container2; ) {
+            nodeTag = getClosestInstanceFromNode(container2);
             if (null === nodeTag) return;
             grandTag = nodeTag.tag;
             if (5 === grandTag || 6 === grandTag || 26 === grandTag || 27 === grandTag) {
               targetInst$jscomp$0 = ancestorInst = nodeTag;
               continue a;
             }
-            container = container.parentNode;
+            container2 = container2.parentNode;
           }
         }
         targetInst$jscomp$0 = targetInst$jscomp$0.return;
@@ -10748,8 +10748,8 @@ function requireReactDomClient_production() {
     } while (node2);
     retryIfBlockedOn(suspenseInstance);
   }
-  function clearContainerSparingly(container) {
-    var nextNode = container.firstChild;
+  function clearContainerSparingly(container2) {
+    var nextNode = container2.firstChild;
     nextNode && 10 === nextNode.nodeType && (nextNode = nextNode.nextSibling);
     for (; nextNode; ) {
       var node2 = nextNode;
@@ -10767,7 +10767,7 @@ function requireReactDomClient_production() {
         case "LINK":
           if ("stylesheet" === node2.rel.toLowerCase()) continue;
       }
-      container.removeChild(node2);
+      container2.removeChild(node2);
     }
   }
   function canHydrateInstance(instance, type, props, inRootOrSingleton) {
@@ -10889,8 +10889,8 @@ function requireReactDomClient_production() {
     detachDeletedInstance(instance);
   }
   var preloadPropsMap = /* @__PURE__ */ new Map(), preconnectsSet = /* @__PURE__ */ new Set();
-  function getHoistableRoot(container) {
-    return "function" === typeof container.getRootNode ? container.getRootNode() : 9 === container.nodeType ? container : container.ownerDocument;
+  function getHoistableRoot(container2) {
+    return "function" === typeof container2.getRootNode ? container2.getRootNode() : 9 === container2.nodeType ? container2 : container2.ownerDocument;
   }
   var previousDispatcher = ReactDOMSharedInternals.d;
   ReactDOMSharedInternals.d = {
@@ -11457,14 +11457,14 @@ function requireReactDomClient_production() {
     parentComponent = emptyContextObject;
     return parentComponent;
   }
-  function updateContainerImpl(rootFiber, lane, element2, container, parentComponent, callback) {
+  function updateContainerImpl(rootFiber, lane, element2, container2, parentComponent, callback) {
     parentComponent = getContextForSubtree(parentComponent);
-    null === container.context ? container.context = parentComponent : container.pendingContext = parentComponent;
-    container = createUpdate(lane);
-    container.payload = { element: element2 };
+    null === container2.context ? container2.context = parentComponent : container2.pendingContext = parentComponent;
+    container2 = createUpdate(lane);
+    container2.payload = { element: element2 };
     callback = void 0 === callback ? null : callback;
-    null !== callback && (container.callback = callback);
-    element2 = enqueueUpdate(rootFiber, container, lane);
+    null !== callback && (container2.callback = callback);
+    element2 = enqueueUpdate(rootFiber, container2, lane);
     null !== element2 && (scheduleUpdateOnFiber(element2, rootFiber, lane), entangleTransitions(element2, rootFiber, lane));
   }
   function markRetryLaneImpl(fiber, retryLane) {
@@ -11486,22 +11486,22 @@ function requireReactDomClient_production() {
     }
   }
   var _enabled = true;
-  function dispatchDiscreteEvent(domEventName, eventSystemFlags, container, nativeEvent) {
+  function dispatchDiscreteEvent(domEventName, eventSystemFlags, container2, nativeEvent) {
     var prevTransition = ReactSharedInternals.T;
     ReactSharedInternals.T = null;
     var previousPriority = ReactDOMSharedInternals.p;
     try {
-      ReactDOMSharedInternals.p = 2, dispatchEvent(domEventName, eventSystemFlags, container, nativeEvent);
+      ReactDOMSharedInternals.p = 2, dispatchEvent(domEventName, eventSystemFlags, container2, nativeEvent);
     } finally {
       ReactDOMSharedInternals.p = previousPriority, ReactSharedInternals.T = prevTransition;
     }
   }
-  function dispatchContinuousEvent(domEventName, eventSystemFlags, container, nativeEvent) {
+  function dispatchContinuousEvent(domEventName, eventSystemFlags, container2, nativeEvent) {
     var prevTransition = ReactSharedInternals.T;
     ReactSharedInternals.T = null;
     var previousPriority = ReactDOMSharedInternals.p;
     try {
-      ReactDOMSharedInternals.p = 8, dispatchEvent(domEventName, eventSystemFlags, container, nativeEvent);
+      ReactDOMSharedInternals.p = 8, dispatchEvent(domEventName, eventSystemFlags, container2, nativeEvent);
     } finally {
       ReactDOMSharedInternals.p = previousPriority, ReactSharedInternals.T = prevTransition;
     }
@@ -11929,10 +11929,10 @@ function requireReactDomClient_production() {
     var root3 = this._internalRoot;
     if (null !== root3) {
       this._internalRoot = null;
-      var container = root3.containerInfo;
+      var container2 = root3.containerInfo;
       updateContainerImpl(root3.current, 2, null, root3, null, null);
       flushSyncWork$1();
-      container[internalContainerInstanceKey] = null;
+      container2[internalContainerInstanceKey] = null;
     }
   };
   function ReactDOMHydrationRoot(internalRoot) {
@@ -11986,12 +11986,12 @@ function requireReactDomClient_production() {
       } catch (err2) {
       }
   }
-  reactDomClient_production.createRoot = function(container, options3) {
-    if (!isValidContainer(container)) throw Error(formatProdErrorMessage(299));
+  reactDomClient_production.createRoot = function(container2, options3) {
+    if (!isValidContainer(container2)) throw Error(formatProdErrorMessage(299));
     var isStrictMode = false, identifierPrefix = "", onUncaughtError = defaultOnUncaughtError, onCaughtError = defaultOnCaughtError, onRecoverableError = defaultOnRecoverableError, transitionCallbacks = null;
     null !== options3 && void 0 !== options3 && (true === options3.unstable_strictMode && (isStrictMode = true), void 0 !== options3.identifierPrefix && (identifierPrefix = options3.identifierPrefix), void 0 !== options3.onUncaughtError && (onUncaughtError = options3.onUncaughtError), void 0 !== options3.onCaughtError && (onCaughtError = options3.onCaughtError), void 0 !== options3.onRecoverableError && (onRecoverableError = options3.onRecoverableError), void 0 !== options3.unstable_transitionCallbacks && (transitionCallbacks = options3.unstable_transitionCallbacks));
     options3 = createFiberRoot(
-      container,
+      container2,
       1,
       false,
       null,
@@ -12004,16 +12004,16 @@ function requireReactDomClient_production() {
       transitionCallbacks,
       null
     );
-    container[internalContainerInstanceKey] = options3.current;
-    listenToAllSupportedEvents(container);
+    container2[internalContainerInstanceKey] = options3.current;
+    listenToAllSupportedEvents(container2);
     return new ReactDOMRoot(options3);
   };
-  reactDomClient_production.hydrateRoot = function(container, initialChildren, options3) {
-    if (!isValidContainer(container)) throw Error(formatProdErrorMessage(299));
+  reactDomClient_production.hydrateRoot = function(container2, initialChildren, options3) {
+    if (!isValidContainer(container2)) throw Error(formatProdErrorMessage(299));
     var isStrictMode = false, identifierPrefix = "", onUncaughtError = defaultOnUncaughtError, onCaughtError = defaultOnCaughtError, onRecoverableError = defaultOnRecoverableError, transitionCallbacks = null, formState = null;
     null !== options3 && void 0 !== options3 && (true === options3.unstable_strictMode && (isStrictMode = true), void 0 !== options3.identifierPrefix && (identifierPrefix = options3.identifierPrefix), void 0 !== options3.onUncaughtError && (onUncaughtError = options3.onUncaughtError), void 0 !== options3.onCaughtError && (onCaughtError = options3.onCaughtError), void 0 !== options3.onRecoverableError && (onRecoverableError = options3.onRecoverableError), void 0 !== options3.unstable_transitionCallbacks && (transitionCallbacks = options3.unstable_transitionCallbacks), void 0 !== options3.formState && (formState = options3.formState));
     initialChildren = createFiberRoot(
-      container,
+      container2,
       1,
       true,
       initialChildren,
@@ -12037,8 +12037,8 @@ function requireReactDomClient_production() {
     initialChildren.current.lanes = options3;
     markRootUpdated$1(initialChildren, options3);
     ensureRootIsScheduled(initialChildren);
-    container[internalContainerInstanceKey] = initialChildren.current;
-    listenToAllSupportedEvents(container);
+    container2[internalContainerInstanceKey] = initialChildren.current;
+    listenToAllSupportedEvents(container2);
     return new ReactDOMHydrationRoot(initialChildren);
   };
   reactDomClient_production.version = "19.1.0";
@@ -14455,63 +14455,63 @@ function _typeof(o) {
     return o2 && "function" == typeof Symbol && o2.constructor === Symbol && o2 !== Symbol.prototype ? "symbol" : typeof o2;
   }, _typeof(o);
 }
-function toPrimitive(t, r) {
+function toPrimitive(t, r2) {
   if ("object" != _typeof(t) || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (void 0 !== e) {
-    var i = e.call(t, r);
+    var i = e.call(t, r2);
     if ("object" != _typeof(i)) return i;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
-  return ("string" === r ? String : Number)(t);
+  return ("string" === r2 ? String : Number)(t);
 }
 function toPropertyKey(t) {
   var i = toPrimitive(t, "string");
   return "symbol" == _typeof(i) ? i : i + "";
 }
-function _defineProperty(e, r, t) {
-  return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+function _defineProperty(e, r2, t) {
+  return (r2 = toPropertyKey(r2)) in e ? Object.defineProperty(e, r2, {
     value: t,
     enumerable: true,
     configurable: true,
     writable: true
-  }) : e[r] = t, e;
+  }) : e[r2] = t, e;
 }
-function ownKeys(e, r) {
+function ownKeys(e, r2) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var o = Object.getOwnPropertySymbols(e);
-    r && (o = o.filter(function(r2) {
-      return Object.getOwnPropertyDescriptor(e, r2).enumerable;
+    r2 && (o = o.filter(function(r3) {
+      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
     })), t.push.apply(t, o);
   }
   return t;
 }
 function _objectSpread2(e) {
-  for (var r = 1; r < arguments.length; r++) {
-    var t = null != arguments[r] ? arguments[r] : {};
-    r % 2 ? ownKeys(Object(t), true).forEach(function(r2) {
-      _defineProperty(e, r2, t[r2]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r2) {
-      Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t, r2));
+  for (var r2 = 1; r2 < arguments.length; r2++) {
+    var t = null != arguments[r2] ? arguments[r2] : {};
+    r2 % 2 ? ownKeys(Object(t), true).forEach(function(r3) {
+      _defineProperty(e, r3, t[r3]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r3) {
+      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t, r3));
     });
   }
   return e;
 }
-function _arrayWithHoles(r) {
-  if (Array.isArray(r)) return r;
+function _arrayWithHoles(r2) {
+  if (Array.isArray(r2)) return r2;
 }
-function _iterableToArrayLimit(r, l) {
-  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+function _iterableToArrayLimit(r2, l) {
+  var t = null == r2 ? null : "undefined" != typeof Symbol && r2[Symbol.iterator] || r2["@@iterator"];
   if (null != t) {
     var e, n, i, u, a = [], f = true, o = false;
     try {
-      if (i = (t = t.call(r)).next, 0 === l) {
+      if (i = (t = t.call(r2)).next, 0 === l) {
         if (Object(t) !== t) return;
         f = false;
       } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = true) ;
-    } catch (r2) {
-      o = true, n = r2;
+    } catch (r3) {
+      o = true, n = r3;
     } finally {
       try {
         if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
@@ -14522,39 +14522,39 @@ function _iterableToArrayLimit(r, l) {
     return a;
   }
 }
-function _arrayLikeToArray(r, a) {
-  (null == a || a > r.length) && (a = r.length);
-  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+function _arrayLikeToArray(r2, a) {
+  (null == a || a > r2.length) && (a = r2.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r2[e];
   return n;
 }
-function _unsupportedIterableToArray(r, a) {
-  if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray(r, a);
-    var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+function _unsupportedIterableToArray(r2, a) {
+  if (r2) {
+    if ("string" == typeof r2) return _arrayLikeToArray(r2, a);
+    var t = {}.toString.call(r2).slice(8, -1);
+    return "Object" === t && r2.constructor && (t = r2.constructor.name), "Map" === t || "Set" === t ? Array.from(r2) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r2, a) : void 0;
   }
 }
 function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _slicedToArray(r, e) {
-  return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
+function _slicedToArray(r2, e) {
+  return _arrayWithHoles(r2) || _iterableToArrayLimit(r2, e) || _unsupportedIterableToArray(r2, e) || _nonIterableRest();
 }
-function _objectWithoutPropertiesLoose(r, e) {
-  if (null == r) return {};
+function _objectWithoutPropertiesLoose(r2, e) {
+  if (null == r2) return {};
   var t = {};
-  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
+  for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
     if (-1 !== e.indexOf(n)) continue;
-    t[n] = r[n];
+    t[n] = r2[n];
   }
   return t;
 }
 function _objectWithoutProperties(e, t) {
   if (null == e) return {};
-  var o, r, i = _objectWithoutPropertiesLoose(e, t);
+  var o, r2, i = _objectWithoutPropertiesLoose(e, t);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
-    for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
+    for (r2 = 0; r2 < n.length; r2++) o = n[r2], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
@@ -14606,7 +14606,7 @@ function _extends() {
   return _extends = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
-      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
+      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
     return n;
   }, _extends.apply(null, arguments);
@@ -14614,14 +14614,14 @@ function _extends() {
 function _classCallCheck(a, n) {
   if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
 }
-function _defineProperties(e, r) {
-  for (var t = 0; t < r.length; t++) {
-    var o = r[t];
+function _defineProperties(e, r2) {
+  for (var t = 0; t < r2.length; t++) {
+    var o = r2[t];
     o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, toPropertyKey(o.key), o);
   }
 }
-function _createClass(e, r, t) {
-  return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", {
+function _createClass(e, r2, t) {
+  return r2 && _defineProperties(e.prototype, r2), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", {
     writable: false
   }), e;
 }
@@ -14667,27 +14667,27 @@ function _possibleConstructorReturn(t, e) {
   return _assertThisInitialized(t);
 }
 function _createSuper(t) {
-  var r = _isNativeReflectConstruct();
+  var r2 = _isNativeReflectConstruct();
   return function() {
     var e, o = _getPrototypeOf(t);
-    if (r) {
+    if (r2) {
       var s = _getPrototypeOf(this).constructor;
       e = Reflect.construct(o, arguments, s);
     } else e = o.apply(this, arguments);
     return _possibleConstructorReturn(this, e);
   };
 }
-function _arrayWithoutHoles(r) {
-  if (Array.isArray(r)) return _arrayLikeToArray(r);
+function _arrayWithoutHoles(r2) {
+  if (Array.isArray(r2)) return _arrayLikeToArray(r2);
 }
-function _iterableToArray(r) {
-  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
+function _iterableToArray(r2) {
+  if ("undefined" != typeof Symbol && null != r2[Symbol.iterator] || null != r2["@@iterator"]) return Array.from(r2);
 }
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _toConsumableArray(r) {
-  return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread();
+function _toConsumableArray(r2) {
+  return _arrayWithoutHoles(r2) || _iterableToArray(r2) || _unsupportedIterableToArray(r2) || _nonIterableSpread();
 }
 function sheetForTag(tag) {
   if (tag.sheet) {
@@ -15084,9 +15084,9 @@ function ruleset(value, root2, parent, index2, offset, rules, points, type, prop
   var rule = offset === 0 ? rules : [""];
   var size = sizeof(rule);
   for (var i = 0, j = 0, k = 0; i < index2; ++i)
-    for (var x = 0, y = substr(value, post2 + 1, post2 = abs(j = points[i])), z = value; x < size; ++x)
-      if (z = trim(j > 0 ? rule[x] + " " + y : replace$1(y, /&\f/g, rule[x])))
-        props[k++] = z;
+    for (var x = 0, y2 = substr(value, post2 + 1, post2 = abs(j = points[i])), z2 = value; x < size; ++x)
+      if (z2 = trim(j > 0 ? rule[x] + " " + y2 : replace$1(y2, /&\f/g, rule[x])))
+        props[k++] = z2;
   return node$1(value, root2, parent, offset === 0 ? RULESET : type, props, children, length2);
 }
 function comment(value, root2, parent) {
@@ -15423,10 +15423,10 @@ var createCache = function createCache2(options2) {
   }
   var stylisPlugins = options2.stylisPlugins || defaultStylisPlugins;
   var inserted = {};
-  var container;
+  var container2;
   var nodesToHydrate = [];
   {
-    container = options2.container || document.head;
+    container2 = options2.container || document.head;
     Array.prototype.forEach.call(
       // this means we will ignore elements which don't have a space in them which
       // means that the style elements we're looking at are only Emotion 11 server-rendered style elements
@@ -15463,7 +15463,7 @@ var createCache = function createCache2(options2) {
     key,
     sheet: new StyleSheet({
       key,
-      container,
+      container: container2,
       nonce: options2.nonce,
       speedy: options2.speedy,
       prepend: options2.prepend,
@@ -15491,8 +15491,8 @@ var hasRequiredReactIs_production_min;
 function requireReactIs_production_min() {
   if (hasRequiredReactIs_production_min) return reactIs_production_min;
   hasRequiredReactIs_production_min = 1;
-  var b = "function" === typeof Symbol && Symbol.for, c = b ? Symbol.for("react.element") : 60103, d = b ? Symbol.for("react.portal") : 60106, e = b ? Symbol.for("react.fragment") : 60107, f = b ? Symbol.for("react.strict_mode") : 60108, g = b ? Symbol.for("react.profiler") : 60114, h = b ? Symbol.for("react.provider") : 60109, k = b ? Symbol.for("react.context") : 60110, l = b ? Symbol.for("react.async_mode") : 60111, m = b ? Symbol.for("react.concurrent_mode") : 60111, n = b ? Symbol.for("react.forward_ref") : 60112, p = b ? Symbol.for("react.suspense") : 60113, q = b ? Symbol.for("react.suspense_list") : 60120, r = b ? Symbol.for("react.memo") : 60115, t = b ? Symbol.for("react.lazy") : 60116, v = b ? Symbol.for("react.block") : 60121, w2 = b ? Symbol.for("react.fundamental") : 60117, x = b ? Symbol.for("react.responder") : 60118, y = b ? Symbol.for("react.scope") : 60119;
-  function z(a) {
+  var b = "function" === typeof Symbol && Symbol.for, c = b ? Symbol.for("react.element") : 60103, d = b ? Symbol.for("react.portal") : 60106, e = b ? Symbol.for("react.fragment") : 60107, f = b ? Symbol.for("react.strict_mode") : 60108, g = b ? Symbol.for("react.profiler") : 60114, h = b ? Symbol.for("react.provider") : 60109, k = b ? Symbol.for("react.context") : 60110, l = b ? Symbol.for("react.async_mode") : 60111, m = b ? Symbol.for("react.concurrent_mode") : 60111, n = b ? Symbol.for("react.forward_ref") : 60112, p = b ? Symbol.for("react.suspense") : 60113, q = b ? Symbol.for("react.suspense_list") : 60120, r2 = b ? Symbol.for("react.memo") : 60115, t = b ? Symbol.for("react.lazy") : 60116, v = b ? Symbol.for("react.block") : 60121, w2 = b ? Symbol.for("react.fundamental") : 60117, x = b ? Symbol.for("react.responder") : 60118, y2 = b ? Symbol.for("react.scope") : 60119;
+  function z2(a) {
     if ("object" === typeof a && null !== a) {
       var u = a.$$typeof;
       switch (u) {
@@ -15510,7 +15510,7 @@ function requireReactIs_production_min() {
                 case k:
                 case n:
                 case t:
-                case r:
+                case r2:
                 case h:
                   return a;
                 default:
@@ -15523,7 +15523,7 @@ function requireReactIs_production_min() {
     }
   }
   function A(a) {
-    return z(a) === m;
+    return z2(a) === m;
   }
   reactIs_production_min.AsyncMode = l;
   reactIs_production_min.ConcurrentMode = m;
@@ -15533,52 +15533,52 @@ function requireReactIs_production_min() {
   reactIs_production_min.ForwardRef = n;
   reactIs_production_min.Fragment = e;
   reactIs_production_min.Lazy = t;
-  reactIs_production_min.Memo = r;
+  reactIs_production_min.Memo = r2;
   reactIs_production_min.Portal = d;
   reactIs_production_min.Profiler = g;
   reactIs_production_min.StrictMode = f;
   reactIs_production_min.Suspense = p;
   reactIs_production_min.isAsyncMode = function(a) {
-    return A(a) || z(a) === l;
+    return A(a) || z2(a) === l;
   };
   reactIs_production_min.isConcurrentMode = A;
   reactIs_production_min.isContextConsumer = function(a) {
-    return z(a) === k;
+    return z2(a) === k;
   };
   reactIs_production_min.isContextProvider = function(a) {
-    return z(a) === h;
+    return z2(a) === h;
   };
   reactIs_production_min.isElement = function(a) {
     return "object" === typeof a && null !== a && a.$$typeof === c;
   };
   reactIs_production_min.isForwardRef = function(a) {
-    return z(a) === n;
+    return z2(a) === n;
   };
   reactIs_production_min.isFragment = function(a) {
-    return z(a) === e;
+    return z2(a) === e;
   };
   reactIs_production_min.isLazy = function(a) {
-    return z(a) === t;
+    return z2(a) === t;
   };
   reactIs_production_min.isMemo = function(a) {
-    return z(a) === r;
+    return z2(a) === r2;
   };
   reactIs_production_min.isPortal = function(a) {
-    return z(a) === d;
+    return z2(a) === d;
   };
   reactIs_production_min.isProfiler = function(a) {
-    return z(a) === g;
+    return z2(a) === g;
   };
   reactIs_production_min.isStrictMode = function(a) {
-    return z(a) === f;
+    return z2(a) === f;
   };
   reactIs_production_min.isSuspense = function(a) {
-    return z(a) === p;
+    return z2(a) === p;
   };
   reactIs_production_min.isValidElementType = function(a) {
-    return "string" === typeof a || "function" === typeof a || a === e || a === m || a === g || a === f || a === p || a === q || "object" === typeof a && null !== a && (a.$$typeof === t || a.$$typeof === r || a.$$typeof === h || a.$$typeof === k || a.$$typeof === n || a.$$typeof === w2 || a.$$typeof === x || a.$$typeof === y || a.$$typeof === v);
+    return "string" === typeof a || "function" === typeof a || a === e || a === m || a === g || a === f || a === p || a === q || "object" === typeof a && null !== a && (a.$$typeof === t || a.$$typeof === r2 || a.$$typeof === h || a.$$typeof === k || a.$$typeof === n || a.$$typeof === w2 || a.$$typeof === x || a.$$typeof === y2 || a.$$typeof === v);
   };
-  reactIs_production_min.typeOf = z;
+  reactIs_production_min.typeOf = z2;
   return reactIs_production_min;
 }
 var hasRequiredReactIs;
@@ -15963,7 +15963,7 @@ function serializeStyles(args, registered, mergedProps) {
 var syncFallback = function syncFallback2(create2) {
   return create2();
 };
-var useInsertionEffect = React["useInsertionEffect"] ? React["useInsertionEffect"] : false;
+var useInsertionEffect = React$1["useInsertionEffect"] ? React$1["useInsertionEffect"] : false;
 var useInsertionEffectAlwaysWithSyncFallback = useInsertionEffect || syncFallback;
 var EmotionCacheContext = /* @__PURE__ */ reactExports.createContext(
   // we're doing this to avoid preconstruct's dead code elimination in this one case
@@ -16092,19 +16092,19 @@ const createCoords = (v) => ({
 function rectToClientRect(rect) {
   const {
     x,
-    y,
+    y: y2,
     width,
     height
   } = rect;
   return {
     width,
     height,
-    top: y,
+    top: y2,
     left: x,
     right: x + width,
-    bottom: y + height,
+    bottom: y2 + height,
     x,
-    y
+    y: y2
   };
 }
 function hasWindow() {
@@ -16240,19 +16240,19 @@ function getScale(element2) {
   const {
     width,
     height,
-    $
+    $: $2
   } = getCssDimensions(domElement);
-  let x = ($ ? round(rect.width) : rect.width) / width;
-  let y = ($ ? round(rect.height) : rect.height) / height;
+  let x = ($2 ? round(rect.width) : rect.width) / width;
+  let y2 = ($2 ? round(rect.height) : rect.height) / height;
   if (!x || !Number.isFinite(x)) {
     x = 1;
   }
-  if (!y || !Number.isFinite(y)) {
-    y = 1;
+  if (!y2 || !Number.isFinite(y2)) {
+    y2 = 1;
   }
   return {
     x,
-    y
+    y: y2
   };
 }
 const noOffsets = /* @__PURE__ */ createCoords(0);
@@ -16285,7 +16285,7 @@ function getBoundingClientRect(element2, includeScale, isFixedStrategy, offsetPa
   }
   const visualOffsets = shouldAddVisualOffsets() ? getVisualOffsets(domElement) : createCoords(0);
   let x = (clientRect.left + visualOffsets.x) / scale.x;
-  let y = (clientRect.top + visualOffsets.y) / scale.y;
+  let y2 = (clientRect.top + visualOffsets.y) / scale.y;
   let width = clientRect.width / scale.x;
   let height = clientRect.height / scale.y;
   if (domElement) {
@@ -16300,11 +16300,11 @@ function getBoundingClientRect(element2, includeScale, isFixedStrategy, offsetPa
       const left = iframeRect.left + (currentIFrame.clientLeft + parseFloat(css4.paddingLeft)) * iframeScale.x;
       const top = iframeRect.top + (currentIFrame.clientTop + parseFloat(css4.paddingTop)) * iframeScale.y;
       x *= iframeScale.x;
-      y *= iframeScale.y;
+      y2 *= iframeScale.y;
       width *= iframeScale.x;
       height *= iframeScale.y;
       x += left;
-      y += top;
+      y2 += top;
       currentWin = getWindow(currentIFrame);
       currentIFrame = getFrameElement(currentWin);
     }
@@ -16313,21 +16313,21 @@ function getBoundingClientRect(element2, includeScale, isFixedStrategy, offsetPa
     width,
     height,
     x,
-    y
+    y: y2
   });
 }
 function rectsAreEqual(a, b) {
   return a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
 }
 function observeMove(element2, onMove) {
-  let io = null;
+  let io2 = null;
   let timeoutId;
   const root2 = getDocumentElement(element2);
   function cleanup() {
     var _io;
     clearTimeout(timeoutId);
-    (_io = io) == null || _io.disconnect();
-    io = null;
+    (_io = io2) == null || _io.disconnect();
+    io2 = null;
   }
   function refresh(skip, threshold) {
     if (skip === void 0) {
@@ -16380,15 +16380,15 @@ function observeMove(element2, onMove) {
       isFirstUpdate = false;
     }
     try {
-      io = new IntersectionObserver(handleObserve, {
+      io2 = new IntersectionObserver(handleObserve, {
         ...options2,
         // Handle <iframe>s
         root: root2.ownerDocument
       });
     } catch (_e) {
-      io = new IntersectionObserver(handleObserve, options2);
+      io2 = new IntersectionObserver(handleObserve, options2);
     }
-    io.observe(element2);
+    io2.observe(element2);
   }
   refresh(true);
   return cleanup;
@@ -16794,12 +16794,12 @@ var menuCSS = function menuCSS2(_ref22, unstyled) {
 };
 var PortalPlacementContext = /* @__PURE__ */ reactExports.createContext(null);
 var MenuPlacer = function MenuPlacer2(props) {
-  var children = props.children, minMenuHeight = props.minMenuHeight, maxMenuHeight = props.maxMenuHeight, menuPlacement = props.menuPlacement, menuPosition = props.menuPosition, menuShouldScrollIntoView = props.menuShouldScrollIntoView, theme2 = props.theme;
+  var children = props.children, minMenuHeight = props.minMenuHeight, maxMenuHeight = props.maxMenuHeight, menuPlacement = props.menuPlacement, menuPosition = props.menuPosition, menuShouldScrollIntoView = props.menuShouldScrollIntoView, theme = props.theme;
   var _ref3 = reactExports.useContext(PortalPlacementContext) || {}, setPortalPlacement = _ref3.setPortalPlacement;
   var ref = reactExports.useRef(null);
   var _useState = reactExports.useState(maxMenuHeight), _useState2 = _slicedToArray(_useState, 2), maxHeight = _useState2[0], setMaxHeight = _useState2[1];
   var _useState3 = reactExports.useState(null), _useState4 = _slicedToArray(_useState3, 2), placement = _useState4[0], setPlacement = _useState4[1];
-  var controlHeight2 = theme2.spacing.controlHeight;
+  var controlHeight2 = theme.spacing.controlHeight;
   index$1(function() {
     var menuEl = ref.current;
     if (!menuEl) return;
@@ -17189,12 +17189,12 @@ var groupCSS = function groupCSS2(_ref3, unstyled) {
   };
 };
 var Group = function Group2(props) {
-  var children = props.children, cx = props.cx, getStyles = props.getStyles, getClassNames = props.getClassNames, Heading = props.Heading, headingProps = props.headingProps, innerProps = props.innerProps, label = props.label, theme2 = props.theme, selectProps = props.selectProps;
+  var children = props.children, cx = props.cx, getStyles = props.getStyles, getClassNames = props.getClassNames, Heading = props.Heading, headingProps = props.headingProps, innerProps = props.innerProps, label = props.label, theme = props.theme, selectProps = props.selectProps;
   return jsx("div", _extends({}, getStyleProps(props, "group", {
     group: true
   }), innerProps), jsx(Heading, _extends({}, headingProps, {
     selectProps,
-    theme: theme2,
+    theme,
     getStyles,
     getClassNames,
     cx
@@ -21515,7 +21515,7 @@ function one$1(state, node2, key) {
     return mdxEsm(state, node2);
   }
   if (node2.type === "root") {
-    return root$2(state, node2, key);
+    return root$3(state, node2, key);
   }
   if (node2.type === "text") {
     return text$5(state, node2);
@@ -21581,7 +21581,7 @@ function mdxJsxElement(state, node2, key) {
   state.schema = parentSchema;
   return state.create(node2, type, props, key);
 }
-function root$2(state, node2, key) {
+function root$3(state, node2, key) {
   const props = {};
   addChildren(props, createChildren(state, node2));
   return state.create(node2, state.Fragment, props, key);
@@ -26879,7 +26879,7 @@ function paragraph$1(state, node2) {
   state.patch(node2, result);
   return state.applyData(node2, result);
 }
-function root$1(state, node2) {
+function root$2(state, node2) {
   const result = { type: "root", children: state.wrap(state.all(node2)) };
   state.patch(node2, result);
   return state.applyData(node2, result);
@@ -27043,7 +27043,7 @@ const handlers = {
   list: list$1,
   paragraph: paragraph$1,
   // @ts-expect-error: root is different, but hard to type.
-  root: root$1,
+  root: root$2,
   strong: strong$1,
   table,
   tableCell,
@@ -27069,14 +27069,14 @@ const SET = 6;
 const ERROR = 7;
 const BIGINT = 8;
 const env = typeof self === "object" ? self : globalThis;
-const deserializer = ($, _) => {
+const deserializer = ($2, _) => {
   const as = (out, index2) => {
-    $.set(index2, out);
+    $2.set(index2, out);
     return out;
   };
   const unpair = (index2) => {
-    if ($.has(index2))
-      return $.get(index2);
+    if ($2.has(index2))
+      return $2.get(index2);
     const [type, value] = _[index2];
     switch (type) {
       case PRIMITIVE:
@@ -27163,15 +27163,15 @@ const typeOf = (value) => {
   return [OBJECT, asString];
 };
 const shouldSkip = ([TYPE, type]) => TYPE === PRIMITIVE && (type === "function" || type === "symbol");
-const serializer = (strict, json, $, _) => {
+const serializer = (strict, json, $2, _) => {
   const as = (out, value) => {
     const index2 = _.push(out) - 1;
-    $.set(value, index2);
+    $2.set(value, index2);
     return index2;
   };
   const pair = (value) => {
-    if ($.has(value))
-      return $.get(value);
+    if ($2.has(value))
+      return $2.get(value);
     let [TYPE, type] = typeOf(value);
     switch (TYPE) {
       case PRIMITIVE: {
@@ -30736,12 +30736,12 @@ const phrasing = (
     "textDirective"
   ])
 );
-function root(node2, _, state, info) {
+function root$1(node2, _, state, info) {
   const hasPhrasing = node2.children.some(function(d) {
     return phrasing(d);
   });
-  const container = hasPhrasing ? state.containerPhrasing : state.containerFlow;
-  return container.call(state, node2, info);
+  const container2 = hasPhrasing ? state.containerPhrasing : state.containerFlow;
+  return container2.call(state, node2, info);
 }
 function checkStrong(state) {
   const marker = state.options.strong || "*";
@@ -30823,7 +30823,7 @@ const handle = {
   list,
   listItem,
   paragraph,
-  root,
+  root: root$1,
   strong,
   text: text$1,
   thematicBreak
@@ -31835,20 +31835,20 @@ class EditMap {
     this.map.length = 0;
   }
 }
-function addImplementation(editMap, at, remove, add) {
+function addImplementation(editMap, at2, remove, add) {
   let index2 = 0;
   if (remove === 0 && add.length === 0) {
     return;
   }
   while (index2 < editMap.map.length) {
-    if (editMap.map[index2][0] === at) {
+    if (editMap.map[index2][0] === at2) {
       editMap.map[index2][1] += remove;
       editMap.map[index2][2].push(...add);
       return;
     }
     index2 += 1;
   }
-  editMap.map.push([at, remove, add]);
+  editMap.map.push([at2, remove, add]);
 }
 function gfmTableAlign(events, index2) {
   let inDelimiterRow = false;
@@ -32356,20 +32356,26 @@ function remarkGfm(options2) {
   toMarkdownExtensions.push(gfmToMarkdown(settings));
 }
 const MarkdownRenderer = ({ content: content2 }) => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "markdown-content", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Markdown, { remarkPlugins: [remarkGfm], children: content2 }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "markdown-content", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Markdown,
+    {
+      remarkPlugins: [remarkGfm],
+      children: content2
+    }
+  ) });
 };
-const AutoPlay = () => {
+const AutoPlay = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [autoplay, setAutoplay] = reactExports.useState({ value: true, label: "Active" });
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleAutoPlay = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -32377,9 +32383,8 @@ const AutoPlay = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/autoplay`, { guildId, autoplay: autoplay.value });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/autoplay`, { guildId, autoplay: autoplay.value });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -32391,12 +32396,6 @@ const AutoPlay = () => {
       handleAutoPlay(event);
     }
   };
-  const markdownContent = `
-Enter the details below to toggle autoplay mode.
-
-- **Guild ID**
-- **Select Type Mode**
-`;
   const autoplayOption = [
     { value: true, label: "Active" },
     { value: false, label: "Deactive" }
@@ -32404,70 +32403,132 @@ Enter the details below to toggle autoplay mode.
   const customStyles = {
     control: (provided) => ({
       ...provided,
-      backgroundColor: "#222831",
-      border: "1px solid #00adb5",
-      color: "#00adb5",
+      backgroundColor: "var(--bg-darker)",
+      border: "2px solid var(--border-color)",
+      color: "var(--text-light)",
       borderRadius: "8px",
-      // Increased border radius for a smoother look
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-      // Slightly increased shadow for better depth
-      transition: "border-color 0.3s, box-shadow 0.3s",
+      minHeight: "42px",
+      boxShadow: "inset 0 2px 4px rgba(0, 0, 0, 0.1)",
+      transition: "all 0.3s ease",
       "&:hover": {
-        borderColor: "#00fff5",
-        boxShadow: "0 0 12px #00fff5"
-        // Increased shadow on hover for a more pronounced effect
+        borderColor: "var(--primary)",
+        boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.1)",
+        transform: "translateY(-1px)"
+      },
+      "&:focus-within": {
+        borderColor: "var(--primary)",
+        boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.1)"
       }
     }),
     menu: (provided) => ({
       ...provided,
-      backgroundColor: "#222831",
-      padding: "10px",
-      // Reduced padding for a more compact menu
-      color: "#00adb5",
+      backgroundColor: "var(--bg-darker)",
+      padding: "8px",
+      color: "var(--text-light)",
       borderRadius: "8px",
-      // Increased border radius for a smoother look
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)"
-      // Slightly increased shadow for better depth
+      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)",
+      border: "1px solid var(--border-color)",
+      marginTop: "8px",
+      animation: "fadeIn 0.2s ease-out",
+      zIndex: 9999
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isFocused ? "#00adb5" : "#222831",
-      color: state.isFocused ? "#ffffff" : "#00adb5",
-      padding: "12px",
-      // Increased padding for better spacing
-      transition: "background-color 0.3s, color 0.3s",
+      backgroundColor: state.isFocused ? "var(--bg-dark)" : "transparent",
+      color: state.isFocused ? "var(--text-light)" : "var(--text-gray)",
+      padding: "10px 12px",
+      transition: "all 0.2s ease",
+      borderRadius: "6px",
+      cursor: "pointer",
+      fontSize: "0.95rem",
+      fontWeight: state.isSelected ? "600" : "400",
       "&:active": {
-        backgroundColor: "#00fff5",
-        color: "#ffffff"
+        backgroundColor: "var(--primary)",
+        color: "var(--text-light)"
+      },
+      "&:hover": {
+        backgroundColor: "var(--bg-dark)",
+        color: "var(--text-light)",
+        transform: "translateX(4px)"
       }
     }),
     singleValue: (provided) => ({
       ...provided,
-      color: "#00adb5",
-      fontWeight: "bold"
-      // Added bold font weight for better emphasis
+      color: "var(--text-light)",
+      fontWeight: "500",
+      fontSize: "0.95rem"
     }),
     placeholder: (provided) => ({
       ...provided,
-      color: "#00adb5",
-      // Styled the placeholder text
-      fontStyle: "italic"
-      // Added italic style for the placeholder text
+      color: "var(--text-muted)",
+      fontStyle: "normal",
+      fontSize: "0.95rem"
     }),
     dropdownIndicator: (provided) => ({
       ...provided,
-      color: "#00adb5",
-      // Styled the dropdown indicator
+      color: "var(--text-gray)",
+      padding: "0 8px",
+      transition: "all 0.3s ease",
       "&:hover": {
-        color: "#00fff5"
-        // Changed color on hover for the dropdown indicator
+        color: "var(--text-light)",
+        transform: "rotate(180deg)"
+      }
+    }),
+    input: (provided) => ({
+      ...provided,
+      color: "var(--text-light)",
+      fontSize: "0.95rem",
+      margin: "0",
+      padding: "0"
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      padding: "4px 8px"
+    }),
+    indicatorsContainer: (provided) => ({
+      ...provided,
+      padding: "0 4px"
+    }),
+    clearIndicator: (provided) => ({
+      ...provided,
+      color: "var(--text-gray)",
+      padding: "0 8px",
+      transition: "all 0.3s ease",
+      "&:hover": {
+        color: "var(--text-light)",
+        transform: "scale(1.1)"
+      }
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      padding: "4px",
+      "&::-webkit-scrollbar": {
+        width: "8px"
+      },
+      "&::-webkit-scrollbar-track": {
+        background: "var(--bg-darker)",
+        borderRadius: "4px"
+      },
+      "&::-webkit-scrollbar-thumb": {
+        background: "var(--primary)",
+        borderRadius: "4px",
+        border: "2px solid var(--bg-darker)"
+      },
+      "&::-webkit-scrollbar-thumb:hover": {
+        background: "var(--primary-dark)"
       }
     })
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "autoplay", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "AutoPlay" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to toggle autoplay mode." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Select Type Mode (ex: Active or Deactive)" })
+        ] })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -32497,20 +32558,20 @@ Enter the details below to toggle autoplay mode.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Join = () => {
+const Join = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [voiceId, setVoiceId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedVoiceId = sessionStorage.getItem("voiceId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedVoiceId = sessionStorage.getItem(`voiceId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedVoiceId) setVoiceId(storedVoiceId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleJoin = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -32518,10 +32579,9 @@ const Join = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        sessionStorage.setItem("voiceId", voiceId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/join`, { guildId, voiceId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        sessionStorage.setItem(`voiceId_${userId}`, voiceId);
+        const { data } = await axios.post(`http://localhost:${port}/join`, { guildId, voiceId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -32533,16 +32593,16 @@ const Join = () => {
       handleJoin(event);
     }
   };
-  const markdownContent = `
-Enter the details below to join a voice channel in your server.
-
-- **Guild ID**
-- **Voice Channel ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "join", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Join" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to join a voice channel in your server." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Voice Channel ID (ex: 1234567890)" })
+        ] })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -32568,17 +32628,17 @@ Enter the details below to join a voice channel in your server.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Leave = () => {
+const Leave = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleLeave = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -32586,9 +32646,8 @@ const Leave = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/leave`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/leave`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -32600,15 +32659,13 @@ const Leave = () => {
       handleLeave(event);
     }
   };
-  const markdownContent = `
-Enter the details below to leave a voice channel in your server.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "leave", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Leave" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to leave a voice channel in your server." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -32625,17 +32682,17 @@ Enter the details below to leave a voice channel in your server.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Queue = () => {
+const Queue = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleQueue = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -32643,9 +32700,8 @@ const Queue = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/queue`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/queue`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -32657,15 +32713,13 @@ const Queue = () => {
       handleQueue(event);
     }
   };
-  const markdownContent = `
-Enter the details below to show the queue of a voice channel in your server.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "queue", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Queue" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to show the queue of a voice channel in your server." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onSubmit: handleQueue, onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -32682,2587 +32736,101 @@ Enter the details below to show the queue of a voice channel in your server.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-var Autosuggest$1 = {};
-var propTypes = { exports: {} };
-var ReactPropTypesSecret_1;
-var hasRequiredReactPropTypesSecret;
-function requireReactPropTypesSecret() {
-  if (hasRequiredReactPropTypesSecret) return ReactPropTypesSecret_1;
-  hasRequiredReactPropTypesSecret = 1;
-  var ReactPropTypesSecret = "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED";
-  ReactPropTypesSecret_1 = ReactPropTypesSecret;
-  return ReactPropTypesSecret_1;
-}
-var factoryWithThrowingShims;
-var hasRequiredFactoryWithThrowingShims;
-function requireFactoryWithThrowingShims() {
-  if (hasRequiredFactoryWithThrowingShims) return factoryWithThrowingShims;
-  hasRequiredFactoryWithThrowingShims = 1;
-  var ReactPropTypesSecret = /* @__PURE__ */ requireReactPropTypesSecret();
-  function emptyFunction() {
-  }
-  function emptyFunctionWithReset() {
-  }
-  emptyFunctionWithReset.resetWarningCache = emptyFunction;
-  factoryWithThrowingShims = function() {
-    function shim(props, propName, componentName, location, propFullName, secret) {
-      if (secret === ReactPropTypesSecret) {
-        return;
-      }
-      var err2 = new Error(
-        "Calling PropTypes validators directly is not supported by the `prop-types` package. Use PropTypes.checkPropTypes() to call them. Read more at http://fb.me/use-check-prop-types"
-      );
-      err2.name = "Invariant Violation";
-      throw err2;
-    }
-    shim.isRequired = shim;
-    function getShim() {
-      return shim;
-    }
-    var ReactPropTypes = {
-      array: shim,
-      bigint: shim,
-      bool: shim,
-      func: shim,
-      number: shim,
-      object: shim,
-      string: shim,
-      symbol: shim,
-      any: shim,
-      arrayOf: getShim,
-      element: shim,
-      elementType: shim,
-      instanceOf: getShim,
-      node: shim,
-      objectOf: getShim,
-      oneOf: getShim,
-      oneOfType: getShim,
-      shape: getShim,
-      exact: getShim,
-      checkPropTypes: emptyFunctionWithReset,
-      resetWarningCache: emptyFunction
-    };
-    ReactPropTypes.PropTypes = ReactPropTypes;
-    return ReactPropTypes;
+const SuggestionItem = ({ suggestion, onSelect }) => {
+  const formatDuration2 = (duration) => {
+    if (!duration) return "";
+    const minutes = Math.floor(duration / 6e4);
+    const seconds = (duration % 6e4 / 1e3).toFixed(0).padStart(2, "0");
+    return `${minutes}:${seconds}`;
   };
-  return factoryWithThrowingShims;
-}
-var hasRequiredPropTypes;
-function requirePropTypes() {
-  if (hasRequiredPropTypes) return propTypes.exports;
-  hasRequiredPropTypes = 1;
-  {
-    propTypes.exports = /* @__PURE__ */ requireFactoryWithThrowingShims()();
-  }
-  return propTypes.exports;
-}
-var arrays;
-var hasRequiredArrays;
-function requireArrays() {
-  if (hasRequiredArrays) return arrays;
-  hasRequiredArrays = 1;
-  function shallowEqualArrays(arrA, arrB) {
-    if (arrA === arrB) {
-      return true;
-    }
-    if (!arrA || !arrB) {
-      return false;
-    }
-    var len = arrA.length;
-    if (arrB.length !== len) {
-      return false;
-    }
-    for (var i = 0; i < len; i++) {
-      if (arrA[i] !== arrB[i]) {
-        return false;
-      }
-    }
-    return true;
-  }
-  arrays = shallowEqualArrays;
-  return arrays;
-}
-var Autowhatever = {};
-var dist$2;
-var hasRequiredDist$2;
-function requireDist$2() {
-  if (hasRequiredDist$2) return dist$2;
-  hasRequiredDist$2 = 1;
-  var _slicedToArray2 = /* @__PURE__ */ function() {
-    function sliceIterator(arr, i) {
-      var _arr = [];
-      var _n = true;
-      var _d = false;
-      var _e = void 0;
-      try {
-        for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-          _arr.push(_s.value);
-          if (i && _arr.length === i) break;
-        }
-      } catch (err2) {
-        _d = true;
-        _e = err2;
-      } finally {
-        try {
-          if (!_n && _i["return"]) _i["return"]();
-        } finally {
-          if (_d) throw _e;
-        }
-      }
-      return _arr;
-    }
-    return function(arr, i) {
-      if (Array.isArray(arr)) {
-        return arr;
-      } else if (Symbol.iterator in Object(arr)) {
-        return sliceIterator(arr, i);
-      } else {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance");
-      }
-    };
-  }();
-  dist$2 = function(_ref3) {
-    var data = _ref3.data;
-    var multiSection = _ref3.multiSection;
-    function nextNonEmptySectionIndex(sectionIndex) {
-      if (sectionIndex === null) {
-        sectionIndex = 0;
-      } else {
-        sectionIndex++;
-      }
-      while (sectionIndex < data.length && data[sectionIndex] === 0) {
-        sectionIndex++;
-      }
-      return sectionIndex === data.length ? null : sectionIndex;
-    }
-    function prevNonEmptySectionIndex(sectionIndex) {
-      if (sectionIndex === null) {
-        sectionIndex = data.length - 1;
-      } else {
-        sectionIndex--;
-      }
-      while (sectionIndex >= 0 && data[sectionIndex] === 0) {
-        sectionIndex--;
-      }
-      return sectionIndex === -1 ? null : sectionIndex;
-    }
-    function next2(position2) {
-      var _position = _slicedToArray2(position2, 2);
-      var sectionIndex = _position[0];
-      var itemIndex = _position[1];
-      if (multiSection) {
-        if (itemIndex === null || itemIndex === data[sectionIndex] - 1) {
-          sectionIndex = nextNonEmptySectionIndex(sectionIndex);
-          if (sectionIndex === null) {
-            return [null, null];
-          }
-          return [sectionIndex, 0];
-        }
-        return [sectionIndex, itemIndex + 1];
-      }
-      if (data === 0 || itemIndex === data - 1) {
-        return [null, null];
-      }
-      if (itemIndex === null) {
-        return [null, 0];
-      }
-      return [null, itemIndex + 1];
-    }
-    function prev2(position2) {
-      var _position2 = _slicedToArray2(position2, 2);
-      var sectionIndex = _position2[0];
-      var itemIndex = _position2[1];
-      if (multiSection) {
-        if (itemIndex === null || itemIndex === 0) {
-          sectionIndex = prevNonEmptySectionIndex(sectionIndex);
-          if (sectionIndex === null) {
-            return [null, null];
-          }
-          return [sectionIndex, data[sectionIndex] - 1];
-        }
-        return [sectionIndex, itemIndex - 1];
-      }
-      if (data === 0 || itemIndex === 0) {
-        return [null, null];
-      }
-      if (itemIndex === null) {
-        return [null, data - 1];
-      }
-      return [null, itemIndex - 1];
-    }
-    function isLast(position2) {
-      return next2(position2)[1] === null;
-    }
-    return {
-      next: next2,
-      prev: prev2,
-      isLast
-    };
-  };
-  return dist$2;
-}
-var dist$1 = { exports: {} };
-var objectAssign;
-var hasRequiredObjectAssign;
-function requireObjectAssign() {
-  if (hasRequiredObjectAssign) return objectAssign;
-  hasRequiredObjectAssign = 1;
-  var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-  function ToObject(val) {
-    if (val == null) {
-      throw new TypeError("Object.assign cannot be called with null or undefined");
-    }
-    return Object(val);
-  }
-  function ownEnumerableKeys(obj) {
-    var keys2 = Object.getOwnPropertyNames(obj);
-    if (Object.getOwnPropertySymbols) {
-      keys2 = keys2.concat(Object.getOwnPropertySymbols(obj));
-    }
-    return keys2.filter(function(key) {
-      return propIsEnumerable.call(obj, key);
-    });
-  }
-  objectAssign = Object.assign || function(target, source) {
-    var from2;
-    var keys2;
-    var to = ToObject(target);
-    for (var s = 1; s < arguments.length; s++) {
-      from2 = arguments[s];
-      keys2 = ownEnumerableKeys(Object(from2));
-      for (var i = 0; i < keys2.length; i++) {
-        to[keys2[i]] = from2[keys2[i]];
-      }
-    }
-    return to;
-  };
-  return objectAssign;
-}
-var hasRequiredDist$1;
-function requireDist$1() {
-  if (hasRequiredDist$1) return dist$1.exports;
-  hasRequiredDist$1 = 1;
-  (function(module, exports) {
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    var _slicedToArray2 = /* @__PURE__ */ function() {
-      function sliceIterator(arr, i) {
-        var _arr = [];
-        var _n = true;
-        var _d = false;
-        var _e = void 0;
-        try {
-          for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-            _arr.push(_s.value);
-            if (i && _arr.length === i) break;
-          }
-        } catch (err2) {
-          _d = true;
-          _e = err2;
-        } finally {
-          try {
-            if (!_n && _i["return"]) _i["return"]();
-          } finally {
-            if (_d) throw _e;
-          }
-        }
-        return _arr;
-      }
-      return function(arr, i) {
-        if (Array.isArray(arr)) {
-          return arr;
-        } else if (Symbol.iterator in Object(arr)) {
-          return sliceIterator(arr, i);
-        } else {
-          throw new TypeError("Invalid attempt to destructure non-iterable instance");
-        }
-      };
-    }();
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { "default": obj };
-    }
-    function _toConsumableArray2(arr) {
-      if (Array.isArray(arr)) {
-        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-        return arr2;
-      } else {
-        return Array.from(arr);
-      }
-    }
-    var _objectAssign = requireObjectAssign();
-    var _objectAssign2 = _interopRequireDefault(_objectAssign);
-    var truthy = function truthy2(x) {
-      return x;
-    };
-    exports["default"] = function(input) {
-      var _ref3 = Array.isArray(input) && input.length === 2 ? input : [input, null];
-      var _ref22 = _slicedToArray2(_ref3, 2);
-      var theme2 = _ref22[0];
-      var classNameDecorator = _ref22[1];
-      return function(key) {
-        for (var _len = arguments.length, names = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-          names[_key - 1] = arguments[_key];
-        }
-        var styles = names.map(function(name2) {
-          return theme2[name2];
-        }).filter(truthy);
-        return typeof styles[0] === "string" || typeof classNameDecorator === "function" ? { key, className: classNameDecorator ? classNameDecorator.apply(void 0, _toConsumableArray2(styles)) : styles.join(" ") } : { key, style: _objectAssign2["default"].apply(void 0, [{}].concat(_toConsumableArray2(styles))) };
-      };
-    };
-    module.exports = exports["default"];
-  })(dist$1, dist$1.exports);
-  return dist$1.exports;
-}
-var SectionTitle = {};
-var compareObjects = {};
-var hasRequiredCompareObjects;
-function requireCompareObjects() {
-  if (hasRequiredCompareObjects) return compareObjects;
-  hasRequiredCompareObjects = 1;
-  (function(exports) {
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports["default"] = compareObjects2;
-    function _typeof2(obj) {
-      "@babel/helpers - typeof";
-      if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-        _typeof2 = function _typeof3(obj2) {
-          return typeof obj2;
-        };
-      } else {
-        _typeof2 = function _typeof3(obj2) {
-          return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        };
-      }
-      return _typeof2(obj);
-    }
-    function compareObjects2(objA, objB) {
-      var keys2 = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : [];
-      if (objA === objB) {
-        return false;
-      }
-      var aKeys = Object.keys(objA);
-      var bKeys = Object.keys(objB);
-      if (aKeys.length !== bKeys.length) {
-        return true;
-      }
-      var keysMap = {};
-      var i, len;
-      for (i = 0, len = keys2.length; i < len; i++) {
-        keysMap[keys2[i]] = true;
-      }
-      for (i = 0, len = aKeys.length; i < len; i++) {
-        var key = aKeys[i];
-        var aValue = objA[key];
-        var bValue = objB[key];
-        if (aValue === bValue) {
-          continue;
-        }
-        if (!keysMap[key] || aValue === null || bValue === null || _typeof2(aValue) !== "object" || _typeof2(bValue) !== "object") {
-          return true;
-        }
-        var aValueKeys = Object.keys(aValue);
-        var bValueKeys = Object.keys(bValue);
-        if (aValueKeys.length !== bValueKeys.length) {
-          return true;
-        }
-        for (var n = 0, length2 = aValueKeys.length; n < length2; n++) {
-          var aValueKey = aValueKeys[n];
-          if (aValue[aValueKey] !== bValue[aValueKey]) {
-            return true;
-          }
-        }
-      }
-      return false;
-    }
-  })(compareObjects);
-  return compareObjects;
-}
-var hasRequiredSectionTitle;
-function requireSectionTitle() {
-  if (hasRequiredSectionTitle) return SectionTitle;
-  hasRequiredSectionTitle = 1;
-  (function(exports) {
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports["default"] = void 0;
-    var _react = _interopRequireWildcard(requireReact());
-    var _propTypes = _interopRequireDefault(/* @__PURE__ */ requirePropTypes());
-    var _compareObjects = _interopRequireDefault(requireCompareObjects());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { "default": obj };
-    }
-    function _getRequireWildcardCache() {
-      if (typeof WeakMap !== "function") return null;
-      var cache = /* @__PURE__ */ new WeakMap();
-      _getRequireWildcardCache = function _getRequireWildcardCache2() {
-        return cache;
-      };
-      return cache;
-    }
-    function _interopRequireWildcard(obj) {
-      if (obj && obj.__esModule) {
-        return obj;
-      }
-      if (obj === null || _typeof2(obj) !== "object" && typeof obj !== "function") {
-        return { "default": obj };
-      }
-      var cache = _getRequireWildcardCache();
-      if (cache && cache.has(obj)) {
-        return cache.get(obj);
-      }
-      var newObj = {};
-      var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-      for (var key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-          if (desc && (desc.get || desc.set)) {
-            Object.defineProperty(newObj, key, desc);
-          } else {
-            newObj[key] = obj[key];
-          }
-        }
-      }
-      newObj["default"] = obj;
-      if (cache) {
-        cache.set(obj, newObj);
-      }
-      return newObj;
-    }
-    function _typeof2(obj) {
-      "@babel/helpers - typeof";
-      if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-        _typeof2 = function _typeof3(obj2) {
-          return typeof obj2;
-        };
-      } else {
-        _typeof2 = function _typeof3(obj2) {
-          return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        };
-      }
-      return _typeof2(obj);
-    }
-    function _classCallCheck2(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-      }
-    }
-    function _defineProperties2(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-    function _createClass2(Constructor, protoProps, staticProps) {
-      if (protoProps) _defineProperties2(Constructor.prototype, protoProps);
-      return Constructor;
-    }
-    function _createSuper2(Derived) {
-      return function() {
-        var Super = _getPrototypeOf2(Derived), result;
-        if (_isNativeReflectConstruct2()) {
-          var NewTarget = _getPrototypeOf2(this).constructor;
-          result = Reflect.construct(Super, arguments, NewTarget);
-        } else {
-          result = Super.apply(this, arguments);
-        }
-        return _possibleConstructorReturn2(this, result);
-      };
-    }
-    function _possibleConstructorReturn2(self2, call) {
-      if (call && (_typeof2(call) === "object" || typeof call === "function")) {
-        return call;
-      }
-      return _assertThisInitialized2(self2);
-    }
-    function _assertThisInitialized2(self2) {
-      if (self2 === void 0) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-      }
-      return self2;
-    }
-    function _isNativeReflectConstruct2() {
-      if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-      if (Reflect.construct.sham) return false;
-      if (typeof Proxy === "function") return true;
-      try {
-        Date.prototype.toString.call(Reflect.construct(Date, [], function() {
-        }));
-        return true;
-      } catch (e) {
-        return false;
-      }
-    }
-    function _getPrototypeOf2(o) {
-      _getPrototypeOf2 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf3(o2) {
-        return o2.__proto__ || Object.getPrototypeOf(o2);
-      };
-      return _getPrototypeOf2(o);
-    }
-    function _inherits2(subClass, superClass) {
-      if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function");
-      }
-      subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
-      if (superClass) _setPrototypeOf2(subClass, superClass);
-    }
-    function _setPrototypeOf2(o, p) {
-      _setPrototypeOf2 = Object.setPrototypeOf || function _setPrototypeOf3(o2, p2) {
-        o2.__proto__ = p2;
-        return o2;
-      };
-      return _setPrototypeOf2(o, p);
-    }
-    function _defineProperty2(obj, key, value) {
-      if (key in obj) {
-        Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-      } else {
-        obj[key] = value;
-      }
-      return obj;
-    }
-    var SectionTitle2 = /* @__PURE__ */ function(_Component) {
-      _inherits2(SectionTitle3, _Component);
-      var _super = _createSuper2(SectionTitle3);
-      function SectionTitle3() {
-        _classCallCheck2(this, SectionTitle3);
-        return _super.apply(this, arguments);
-      }
-      _createClass2(SectionTitle3, [{
-        key: "shouldComponentUpdate",
-        value: function shouldComponentUpdate(nextProps) {
-          return (0, _compareObjects["default"])(nextProps, this.props);
-        }
-      }, {
-        key: "render",
-        value: function render() {
-          var _this$props = this.props, section = _this$props.section, renderSectionTitle = _this$props.renderSectionTitle, theme2 = _this$props.theme, sectionKeyPrefix = _this$props.sectionKeyPrefix;
-          var sectionTitle = renderSectionTitle(section);
-          if (!sectionTitle) {
-            return null;
-          }
-          return /* @__PURE__ */ _react["default"].createElement("div", theme2("".concat(sectionKeyPrefix, "title"), "sectionTitle"), sectionTitle);
-        }
-      }]);
-      return SectionTitle3;
-    }(_react.Component);
-    exports["default"] = SectionTitle2;
-    _defineProperty2(SectionTitle2, "propTypes", {
-      section: _propTypes["default"].any.isRequired,
-      renderSectionTitle: _propTypes["default"].func.isRequired,
-      theme: _propTypes["default"].func.isRequired,
-      sectionKeyPrefix: _propTypes["default"].string.isRequired
-    });
-  })(SectionTitle);
-  return SectionTitle;
-}
-var ItemList = {};
-var Item = {};
-var hasRequiredItem;
-function requireItem() {
-  if (hasRequiredItem) return Item;
-  hasRequiredItem = 1;
-  (function(exports) {
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports["default"] = void 0;
-    var _react = _interopRequireWildcard(requireReact());
-    var _propTypes = _interopRequireDefault(/* @__PURE__ */ requirePropTypes());
-    var _compareObjects = _interopRequireDefault(requireCompareObjects());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { "default": obj };
-    }
-    function _getRequireWildcardCache() {
-      if (typeof WeakMap !== "function") return null;
-      var cache = /* @__PURE__ */ new WeakMap();
-      _getRequireWildcardCache = function _getRequireWildcardCache2() {
-        return cache;
-      };
-      return cache;
-    }
-    function _interopRequireWildcard(obj) {
-      if (obj && obj.__esModule) {
-        return obj;
-      }
-      if (obj === null || _typeof2(obj) !== "object" && typeof obj !== "function") {
-        return { "default": obj };
-      }
-      var cache = _getRequireWildcardCache();
-      if (cache && cache.has(obj)) {
-        return cache.get(obj);
-      }
-      var newObj = {};
-      var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-      for (var key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-          if (desc && (desc.get || desc.set)) {
-            Object.defineProperty(newObj, key, desc);
-          } else {
-            newObj[key] = obj[key];
-          }
-        }
-      }
-      newObj["default"] = obj;
-      if (cache) {
-        cache.set(obj, newObj);
-      }
-      return newObj;
-    }
-    function _typeof2(obj) {
-      "@babel/helpers - typeof";
-      if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-        _typeof2 = function _typeof3(obj2) {
-          return typeof obj2;
-        };
-      } else {
-        _typeof2 = function _typeof3(obj2) {
-          return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        };
-      }
-      return _typeof2(obj);
-    }
-    function _extends2() {
-      _extends2 = Object.assign || function(target) {
-        for (var i = 1; i < arguments.length; i++) {
-          var source = arguments[i];
-          for (var key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
-              target[key] = source[key];
-            }
-          }
-        }
-        return target;
-      };
-      return _extends2.apply(this, arguments);
-    }
-    function ownKeys2(object, enumerableOnly) {
-      var keys2 = Object.keys(object);
-      if (Object.getOwnPropertySymbols) {
-        var symbols = Object.getOwnPropertySymbols(object);
-        if (enumerableOnly) symbols = symbols.filter(function(sym) {
-          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        });
-        keys2.push.apply(keys2, symbols);
-      }
-      return keys2;
-    }
-    function _objectSpread(target) {
-      for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i] != null ? arguments[i] : {};
-        if (i % 2) {
-          ownKeys2(Object(source), true).forEach(function(key) {
-            _defineProperty2(target, key, source[key]);
-          });
-        } else if (Object.getOwnPropertyDescriptors) {
-          Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-        } else {
-          ownKeys2(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-      }
-      return target;
-    }
-    function _objectWithoutProperties2(source, excluded) {
-      if (source == null) return {};
-      var target = _objectWithoutPropertiesLoose2(source, excluded);
-      var key, i;
-      if (Object.getOwnPropertySymbols) {
-        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-        for (i = 0; i < sourceSymbolKeys.length; i++) {
-          key = sourceSymbolKeys[i];
-          if (excluded.indexOf(key) >= 0) continue;
-          if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-          target[key] = source[key];
-        }
-      }
-      return target;
-    }
-    function _objectWithoutPropertiesLoose2(source, excluded) {
-      if (source == null) return {};
-      var target = {};
-      var sourceKeys = Object.keys(source);
-      var key, i;
-      for (i = 0; i < sourceKeys.length; i++) {
-        key = sourceKeys[i];
-        if (excluded.indexOf(key) >= 0) continue;
-        target[key] = source[key];
-      }
-      return target;
-    }
-    function _classCallCheck2(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-      }
-    }
-    function _defineProperties2(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-    function _createClass2(Constructor, protoProps, staticProps) {
-      if (protoProps) _defineProperties2(Constructor.prototype, protoProps);
-      return Constructor;
-    }
-    function _createSuper2(Derived) {
-      return function() {
-        var Super = _getPrototypeOf2(Derived), result;
-        if (_isNativeReflectConstruct2()) {
-          var NewTarget = _getPrototypeOf2(this).constructor;
-          result = Reflect.construct(Super, arguments, NewTarget);
-        } else {
-          result = Super.apply(this, arguments);
-        }
-        return _possibleConstructorReturn2(this, result);
-      };
-    }
-    function _possibleConstructorReturn2(self2, call) {
-      if (call && (_typeof2(call) === "object" || typeof call === "function")) {
-        return call;
-      }
-      return _assertThisInitialized2(self2);
-    }
-    function _assertThisInitialized2(self2) {
-      if (self2 === void 0) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-      }
-      return self2;
-    }
-    function _isNativeReflectConstruct2() {
-      if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-      if (Reflect.construct.sham) return false;
-      if (typeof Proxy === "function") return true;
-      try {
-        Date.prototype.toString.call(Reflect.construct(Date, [], function() {
-        }));
-        return true;
-      } catch (e) {
-        return false;
-      }
-    }
-    function _getPrototypeOf2(o) {
-      _getPrototypeOf2 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf3(o2) {
-        return o2.__proto__ || Object.getPrototypeOf(o2);
-      };
-      return _getPrototypeOf2(o);
-    }
-    function _inherits2(subClass, superClass) {
-      if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function");
-      }
-      subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
-      if (superClass) _setPrototypeOf2(subClass, superClass);
-    }
-    function _setPrototypeOf2(o, p) {
-      _setPrototypeOf2 = Object.setPrototypeOf || function _setPrototypeOf3(o2, p2) {
-        o2.__proto__ = p2;
-        return o2;
-      };
-      return _setPrototypeOf2(o, p);
-    }
-    function _defineProperty2(obj, key, value) {
-      if (key in obj) {
-        Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-      } else {
-        obj[key] = value;
-      }
-      return obj;
-    }
-    var Item2 = /* @__PURE__ */ function(_Component) {
-      _inherits2(Item3, _Component);
-      var _super = _createSuper2(Item3);
-      function Item3() {
-        var _this;
-        _classCallCheck2(this, Item3);
-        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-        _this = _super.call.apply(_super, [this].concat(args));
-        _defineProperty2(_assertThisInitialized2(_this), "storeItemReference", function(item) {
-          if (item !== null) {
-            _this.item = item;
-          }
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onMouseEnter", function(event) {
-          var _this$props = _this.props, sectionIndex = _this$props.sectionIndex, itemIndex = _this$props.itemIndex;
-          _this.props.onMouseEnter(event, {
-            sectionIndex,
-            itemIndex
-          });
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onMouseLeave", function(event) {
-          var _this$props2 = _this.props, sectionIndex = _this$props2.sectionIndex, itemIndex = _this$props2.itemIndex;
-          _this.props.onMouseLeave(event, {
-            sectionIndex,
-            itemIndex
-          });
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onMouseDown", function(event) {
-          var _this$props3 = _this.props, sectionIndex = _this$props3.sectionIndex, itemIndex = _this$props3.itemIndex;
-          _this.props.onMouseDown(event, {
-            sectionIndex,
-            itemIndex
-          });
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onClick", function(event) {
-          var _this$props4 = _this.props, sectionIndex = _this$props4.sectionIndex, itemIndex = _this$props4.itemIndex;
-          _this.props.onClick(event, {
-            sectionIndex,
-            itemIndex
-          });
-        });
-        return _this;
-      }
-      _createClass2(Item3, [{
-        key: "shouldComponentUpdate",
-        value: function shouldComponentUpdate(nextProps) {
-          return (0, _compareObjects["default"])(nextProps, this.props, ["renderItemData"]);
-        }
-      }, {
-        key: "render",
-        value: function render() {
-          var _this$props5 = this.props, isHighlighted = _this$props5.isHighlighted, item = _this$props5.item, renderItem = _this$props5.renderItem, renderItemData = _this$props5.renderItemData, restProps = _objectWithoutProperties2(_this$props5, ["isHighlighted", "item", "renderItem", "renderItemData"]);
-          delete restProps.sectionIndex;
-          delete restProps.itemIndex;
-          if (typeof restProps.onMouseEnter === "function") {
-            restProps.onMouseEnter = this.onMouseEnter;
-          }
-          if (typeof restProps.onMouseLeave === "function") {
-            restProps.onMouseLeave = this.onMouseLeave;
-          }
-          if (typeof restProps.onMouseDown === "function") {
-            restProps.onMouseDown = this.onMouseDown;
-          }
-          if (typeof restProps.onClick === "function") {
-            restProps.onClick = this.onClick;
-          }
-          return /* @__PURE__ */ _react["default"].createElement("li", _extends2({
-            role: "option"
-          }, restProps, {
-            ref: this.storeItemReference
-          }), renderItem(item, _objectSpread({
-            isHighlighted
-          }, renderItemData)));
-        }
-      }]);
-      return Item3;
-    }(_react.Component);
-    exports["default"] = Item2;
-    _defineProperty2(Item2, "propTypes", {
-      sectionIndex: _propTypes["default"].number,
-      isHighlighted: _propTypes["default"].bool.isRequired,
-      itemIndex: _propTypes["default"].number.isRequired,
-      item: _propTypes["default"].any.isRequired,
-      renderItem: _propTypes["default"].func.isRequired,
-      renderItemData: _propTypes["default"].object.isRequired,
-      onMouseEnter: _propTypes["default"].func,
-      onMouseLeave: _propTypes["default"].func,
-      onMouseDown: _propTypes["default"].func,
-      onClick: _propTypes["default"].func
-    });
-  })(Item);
-  return Item;
-}
-var hasRequiredItemList;
-function requireItemList() {
-  if (hasRequiredItemList) return ItemList;
-  hasRequiredItemList = 1;
-  (function(exports) {
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports["default"] = void 0;
-    var _react = _interopRequireWildcard(requireReact());
-    var _propTypes = _interopRequireDefault(/* @__PURE__ */ requirePropTypes());
-    var _Item = _interopRequireDefault(requireItem());
-    var _compareObjects = _interopRequireDefault(requireCompareObjects());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { "default": obj };
-    }
-    function _getRequireWildcardCache() {
-      if (typeof WeakMap !== "function") return null;
-      var cache = /* @__PURE__ */ new WeakMap();
-      _getRequireWildcardCache = function _getRequireWildcardCache2() {
-        return cache;
-      };
-      return cache;
-    }
-    function _interopRequireWildcard(obj) {
-      if (obj && obj.__esModule) {
-        return obj;
-      }
-      if (obj === null || _typeof2(obj) !== "object" && typeof obj !== "function") {
-        return { "default": obj };
-      }
-      var cache = _getRequireWildcardCache();
-      if (cache && cache.has(obj)) {
-        return cache.get(obj);
-      }
-      var newObj = {};
-      var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-      for (var key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-          if (desc && (desc.get || desc.set)) {
-            Object.defineProperty(newObj, key, desc);
-          } else {
-            newObj[key] = obj[key];
-          }
-        }
-      }
-      newObj["default"] = obj;
-      if (cache) {
-        cache.set(obj, newObj);
-      }
-      return newObj;
-    }
-    function _typeof2(obj) {
-      "@babel/helpers - typeof";
-      if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-        _typeof2 = function _typeof3(obj2) {
-          return typeof obj2;
-        };
-      } else {
-        _typeof2 = function _typeof3(obj2) {
-          return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        };
-      }
-      return _typeof2(obj);
-    }
-    function _extends2() {
-      _extends2 = Object.assign || function(target) {
-        for (var i = 1; i < arguments.length; i++) {
-          var source = arguments[i];
-          for (var key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
-              target[key] = source[key];
-            }
-          }
-        }
-        return target;
-      };
-      return _extends2.apply(this, arguments);
-    }
-    function ownKeys2(object, enumerableOnly) {
-      var keys2 = Object.keys(object);
-      if (Object.getOwnPropertySymbols) {
-        var symbols = Object.getOwnPropertySymbols(object);
-        if (enumerableOnly) symbols = symbols.filter(function(sym) {
-          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        });
-        keys2.push.apply(keys2, symbols);
-      }
-      return keys2;
-    }
-    function _objectSpread(target) {
-      for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i] != null ? arguments[i] : {};
-        if (i % 2) {
-          ownKeys2(Object(source), true).forEach(function(key) {
-            _defineProperty2(target, key, source[key]);
-          });
-        } else if (Object.getOwnPropertyDescriptors) {
-          Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-        } else {
-          ownKeys2(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-      }
-      return target;
-    }
-    function _classCallCheck2(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-      }
-    }
-    function _defineProperties2(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-    function _createClass2(Constructor, protoProps, staticProps) {
-      if (protoProps) _defineProperties2(Constructor.prototype, protoProps);
-      return Constructor;
-    }
-    function _createSuper2(Derived) {
-      return function() {
-        var Super = _getPrototypeOf2(Derived), result;
-        if (_isNativeReflectConstruct2()) {
-          var NewTarget = _getPrototypeOf2(this).constructor;
-          result = Reflect.construct(Super, arguments, NewTarget);
-        } else {
-          result = Super.apply(this, arguments);
-        }
-        return _possibleConstructorReturn2(this, result);
-      };
-    }
-    function _possibleConstructorReturn2(self2, call) {
-      if (call && (_typeof2(call) === "object" || typeof call === "function")) {
-        return call;
-      }
-      return _assertThisInitialized2(self2);
-    }
-    function _assertThisInitialized2(self2) {
-      if (self2 === void 0) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-      }
-      return self2;
-    }
-    function _isNativeReflectConstruct2() {
-      if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-      if (Reflect.construct.sham) return false;
-      if (typeof Proxy === "function") return true;
-      try {
-        Date.prototype.toString.call(Reflect.construct(Date, [], function() {
-        }));
-        return true;
-      } catch (e) {
-        return false;
-      }
-    }
-    function _getPrototypeOf2(o) {
-      _getPrototypeOf2 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf3(o2) {
-        return o2.__proto__ || Object.getPrototypeOf(o2);
-      };
-      return _getPrototypeOf2(o);
-    }
-    function _inherits2(subClass, superClass) {
-      if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function");
-      }
-      subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
-      if (superClass) _setPrototypeOf2(subClass, superClass);
-    }
-    function _setPrototypeOf2(o, p) {
-      _setPrototypeOf2 = Object.setPrototypeOf || function _setPrototypeOf3(o2, p2) {
-        o2.__proto__ = p2;
-        return o2;
-      };
-      return _setPrototypeOf2(o, p);
-    }
-    function _defineProperty2(obj, key, value) {
-      if (key in obj) {
-        Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-      } else {
-        obj[key] = value;
-      }
-      return obj;
-    }
-    var ItemsList = /* @__PURE__ */ function(_Component) {
-      _inherits2(ItemsList2, _Component);
-      var _super = _createSuper2(ItemsList2);
-      function ItemsList2() {
-        var _this;
-        _classCallCheck2(this, ItemsList2);
-        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-        _this = _super.call.apply(_super, [this].concat(args));
-        _defineProperty2(_assertThisInitialized2(_this), "storeHighlightedItemReference", function(highlightedItem) {
-          _this.props.onHighlightedItemChange(highlightedItem === null ? null : highlightedItem.item);
-        });
-        return _this;
-      }
-      _createClass2(ItemsList2, [{
-        key: "shouldComponentUpdate",
-        value: function shouldComponentUpdate(nextProps) {
-          return (0, _compareObjects["default"])(nextProps, this.props, ["itemProps"]);
-        }
-      }, {
-        key: "render",
-        value: function render() {
-          var _this2 = this;
-          var _this$props = this.props, items = _this$props.items, itemProps = _this$props.itemProps, renderItem = _this$props.renderItem, renderItemData = _this$props.renderItemData, sectionIndex = _this$props.sectionIndex, highlightedItemIndex = _this$props.highlightedItemIndex, getItemId = _this$props.getItemId, theme2 = _this$props.theme, keyPrefix = _this$props.keyPrefix;
-          var sectionPrefix = sectionIndex === null ? keyPrefix : "".concat(keyPrefix, "section-").concat(sectionIndex, "-");
-          var isItemPropsFunction = typeof itemProps === "function";
-          return /* @__PURE__ */ _react["default"].createElement("ul", _extends2({
-            role: "listbox"
-          }, theme2("".concat(sectionPrefix, "items-list"), "itemsList")), items.map(function(item, itemIndex) {
-            var isFirst = itemIndex === 0;
-            var isHighlighted = itemIndex === highlightedItemIndex;
-            var itemKey = "".concat(sectionPrefix, "item-").concat(itemIndex);
-            var itemPropsObj = isItemPropsFunction ? itemProps({
-              sectionIndex,
-              itemIndex
-            }) : itemProps;
-            var allItemProps = _objectSpread({
-              id: getItemId(sectionIndex, itemIndex),
-              "aria-selected": isHighlighted
-            }, theme2(itemKey, "item", isFirst && "itemFirst", isHighlighted && "itemHighlighted"), {}, itemPropsObj);
-            if (isHighlighted) {
-              allItemProps.ref = _this2.storeHighlightedItemReference;
-            }
-            return /* @__PURE__ */ _react["default"].createElement(_Item["default"], _extends2({}, allItemProps, {
-              sectionIndex,
-              isHighlighted,
-              itemIndex,
-              item,
-              renderItem,
-              renderItemData
-            }));
-          }));
-        }
-      }]);
-      return ItemsList2;
-    }(_react.Component);
-    exports["default"] = ItemsList;
-    _defineProperty2(ItemsList, "propTypes", {
-      items: _propTypes["default"].array.isRequired,
-      itemProps: _propTypes["default"].oneOfType([_propTypes["default"].object, _propTypes["default"].func]),
-      renderItem: _propTypes["default"].func.isRequired,
-      renderItemData: _propTypes["default"].object.isRequired,
-      sectionIndex: _propTypes["default"].number,
-      highlightedItemIndex: _propTypes["default"].number,
-      onHighlightedItemChange: _propTypes["default"].func.isRequired,
-      getItemId: _propTypes["default"].func.isRequired,
-      theme: _propTypes["default"].func.isRequired,
-      keyPrefix: _propTypes["default"].string.isRequired
-    });
-    _defineProperty2(ItemsList, "defaultProps", {
-      sectionIndex: null
-    });
-  })(ItemList);
-  return ItemList;
-}
-var hasRequiredAutowhatever;
-function requireAutowhatever() {
-  if (hasRequiredAutowhatever) return Autowhatever;
-  hasRequiredAutowhatever = 1;
-  (function(exports) {
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports["default"] = void 0;
-    var _react = _interopRequireWildcard(requireReact());
-    var _propTypes = _interopRequireDefault(/* @__PURE__ */ requirePropTypes());
-    var _sectionIterator = _interopRequireDefault(requireDist$2());
-    var _reactThemeable = _interopRequireDefault(requireDist$1());
-    var _SectionTitle = _interopRequireDefault(requireSectionTitle());
-    var _ItemList = _interopRequireDefault(requireItemList());
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { "default": obj };
-    }
-    function _getRequireWildcardCache() {
-      if (typeof WeakMap !== "function") return null;
-      var cache = /* @__PURE__ */ new WeakMap();
-      _getRequireWildcardCache = function _getRequireWildcardCache2() {
-        return cache;
-      };
-      return cache;
-    }
-    function _interopRequireWildcard(obj) {
-      if (obj && obj.__esModule) {
-        return obj;
-      }
-      if (obj === null || _typeof2(obj) !== "object" && typeof obj !== "function") {
-        return { "default": obj };
-      }
-      var cache = _getRequireWildcardCache();
-      if (cache && cache.has(obj)) {
-        return cache.get(obj);
-      }
-      var newObj = {};
-      var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-      for (var key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-          if (desc && (desc.get || desc.set)) {
-            Object.defineProperty(newObj, key, desc);
-          } else {
-            newObj[key] = obj[key];
-          }
-        }
-      }
-      newObj["default"] = obj;
-      if (cache) {
-        cache.set(obj, newObj);
-      }
-      return newObj;
-    }
-    function ownKeys2(object, enumerableOnly) {
-      var keys2 = Object.keys(object);
-      if (Object.getOwnPropertySymbols) {
-        var symbols = Object.getOwnPropertySymbols(object);
-        if (enumerableOnly) symbols = symbols.filter(function(sym) {
-          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        });
-        keys2.push.apply(keys2, symbols);
-      }
-      return keys2;
-    }
-    function _objectSpread(target) {
-      for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i] != null ? arguments[i] : {};
-        if (i % 2) {
-          ownKeys2(Object(source), true).forEach(function(key) {
-            _defineProperty2(target, key, source[key]);
-          });
-        } else if (Object.getOwnPropertyDescriptors) {
-          Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-        } else {
-          ownKeys2(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-      }
-      return target;
-    }
-    function _slicedToArray2(arr, i) {
-      return _arrayWithHoles2(arr) || _iterableToArrayLimit2(arr, i) || _unsupportedIterableToArray2(arr, i) || _nonIterableRest2();
-    }
-    function _nonIterableRest2() {
-      throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-    }
-    function _unsupportedIterableToArray2(o, minLen) {
-      if (!o) return;
-      if (typeof o === "string") return _arrayLikeToArray2(o, minLen);
-      var n = Object.prototype.toString.call(o).slice(8, -1);
-      if (n === "Object" && o.constructor) n = o.constructor.name;
-      if (n === "Map" || n === "Set") return Array.from(n);
-      if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray2(o, minLen);
-    }
-    function _arrayLikeToArray2(arr, len) {
-      if (len == null || len > arr.length) len = arr.length;
-      for (var i = 0, arr2 = new Array(len); i < len; i++) {
-        arr2[i] = arr[i];
-      }
-      return arr2;
-    }
-    function _iterableToArrayLimit2(arr, i) {
-      if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
-      var _arr = [];
-      var _n = true;
-      var _d = false;
-      var _e = void 0;
-      try {
-        for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-          _arr.push(_s.value);
-          if (i && _arr.length === i) break;
-        }
-      } catch (err2) {
-        _d = true;
-        _e = err2;
-      } finally {
-        try {
-          if (!_n && _i["return"] != null) _i["return"]();
-        } finally {
-          if (_d) throw _e;
-        }
-      }
-      return _arr;
-    }
-    function _arrayWithHoles2(arr) {
-      if (Array.isArray(arr)) return arr;
-    }
-    function _typeof2(obj) {
-      "@babel/helpers - typeof";
-      if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-        _typeof2 = function _typeof3(obj2) {
-          return typeof obj2;
-        };
-      } else {
-        _typeof2 = function _typeof3(obj2) {
-          return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        };
-      }
-      return _typeof2(obj);
-    }
-    function _classCallCheck2(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-      }
-    }
-    function _defineProperties2(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-    function _createClass2(Constructor, protoProps, staticProps) {
-      if (protoProps) _defineProperties2(Constructor.prototype, protoProps);
-      return Constructor;
-    }
-    function _createSuper2(Derived) {
-      return function() {
-        var Super = _getPrototypeOf2(Derived), result;
-        if (_isNativeReflectConstruct2()) {
-          var NewTarget = _getPrototypeOf2(this).constructor;
-          result = Reflect.construct(Super, arguments, NewTarget);
-        } else {
-          result = Super.apply(this, arguments);
-        }
-        return _possibleConstructorReturn2(this, result);
-      };
-    }
-    function _possibleConstructorReturn2(self2, call) {
-      if (call && (_typeof2(call) === "object" || typeof call === "function")) {
-        return call;
-      }
-      return _assertThisInitialized2(self2);
-    }
-    function _assertThisInitialized2(self2) {
-      if (self2 === void 0) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-      }
-      return self2;
-    }
-    function _isNativeReflectConstruct2() {
-      if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-      if (Reflect.construct.sham) return false;
-      if (typeof Proxy === "function") return true;
-      try {
-        Date.prototype.toString.call(Reflect.construct(Date, [], function() {
-        }));
-        return true;
-      } catch (e) {
-        return false;
-      }
-    }
-    function _getPrototypeOf2(o) {
-      _getPrototypeOf2 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf3(o2) {
-        return o2.__proto__ || Object.getPrototypeOf(o2);
-      };
-      return _getPrototypeOf2(o);
-    }
-    function _inherits2(subClass, superClass) {
-      if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function");
-      }
-      subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
-      if (superClass) _setPrototypeOf2(subClass, superClass);
-    }
-    function _setPrototypeOf2(o, p) {
-      _setPrototypeOf2 = Object.setPrototypeOf || function _setPrototypeOf3(o2, p2) {
-        o2.__proto__ = p2;
-        return o2;
-      };
-      return _setPrototypeOf2(o, p);
-    }
-    function _defineProperty2(obj, key, value) {
-      if (key in obj) {
-        Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-      } else {
-        obj[key] = value;
-      }
-      return obj;
-    }
-    var emptyObject = {};
-    var defaultRenderInputComponent = function defaultRenderInputComponent2(props) {
-      return /* @__PURE__ */ _react["default"].createElement("input", props);
-    };
-    var defaultRenderItemsContainer = function defaultRenderItemsContainer2(_ref3) {
-      var containerProps = _ref3.containerProps, children = _ref3.children;
-      return /* @__PURE__ */ _react["default"].createElement("div", containerProps, children);
-    };
-    var defaultTheme2 = {
-      container: "react-autowhatever__container",
-      containerOpen: "react-autowhatever__container--open",
-      input: "react-autowhatever__input",
-      inputOpen: "react-autowhatever__input--open",
-      inputFocused: "react-autowhatever__input--focused",
-      itemsContainer: "react-autowhatever__items-container",
-      itemsContainerOpen: "react-autowhatever__items-container--open",
-      itemsList: "react-autowhatever__items-list",
-      item: "react-autowhatever__item",
-      itemFirst: "react-autowhatever__item--first",
-      itemHighlighted: "react-autowhatever__item--highlighted",
-      sectionContainer: "react-autowhatever__section-container",
-      sectionContainerFirst: "react-autowhatever__section-container--first",
-      sectionTitle: "react-autowhatever__section-title"
-    };
-    var Autowhatever2 = /* @__PURE__ */ function(_Component) {
-      _inherits2(Autowhatever3, _Component);
-      var _super = _createSuper2(Autowhatever3);
-      function Autowhatever3(props) {
-        var _this;
-        _classCallCheck2(this, Autowhatever3);
-        _this = _super.call(this, props);
-        _defineProperty2(_assertThisInitialized2(_this), "storeInputReference", function(input) {
-          if (input !== null) {
-            _this.input = input;
-          }
-          var userRef = _this.props.inputProps.ref;
-          if (userRef) {
-            if (typeof userRef === "function") {
-              userRef(input);
-            } else if (_typeof2(userRef) === "object" && Object.prototype.hasOwnProperty.call(userRef, "current")) {
-              userRef.current = input;
-            }
-          }
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "storeItemsContainerReference", function(itemsContainer) {
-          if (itemsContainer !== null) {
-            _this.itemsContainer = itemsContainer;
-          }
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onHighlightedItemChange", function(highlightedItem) {
-          _this.highlightedItem = highlightedItem;
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "getItemId", function(sectionIndex, itemIndex) {
-          if (itemIndex === null) {
-            return null;
-          }
-          var id = _this.props.id;
-          var section = sectionIndex === null ? "" : "section-".concat(sectionIndex);
-          return "react-autowhatever-".concat(id, "-").concat(section, "-item-").concat(itemIndex);
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onFocus", function(event) {
-          var inputProps = _this.props.inputProps;
-          _this.setState({
-            isInputFocused: true
-          });
-          inputProps.onFocus && inputProps.onFocus(event);
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onBlur", function(event) {
-          var inputProps = _this.props.inputProps;
-          _this.setState({
-            isInputFocused: false
-          });
-          inputProps.onBlur && inputProps.onBlur(event);
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onKeyDown", function(event) {
-          var _this$props = _this.props, inputProps = _this$props.inputProps, highlightedSectionIndex = _this$props.highlightedSectionIndex, highlightedItemIndex = _this$props.highlightedItemIndex;
-          var keyCode = event.keyCode;
-          switch (keyCode) {
-            case 40:
-            // ArrowDown
-            case 38: {
-              var nextPrev = keyCode === 40 ? "next" : "prev";
-              var _this$sectionIterator = _this.sectionIterator[nextPrev]([highlightedSectionIndex, highlightedItemIndex]), _this$sectionIterator2 = _slicedToArray2(_this$sectionIterator, 2), newHighlightedSectionIndex = _this$sectionIterator2[0], newHighlightedItemIndex = _this$sectionIterator2[1];
-              inputProps.onKeyDown(event, {
-                newHighlightedSectionIndex,
-                newHighlightedItemIndex
-              });
-              break;
-            }
-            default:
-              inputProps.onKeyDown(event, {
-                highlightedSectionIndex,
-                highlightedItemIndex
-              });
-          }
-        });
-        _this.highlightedItem = null;
-        _this.state = {
-          isInputFocused: false
-        };
-        _this.setSectionsItems(props);
-        _this.setSectionIterator(props);
-        _this.setTheme(props);
-        return _this;
-      }
-      _createClass2(Autowhatever3, [{
-        key: "componentDidMount",
-        value: function componentDidMount() {
-          this.ensureHighlightedItemIsVisible();
-        }
-        // eslint-disable-next-line camelcase, react/sort-comp
-      }, {
-        key: "UNSAFE_componentWillReceiveProps",
-        value: function UNSAFE_componentWillReceiveProps(nextProps) {
-          if (nextProps.items !== this.props.items) {
-            this.setSectionsItems(nextProps);
-          }
-          if (nextProps.items !== this.props.items || nextProps.multiSection !== this.props.multiSection) {
-            this.setSectionIterator(nextProps);
-          }
-          if (nextProps.theme !== this.props.theme) {
-            this.setTheme(nextProps);
-          }
-        }
-      }, {
-        key: "componentDidUpdate",
-        value: function componentDidUpdate() {
-          this.ensureHighlightedItemIsVisible();
-        }
-      }, {
-        key: "setSectionsItems",
-        value: function setSectionsItems(props) {
-          if (props.multiSection) {
-            this.sectionsItems = props.items.map(function(section) {
-              return props.getSectionItems(section);
-            });
-            this.sectionsLengths = this.sectionsItems.map(function(items) {
-              return items.length;
-            });
-            this.allSectionsAreEmpty = this.sectionsLengths.every(function(itemsCount) {
-              return itemsCount === 0;
-            });
-          }
-        }
-      }, {
-        key: "setSectionIterator",
-        value: function setSectionIterator(props) {
-          this.sectionIterator = (0, _sectionIterator["default"])({
-            multiSection: props.multiSection,
-            data: props.multiSection ? this.sectionsLengths : props.items.length
-          });
-        }
-      }, {
-        key: "setTheme",
-        value: function setTheme(props) {
-          this.theme = (0, _reactThemeable["default"])(props.theme);
-        }
-      }, {
-        key: "renderSections",
-        value: function renderSections() {
-          var _this2 = this;
-          if (this.allSectionsAreEmpty) {
-            return null;
-          }
-          var theme2 = this.theme;
-          var _this$props2 = this.props, id = _this$props2.id, items = _this$props2.items, renderItem = _this$props2.renderItem, renderItemData = _this$props2.renderItemData, renderSectionTitle = _this$props2.renderSectionTitle, highlightedSectionIndex = _this$props2.highlightedSectionIndex, highlightedItemIndex = _this$props2.highlightedItemIndex, itemProps = _this$props2.itemProps;
-          return items.map(function(section, sectionIndex) {
-            var keyPrefix = "react-autowhatever-".concat(id, "-");
-            var sectionKeyPrefix = "".concat(keyPrefix, "section-").concat(sectionIndex, "-");
-            var isFirstSection = sectionIndex === 0;
-            return /* @__PURE__ */ _react["default"].createElement("div", theme2("".concat(sectionKeyPrefix, "container"), "sectionContainer", isFirstSection && "sectionContainerFirst"), /* @__PURE__ */ _react["default"].createElement(_SectionTitle["default"], {
-              section,
-              renderSectionTitle,
-              theme: theme2,
-              sectionKeyPrefix
-            }), /* @__PURE__ */ _react["default"].createElement(_ItemList["default"], {
-              items: _this2.sectionsItems[sectionIndex],
-              itemProps,
-              renderItem,
-              renderItemData,
-              sectionIndex,
-              highlightedItemIndex: highlightedSectionIndex === sectionIndex ? highlightedItemIndex : null,
-              onHighlightedItemChange: _this2.onHighlightedItemChange,
-              getItemId: _this2.getItemId,
-              theme: theme2,
-              keyPrefix,
-              ref: _this2.storeItemsListReference
-            }));
-          });
-        }
-      }, {
-        key: "renderItems",
-        value: function renderItems() {
-          var items = this.props.items;
-          if (items.length === 0) {
-            return null;
-          }
-          var theme2 = this.theme;
-          var _this$props3 = this.props, id = _this$props3.id, renderItem = _this$props3.renderItem, renderItemData = _this$props3.renderItemData, highlightedSectionIndex = _this$props3.highlightedSectionIndex, highlightedItemIndex = _this$props3.highlightedItemIndex, itemProps = _this$props3.itemProps;
-          return /* @__PURE__ */ _react["default"].createElement(_ItemList["default"], {
-            items,
-            itemProps,
-            renderItem,
-            renderItemData,
-            highlightedItemIndex: highlightedSectionIndex === null ? highlightedItemIndex : null,
-            onHighlightedItemChange: this.onHighlightedItemChange,
-            getItemId: this.getItemId,
-            theme: theme2,
-            keyPrefix: "react-autowhatever-".concat(id, "-")
-          });
-        }
-      }, {
-        key: "ensureHighlightedItemIsVisible",
-        value: function ensureHighlightedItemIsVisible() {
-          var highlightedItem = this.highlightedItem;
-          if (!highlightedItem) {
-            return;
-          }
-          var itemsContainer = this.itemsContainer;
-          var itemOffsetRelativeToContainer = highlightedItem.offsetParent === itemsContainer ? highlightedItem.offsetTop : highlightedItem.offsetTop - itemsContainer.offsetTop;
-          var scrollTop = itemsContainer.scrollTop;
-          if (itemOffsetRelativeToContainer < scrollTop) {
-            scrollTop = itemOffsetRelativeToContainer;
-          } else if (itemOffsetRelativeToContainer + highlightedItem.offsetHeight > scrollTop + itemsContainer.offsetHeight) {
-            scrollTop = itemOffsetRelativeToContainer + highlightedItem.offsetHeight - itemsContainer.offsetHeight;
-          }
-          if (scrollTop !== itemsContainer.scrollTop) {
-            itemsContainer.scrollTop = scrollTop;
-          }
-        }
-      }, {
-        key: "render",
-        value: function render() {
-          var theme2 = this.theme;
-          var _this$props4 = this.props, id = _this$props4.id, multiSection = _this$props4.multiSection, renderInputComponent = _this$props4.renderInputComponent, renderItemsContainer = _this$props4.renderItemsContainer, highlightedSectionIndex = _this$props4.highlightedSectionIndex, highlightedItemIndex = _this$props4.highlightedItemIndex;
-          var isInputFocused = this.state.isInputFocused;
-          var renderedItems = multiSection ? this.renderSections() : this.renderItems();
-          var isOpen = renderedItems !== null;
-          var ariaActivedescendant = this.getItemId(highlightedSectionIndex, highlightedItemIndex);
-          var itemsContainerId = "react-autowhatever-".concat(id);
-          var containerProps = _objectSpread({
-            role: "combobox",
-            "aria-haspopup": "listbox",
-            "aria-owns": itemsContainerId,
-            "aria-expanded": isOpen
-          }, theme2("react-autowhatever-".concat(id, "-container"), "container", isOpen && "containerOpen"), {}, this.props.containerProps);
-          var inputComponent = renderInputComponent(_objectSpread({
-            type: "text",
-            value: "",
-            autoComplete: "off",
-            "aria-autocomplete": "list",
-            "aria-controls": itemsContainerId,
-            "aria-activedescendant": ariaActivedescendant
-          }, theme2("react-autowhatever-".concat(id, "-input"), "input", isOpen && "inputOpen", isInputFocused && "inputFocused"), {}, this.props.inputProps, {
-            onFocus: this.onFocus,
-            onBlur: this.onBlur,
-            onKeyDown: this.props.inputProps.onKeyDown && this.onKeyDown,
-            ref: this.storeInputReference
-          }));
-          var itemsContainer = renderItemsContainer({
-            containerProps: _objectSpread({
-              id: itemsContainerId,
-              role: "listbox"
-            }, theme2("react-autowhatever-".concat(id, "-items-container"), "itemsContainer", isOpen && "itemsContainerOpen"), {
-              ref: this.storeItemsContainerReference
-            }),
-            children: renderedItems
-          });
-          return /* @__PURE__ */ _react["default"].createElement("div", containerProps, inputComponent, itemsContainer);
-        }
-      }]);
-      return Autowhatever3;
-    }(_react.Component);
-    exports["default"] = Autowhatever2;
-    _defineProperty2(Autowhatever2, "propTypes", {
-      id: _propTypes["default"].string,
-      // Used in aria-* attributes. If multiple Autowhatever's are rendered on a page, they must have unique ids.
-      multiSection: _propTypes["default"].bool,
-      // Indicates whether a multi section layout should be rendered.
-      renderInputComponent: _propTypes["default"].func,
-      // When specified, it is used to render the input element.
-      renderItemsContainer: _propTypes["default"].func,
-      // Renders the items container.
-      items: _propTypes["default"].array.isRequired,
-      // Array of items or sections to render.
-      renderItem: _propTypes["default"].func,
-      // This function renders a single item.
-      renderItemData: _propTypes["default"].object,
-      // Arbitrary data that will be passed to renderItem()
-      renderSectionTitle: _propTypes["default"].func,
-      // This function gets a section and renders its title.
-      getSectionItems: _propTypes["default"].func,
-      // This function gets a section and returns its items, which will be passed into `renderItem` for rendering.
-      containerProps: _propTypes["default"].object,
-      // Arbitrary container props
-      inputProps: _propTypes["default"].object,
-      // Arbitrary input props
-      itemProps: _propTypes["default"].oneOfType([
-        // Arbitrary item props
-        _propTypes["default"].object,
-        _propTypes["default"].func
-      ]),
-      highlightedSectionIndex: _propTypes["default"].number,
-      // Section index of the highlighted item
-      highlightedItemIndex: _propTypes["default"].number,
-      // Highlighted item index (within a section)
-      theme: _propTypes["default"].oneOfType([
-        // Styles. See: https://github.com/markdalgleish/react-themeable
-        _propTypes["default"].object,
-        _propTypes["default"].array
-      ])
-    });
-    _defineProperty2(Autowhatever2, "defaultProps", {
-      id: "1",
-      multiSection: false,
-      renderInputComponent: defaultRenderInputComponent,
-      renderItemsContainer: defaultRenderItemsContainer,
-      renderItem: function renderItem() {
-        throw new Error("`renderItem` must be provided");
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "button",
+    {
+      className: "suggestion-item",
+      onClick: () => onSelect(suggestion),
+      style: {
+        display: "flex",
+        alignItems: "center",
+        width: "100%",
+        padding: "8px",
+        border: "none",
+        background: "transparent",
+        cursor: "pointer",
+        transition: "background-color 0.2s ease",
+        borderRadius: "4px",
+        gap: "12px"
       },
-      renderItemData: emptyObject,
-      renderSectionTitle: function renderSectionTitle() {
-        throw new Error("`renderSectionTitle` must be provided");
-      },
-      getSectionItems: function getSectionItems() {
-        throw new Error("`getSectionItems` must be provided");
-      },
-      containerProps: emptyObject,
-      inputProps: emptyObject,
-      itemProps: emptyObject,
-      highlightedSectionIndex: null,
-      highlightedItemIndex: null,
-      theme: defaultTheme2
-    });
-  })(Autowhatever);
-  return Autowhatever;
-}
-var theme = {};
-var hasRequiredTheme;
-function requireTheme() {
-  if (hasRequiredTheme) return theme;
-  hasRequiredTheme = 1;
-  Object.defineProperty(theme, "__esModule", {
-    value: true
-  });
-  theme.mapToAutowhateverTheme = theme.defaultTheme = void 0;
-  var defaultTheme2 = {
-    container: "react-autosuggest__container",
-    containerOpen: "react-autosuggest__container--open",
-    input: "react-autosuggest__input",
-    inputOpen: "react-autosuggest__input--open",
-    inputFocused: "react-autosuggest__input--focused",
-    suggestionsContainer: "react-autosuggest__suggestions-container",
-    suggestionsContainerOpen: "react-autosuggest__suggestions-container--open",
-    suggestionsList: "react-autosuggest__suggestions-list",
-    suggestion: "react-autosuggest__suggestion",
-    suggestionFirst: "react-autosuggest__suggestion--first",
-    suggestionHighlighted: "react-autosuggest__suggestion--highlighted",
-    sectionContainer: "react-autosuggest__section-container",
-    sectionContainerFirst: "react-autosuggest__section-container--first",
-    sectionTitle: "react-autosuggest__section-title"
-  };
-  theme.defaultTheme = defaultTheme2;
-  var mapToAutowhateverTheme = function mapToAutowhateverTheme2(theme2) {
-    var result = {};
-    for (var key in theme2) {
-      switch (key) {
-        case "suggestionsContainer":
-          result["itemsContainer"] = theme2[key];
-          break;
-        case "suggestionsContainerOpen":
-          result["itemsContainerOpen"] = theme2[key];
-          break;
-        case "suggestion":
-          result["item"] = theme2[key];
-          break;
-        case "suggestionFirst":
-          result["itemFirst"] = theme2[key];
-          break;
-        case "suggestionHighlighted":
-          result["itemHighlighted"] = theme2[key];
-          break;
-        case "suggestionsList":
-          result["itemsList"] = theme2[key];
-          break;
-        default:
-          result[key] = theme2[key];
-      }
-    }
-    return result;
-  };
-  theme.mapToAutowhateverTheme = mapToAutowhateverTheme;
-  return theme;
-}
-var hasRequiredAutosuggest;
-function requireAutosuggest() {
-  if (hasRequiredAutosuggest) return Autosuggest$1;
-  hasRequiredAutosuggest = 1;
-  (function(exports) {
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports["default"] = void 0;
-    var _react = _interopRequireWildcard(requireReact());
-    var _propTypes = _interopRequireDefault(/* @__PURE__ */ requirePropTypes());
-    var _arrays = _interopRequireDefault(requireArrays());
-    var _Autowhatever = _interopRequireDefault(requireAutowhatever());
-    var _theme = requireTheme();
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { "default": obj };
-    }
-    function _getRequireWildcardCache() {
-      if (typeof WeakMap !== "function") return null;
-      var cache = /* @__PURE__ */ new WeakMap();
-      _getRequireWildcardCache = function _getRequireWildcardCache2() {
-        return cache;
-      };
-      return cache;
-    }
-    function _interopRequireWildcard(obj) {
-      if (obj && obj.__esModule) {
-        return obj;
-      }
-      if (obj === null || _typeof2(obj) !== "object" && typeof obj !== "function") {
-        return { "default": obj };
-      }
-      var cache = _getRequireWildcardCache();
-      if (cache && cache.has(obj)) {
-        return cache.get(obj);
-      }
-      var newObj = {};
-      var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-      for (var key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-          if (desc && (desc.get || desc.set)) {
-            Object.defineProperty(newObj, key, desc);
-          } else {
-            newObj[key] = obj[key];
-          }
-        }
-      }
-      newObj["default"] = obj;
-      if (cache) {
-        cache.set(obj, newObj);
-      }
-      return newObj;
-    }
-    function _typeof2(obj) {
-      "@babel/helpers - typeof";
-      if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-        _typeof2 = function _typeof3(obj2) {
-          return typeof obj2;
-        };
-      } else {
-        _typeof2 = function _typeof3(obj2) {
-          return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        };
-      }
-      return _typeof2(obj);
-    }
-    function ownKeys2(object, enumerableOnly) {
-      var keys2 = Object.keys(object);
-      if (Object.getOwnPropertySymbols) {
-        var symbols = Object.getOwnPropertySymbols(object);
-        if (enumerableOnly) symbols = symbols.filter(function(sym) {
-          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        });
-        keys2.push.apply(keys2, symbols);
-      }
-      return keys2;
-    }
-    function _objectSpread(target) {
-      for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i] != null ? arguments[i] : {};
-        if (i % 2) {
-          ownKeys2(Object(source), true).forEach(function(key) {
-            _defineProperty2(target, key, source[key]);
-          });
-        } else if (Object.getOwnPropertyDescriptors) {
-          Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-        } else {
-          ownKeys2(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-      }
-      return target;
-    }
-    function _classCallCheck2(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-      }
-    }
-    function _defineProperties2(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-    function _createClass2(Constructor, protoProps, staticProps) {
-      if (protoProps) _defineProperties2(Constructor.prototype, protoProps);
-      return Constructor;
-    }
-    function _createSuper2(Derived) {
-      return function() {
-        var Super = _getPrototypeOf2(Derived), result;
-        if (_isNativeReflectConstruct2()) {
-          var NewTarget = _getPrototypeOf2(this).constructor;
-          result = Reflect.construct(Super, arguments, NewTarget);
-        } else {
-          result = Super.apply(this, arguments);
-        }
-        return _possibleConstructorReturn2(this, result);
-      };
-    }
-    function _possibleConstructorReturn2(self2, call) {
-      if (call && (_typeof2(call) === "object" || typeof call === "function")) {
-        return call;
-      }
-      return _assertThisInitialized2(self2);
-    }
-    function _assertThisInitialized2(self2) {
-      if (self2 === void 0) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-      }
-      return self2;
-    }
-    function _isNativeReflectConstruct2() {
-      if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-      if (Reflect.construct.sham) return false;
-      if (typeof Proxy === "function") return true;
-      try {
-        Date.prototype.toString.call(Reflect.construct(Date, [], function() {
-        }));
-        return true;
-      } catch (e) {
-        return false;
-      }
-    }
-    function _getPrototypeOf2(o) {
-      _getPrototypeOf2 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf3(o2) {
-        return o2.__proto__ || Object.getPrototypeOf(o2);
-      };
-      return _getPrototypeOf2(o);
-    }
-    function _inherits2(subClass, superClass) {
-      if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function");
-      }
-      subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
-      if (superClass) _setPrototypeOf2(subClass, superClass);
-    }
-    function _setPrototypeOf2(o, p) {
-      _setPrototypeOf2 = Object.setPrototypeOf || function _setPrototypeOf3(o2, p2) {
-        o2.__proto__ = p2;
-        return o2;
-      };
-      return _setPrototypeOf2(o, p);
-    }
-    function _defineProperty2(obj, key, value) {
-      if (key in obj) {
-        Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-      } else {
-        obj[key] = value;
-      }
-      return obj;
-    }
-    var alwaysTrue = function alwaysTrue2() {
-      return true;
-    };
-    var defaultShouldRenderSuggestions = function defaultShouldRenderSuggestions2(value) {
-      return value.trim().length > 0;
-    };
-    var defaultRenderSuggestionsContainer = function defaultRenderSuggestionsContainer2(_ref3) {
-      var containerProps = _ref3.containerProps, children = _ref3.children;
-      return /* @__PURE__ */ _react["default"].createElement("div", containerProps, children);
-    };
-    var REASON_SUGGESTIONS_REVEALED = "suggestions-revealed";
-    var REASON_SUGGESTIONS_UPDATED = "suggestions-updated";
-    var REASON_SUGGESTION_SELECTED = "suggestion-selected";
-    var REASON_INPUT_FOCUSED = "input-focused";
-    var REASON_INPUT_CHANGED = "input-changed";
-    var REASON_INPUT_BLURRED = "input-blurred";
-    var REASON_ESCAPE_PRESSED = "escape-pressed";
-    var Autosuggest2 = /* @__PURE__ */ function(_Component) {
-      _inherits2(Autosuggest3, _Component);
-      var _super = _createSuper2(Autosuggest3);
-      function Autosuggest3(_ref22) {
-        var _this;
-        var _alwaysRenderSuggestions = _ref22.alwaysRenderSuggestions;
-        _classCallCheck2(this, Autosuggest3);
-        _this = _super.call(this);
-        _defineProperty2(_assertThisInitialized2(_this), "onDocumentMouseDown", function(event) {
-          _this.justClickedOnSuggestionsContainer = false;
-          var node2 = event.detail && event.detail.target || // This is for testing only. Please show me a better way to emulate this.
-          event.target;
-          while (node2 !== null && node2 !== document) {
-            if (node2.getAttribute && node2.getAttribute("data-suggestion-index") !== null) {
-              return;
-            }
-            if (node2 === _this.suggestionsContainer) {
-              _this.justClickedOnSuggestionsContainer = true;
-              return;
-            }
-            node2 = node2.parentNode;
-          }
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "storeAutowhateverRef", function(autowhatever) {
-          if (autowhatever !== null) {
-            _this.autowhatever = autowhatever;
-          }
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onSuggestionMouseEnter", function(event, _ref3) {
-          var sectionIndex = _ref3.sectionIndex, itemIndex = _ref3.itemIndex;
-          _this.updateHighlightedSuggestion(sectionIndex, itemIndex);
-          if (event.target === _this.pressedSuggestion) {
-            _this.justSelectedSuggestion = true;
-          }
-          _this.justMouseEntered = true;
-          setTimeout(function() {
-            _this.justMouseEntered = false;
-          });
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "highlightFirstSuggestion", function() {
-          _this.updateHighlightedSuggestion(_this.props.multiSection ? 0 : null, 0);
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onDocumentMouseUp", function() {
-          if (_this.pressedSuggestion && !_this.justSelectedSuggestion) {
-            _this.input.focus();
-          }
-          _this.pressedSuggestion = null;
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onSuggestionMouseDown", function(event) {
-          if (!_this.justSelectedSuggestion) {
-            _this.justSelectedSuggestion = true;
-            _this.pressedSuggestion = event.target;
-          }
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onSuggestionsClearRequested", function() {
-          var onSuggestionsClearRequested = _this.props.onSuggestionsClearRequested;
-          onSuggestionsClearRequested && onSuggestionsClearRequested();
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onSuggestionSelected", function(event, data) {
-          var _this$props = _this.props, alwaysRenderSuggestions = _this$props.alwaysRenderSuggestions, onSuggestionSelected = _this$props.onSuggestionSelected, onSuggestionsFetchRequested = _this$props.onSuggestionsFetchRequested;
-          onSuggestionSelected && onSuggestionSelected(event, data);
-          var keepSuggestionsOnSelect = _this.props.shouldKeepSuggestionsOnSelect(data.suggestion);
-          if (alwaysRenderSuggestions || keepSuggestionsOnSelect) {
-            onSuggestionsFetchRequested({
-              value: data.suggestionValue,
-              reason: REASON_SUGGESTION_SELECTED
-            });
-          } else {
-            _this.onSuggestionsClearRequested();
-          }
-          _this.resetHighlightedSuggestion();
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onSuggestionClick", function(event) {
-          var _this$props2 = _this.props, alwaysRenderSuggestions = _this$props2.alwaysRenderSuggestions, focusInputOnSuggestionClick = _this$props2.focusInputOnSuggestionClick;
-          var _this$getSuggestionIn = _this.getSuggestionIndices(_this.findSuggestionElement(event.target)), sectionIndex = _this$getSuggestionIn.sectionIndex, suggestionIndex = _this$getSuggestionIn.suggestionIndex;
-          var clickedSuggestion = _this.getSuggestion(sectionIndex, suggestionIndex);
-          var clickedSuggestionValue = _this.props.getSuggestionValue(clickedSuggestion);
-          _this.maybeCallOnChange(event, clickedSuggestionValue, "click");
-          _this.onSuggestionSelected(event, {
-            suggestion: clickedSuggestion,
-            suggestionValue: clickedSuggestionValue,
-            suggestionIndex,
-            sectionIndex,
-            method: "click"
-          });
-          var keepSuggestionsOnSelect = _this.props.shouldKeepSuggestionsOnSelect(clickedSuggestion);
-          if (!(alwaysRenderSuggestions || keepSuggestionsOnSelect)) {
-            _this.closeSuggestions();
-          }
-          if (focusInputOnSuggestionClick === true) {
-            _this.input.focus();
-          } else {
-            _this.onBlur();
-          }
-          setTimeout(function() {
-            _this.justSelectedSuggestion = false;
-          });
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onBlur", function() {
-          var _this$props3 = _this.props, inputProps = _this$props3.inputProps, shouldRenderSuggestions = _this$props3.shouldRenderSuggestions;
-          var value = inputProps.value, onBlur = inputProps.onBlur;
-          var highlightedSuggestion = _this.getHighlightedSuggestion();
-          var shouldRender = shouldRenderSuggestions(value, REASON_INPUT_BLURRED);
-          _this.setState({
-            isFocused: false,
-            highlightedSectionIndex: null,
-            highlightedSuggestionIndex: null,
-            highlightedSuggestion: null,
-            valueBeforeUpDown: null,
-            isCollapsed: !shouldRender
-          });
-          onBlur && onBlur(_this.blurEvent, {
-            highlightedSuggestion
-          });
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onSuggestionMouseLeave", function(event) {
-          _this.resetHighlightedSuggestion(false);
-          if (_this.justSelectedSuggestion && event.target === _this.pressedSuggestion) {
-            _this.justSelectedSuggestion = false;
-          }
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onSuggestionTouchStart", function() {
-          _this.justSelectedSuggestion = true;
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "onSuggestionTouchMove", function() {
-          _this.justSelectedSuggestion = false;
-          _this.pressedSuggestion = null;
-          _this.input.focus();
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "itemProps", function(_ref4) {
-          var sectionIndex = _ref4.sectionIndex, itemIndex = _ref4.itemIndex;
-          return {
-            "data-section-index": sectionIndex,
-            "data-suggestion-index": itemIndex,
-            onMouseEnter: _this.onSuggestionMouseEnter,
-            onMouseLeave: _this.onSuggestionMouseLeave,
-            onMouseDown: _this.onSuggestionMouseDown,
-            onTouchStart: _this.onSuggestionTouchStart,
-            onTouchMove: _this.onSuggestionTouchMove,
-            onClick: _this.onSuggestionClick
-          };
-        });
-        _defineProperty2(_assertThisInitialized2(_this), "renderSuggestionsContainer", function(_ref5) {
-          var containerProps = _ref5.containerProps, children = _ref5.children;
-          var renderSuggestionsContainer = _this.props.renderSuggestionsContainer;
-          return renderSuggestionsContainer({
-            containerProps,
-            children,
-            query: _this.getQuery()
-          });
-        });
-        _this.state = {
-          isFocused: false,
-          isCollapsed: !_alwaysRenderSuggestions,
-          highlightedSectionIndex: null,
-          highlightedSuggestionIndex: null,
-          highlightedSuggestion: null,
-          valueBeforeUpDown: null
-        };
-        _this.justPressedUpDown = false;
-        _this.justMouseEntered = false;
-        _this.pressedSuggestion = null;
-        return _this;
-      }
-      _createClass2(Autosuggest3, [{
-        key: "componentDidMount",
-        value: function componentDidMount() {
-          document.addEventListener("mousedown", this.onDocumentMouseDown);
-          document.addEventListener("mouseup", this.onDocumentMouseUp);
-          this.input = this.autowhatever.input;
-          this.suggestionsContainer = this.autowhatever.itemsContainer;
-        }
-        // eslint-disable-next-line camelcase, react/sort-comp
-      }, {
-        key: "UNSAFE_componentWillReceiveProps",
-        value: function UNSAFE_componentWillReceiveProps(nextProps) {
-          var shouldResetHighlighting = this.state.highlightedSuggestionIndex === 0 && this.props.highlightFirstSuggestion && !nextProps.highlightFirstSuggestion;
-          if ((0, _arrays["default"])(nextProps.suggestions, this.props.suggestions)) {
-            if (nextProps.highlightFirstSuggestion && nextProps.suggestions.length > 0 && this.justPressedUpDown === false && this.justMouseEntered === false) {
-              this.highlightFirstSuggestion();
-            } else if (shouldResetHighlighting) {
-              this.resetHighlightedSuggestion();
-            }
-          } else {
-            if (this.willRenderSuggestions(nextProps, REASON_SUGGESTIONS_UPDATED)) {
-              if (this.state.isCollapsed && !this.justSelectedSuggestion) {
-                this.revealSuggestions();
-              }
-              if (shouldResetHighlighting) {
-                this.resetHighlightedSuggestion();
-              }
-            } else {
-              this.resetHighlightedSuggestion();
-            }
-          }
-        }
-      }, {
-        key: "componentDidUpdate",
-        value: function componentDidUpdate(prevProps, prevState) {
-          var _this$props4 = this.props, suggestions = _this$props4.suggestions, onSuggestionHighlighted = _this$props4.onSuggestionHighlighted, highlightFirstSuggestion = _this$props4.highlightFirstSuggestion;
-          if (!(0, _arrays["default"])(suggestions, prevProps.suggestions) && suggestions.length > 0 && highlightFirstSuggestion) {
-            this.highlightFirstSuggestion();
-            return;
-          }
-          if (onSuggestionHighlighted) {
-            var highlightedSuggestion = this.getHighlightedSuggestion();
-            var prevHighlightedSuggestion = prevState.highlightedSuggestion;
-            if (highlightedSuggestion != prevHighlightedSuggestion) {
-              onSuggestionHighlighted({
-                suggestion: highlightedSuggestion
-              });
-            }
-          }
-        }
-      }, {
-        key: "componentWillUnmount",
-        value: function componentWillUnmount() {
-          document.removeEventListener("mousedown", this.onDocumentMouseDown);
-          document.removeEventListener("mouseup", this.onDocumentMouseUp);
-        }
-      }, {
-        key: "updateHighlightedSuggestion",
-        value: function updateHighlightedSuggestion(sectionIndex, suggestionIndex, prevValue) {
-          var _this2 = this;
-          this.setState(function(state) {
-            var valueBeforeUpDown = state.valueBeforeUpDown;
-            if (suggestionIndex === null) {
-              valueBeforeUpDown = null;
-            } else if (valueBeforeUpDown === null && typeof prevValue !== "undefined") {
-              valueBeforeUpDown = prevValue;
-            }
-            return {
-              highlightedSectionIndex: sectionIndex,
-              highlightedSuggestionIndex: suggestionIndex,
-              highlightedSuggestion: suggestionIndex === null ? null : _this2.getSuggestion(sectionIndex, suggestionIndex),
-              valueBeforeUpDown
-            };
-          });
-        }
-      }, {
-        key: "resetHighlightedSuggestion",
-        value: function resetHighlightedSuggestion() {
-          var shouldResetValueBeforeUpDown = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : true;
-          this.setState(function(state) {
-            var valueBeforeUpDown = state.valueBeforeUpDown;
-            return {
-              highlightedSectionIndex: null,
-              highlightedSuggestionIndex: null,
-              highlightedSuggestion: null,
-              valueBeforeUpDown: shouldResetValueBeforeUpDown ? null : valueBeforeUpDown
-            };
-          });
-        }
-      }, {
-        key: "revealSuggestions",
-        value: function revealSuggestions() {
-          this.setState({
-            isCollapsed: false
-          });
-        }
-      }, {
-        key: "closeSuggestions",
-        value: function closeSuggestions() {
-          this.setState({
-            highlightedSectionIndex: null,
-            highlightedSuggestionIndex: null,
-            highlightedSuggestion: null,
-            valueBeforeUpDown: null,
-            isCollapsed: true
-          });
-        }
-      }, {
-        key: "getSuggestion",
-        value: function getSuggestion(sectionIndex, suggestionIndex) {
-          var _this$props5 = this.props, suggestions = _this$props5.suggestions, multiSection = _this$props5.multiSection, getSectionSuggestions = _this$props5.getSectionSuggestions;
-          if (multiSection) {
-            return getSectionSuggestions(suggestions[sectionIndex])[suggestionIndex];
-          }
-          return suggestions[suggestionIndex];
-        }
-      }, {
-        key: "getHighlightedSuggestion",
-        value: function getHighlightedSuggestion() {
-          var _this$state = this.state, highlightedSectionIndex = _this$state.highlightedSectionIndex, highlightedSuggestionIndex = _this$state.highlightedSuggestionIndex;
-          if (highlightedSuggestionIndex === null) {
-            return null;
-          }
-          return this.getSuggestion(highlightedSectionIndex, highlightedSuggestionIndex);
-        }
-      }, {
-        key: "getSuggestionValueByIndex",
-        value: function getSuggestionValueByIndex(sectionIndex, suggestionIndex) {
-          var getSuggestionValue = this.props.getSuggestionValue;
-          return getSuggestionValue(this.getSuggestion(sectionIndex, suggestionIndex));
-        }
-      }, {
-        key: "getSuggestionIndices",
-        value: function getSuggestionIndices(suggestionElement) {
-          var sectionIndex = suggestionElement.getAttribute("data-section-index");
-          var suggestionIndex = suggestionElement.getAttribute("data-suggestion-index");
-          return {
-            sectionIndex: typeof sectionIndex === "string" ? parseInt(sectionIndex, 10) : null,
-            suggestionIndex: parseInt(suggestionIndex, 10)
-          };
-        }
-      }, {
-        key: "findSuggestionElement",
-        value: function findSuggestionElement(startNode) {
-          var node2 = startNode;
-          do {
-            if (node2.getAttribute && node2.getAttribute("data-suggestion-index") !== null) {
-              return node2;
-            }
-            node2 = node2.parentNode;
-          } while (node2 !== null);
-          console.error("Clicked element:", startNode);
-          throw new Error("Couldn't find suggestion element");
-        }
-      }, {
-        key: "maybeCallOnChange",
-        value: function maybeCallOnChange(event, newValue, method) {
-          var _this$props$inputProp = this.props.inputProps, value = _this$props$inputProp.value, onChange2 = _this$props$inputProp.onChange;
-          if (newValue !== value) {
-            onChange2(event, {
-              newValue,
-              method
-            });
-          }
-        }
-      }, {
-        key: "willRenderSuggestions",
-        value: function willRenderSuggestions(props, reason) {
-          var suggestions = props.suggestions, inputProps = props.inputProps, shouldRenderSuggestions = props.shouldRenderSuggestions;
-          var value = inputProps.value;
-          return suggestions.length > 0 && shouldRenderSuggestions(value, reason);
-        }
-      }, {
-        key: "getQuery",
-        value: function getQuery() {
-          var inputProps = this.props.inputProps;
-          var value = inputProps.value;
-          var valueBeforeUpDown = this.state.valueBeforeUpDown;
-          return (valueBeforeUpDown === null ? value : valueBeforeUpDown).trim();
-        }
-      }, {
-        key: "render",
-        value: function render() {
-          var _this3 = this;
-          var _this$props6 = this.props, suggestions = _this$props6.suggestions, renderInputComponent = _this$props6.renderInputComponent, onSuggestionsFetchRequested = _this$props6.onSuggestionsFetchRequested, renderSuggestion = _this$props6.renderSuggestion, inputProps = _this$props6.inputProps, multiSection = _this$props6.multiSection, renderSectionTitle = _this$props6.renderSectionTitle, id = _this$props6.id, getSectionSuggestions = _this$props6.getSectionSuggestions, theme2 = _this$props6.theme, getSuggestionValue = _this$props6.getSuggestionValue, alwaysRenderSuggestions = _this$props6.alwaysRenderSuggestions, highlightFirstSuggestion = _this$props6.highlightFirstSuggestion, containerProps = _this$props6.containerProps;
-          var _this$state2 = this.state, isFocused = _this$state2.isFocused, isCollapsed = _this$state2.isCollapsed, highlightedSectionIndex = _this$state2.highlightedSectionIndex, highlightedSuggestionIndex = _this$state2.highlightedSuggestionIndex, valueBeforeUpDown = _this$state2.valueBeforeUpDown;
-          var shouldRenderSuggestions = alwaysRenderSuggestions ? alwaysTrue : this.props.shouldRenderSuggestions;
-          var value = inputProps.value, _onFocus = inputProps.onFocus, _onKeyDown = inputProps.onKeyDown;
-          var willRenderSuggestions = this.willRenderSuggestions(this.props, "render");
-          var isOpen = alwaysRenderSuggestions || isFocused && !isCollapsed && willRenderSuggestions;
-          var items = isOpen ? suggestions : [];
-          var autowhateverInputProps = _objectSpread({}, inputProps, {
-            onFocus: function onFocus2(event) {
-              if (!_this3.justSelectedSuggestion && !_this3.justClickedOnSuggestionsContainer) {
-                var shouldRender = shouldRenderSuggestions(value, REASON_INPUT_FOCUSED);
-                _this3.setState({
-                  isFocused: true,
-                  isCollapsed: !shouldRender
-                });
-                _onFocus && _onFocus(event);
-                if (shouldRender) {
-                  onSuggestionsFetchRequested({
-                    value,
-                    reason: REASON_INPUT_FOCUSED
-                  });
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: "suggestion-thumbnail",
+            style: {
+              width: "48px",
+              height: "48px",
+              borderRadius: "4px",
+              overflow: "hidden",
+              flexShrink: 0
+            },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
+              {
+                src: suggestion.thumbnail,
+                alt: suggestion.name,
+                style: {
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover"
                 }
               }
+            )
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "suggestion-content",
+            style: {
+              flex: 1,
+              minWidth: 0,
+              textAlign: "left"
             },
-            onBlur: function onBlur(event) {
-              if (_this3.justClickedOnSuggestionsContainer) {
-                _this3.input.focus();
-                return;
-              }
-              _this3.blurEvent = event;
-              if (!_this3.justSelectedSuggestion) {
-                _this3.onBlur();
-                _this3.onSuggestionsClearRequested();
-              }
-            },
-            onChange: function onChange2(event) {
-              var value2 = event.target.value;
-              var shouldRender = shouldRenderSuggestions(value2, REASON_INPUT_CHANGED);
-              _this3.maybeCallOnChange(event, value2, "type");
-              if (_this3.suggestionsContainer) {
-                _this3.suggestionsContainer.scrollTop = 0;
-              }
-              _this3.setState(_objectSpread({}, highlightFirstSuggestion ? {} : {
-                highlightedSectionIndex: null,
-                highlightedSuggestionIndex: null,
-                highlightedSuggestion: null
-              }, {
-                valueBeforeUpDown: null,
-                isCollapsed: !shouldRender
-              }));
-              if (shouldRender) {
-                onSuggestionsFetchRequested({
-                  value: value2,
-                  reason: REASON_INPUT_CHANGED
-                });
-              } else {
-                _this3.onSuggestionsClearRequested();
-              }
-            },
-            onKeyDown: function onKeyDown(event, data) {
-              var keyCode = event.keyCode;
-              switch (keyCode) {
-                case 40:
-                // ArrowDown
-                case 38:
-                  if (isCollapsed) {
-                    if (shouldRenderSuggestions(value, REASON_SUGGESTIONS_REVEALED)) {
-                      onSuggestionsFetchRequested({
-                        value,
-                        reason: REASON_SUGGESTIONS_REVEALED
-                      });
-                      _this3.revealSuggestions();
-                      event.preventDefault();
-                    }
-                  } else if (suggestions.length > 0) {
-                    var newHighlightedSectionIndex = data.newHighlightedSectionIndex, newHighlightedItemIndex = data.newHighlightedItemIndex;
-                    var newValue;
-                    if (newHighlightedItemIndex === null) {
-                      newValue = valueBeforeUpDown === null ? value : valueBeforeUpDown;
-                    } else {
-                      newValue = _this3.getSuggestionValueByIndex(newHighlightedSectionIndex, newHighlightedItemIndex);
-                    }
-                    _this3.updateHighlightedSuggestion(newHighlightedSectionIndex, newHighlightedItemIndex, value);
-                    _this3.maybeCallOnChange(event, newValue, keyCode === 40 ? "down" : "up");
-                    event.preventDefault();
-                  }
-                  _this3.justPressedUpDown = true;
-                  setTimeout(function() {
-                    _this3.justPressedUpDown = false;
-                  });
-                  break;
-                // Enter
-                case 13: {
-                  if (event.keyCode === 229) {
-                    break;
-                  }
-                  var highlightedSuggestion = _this3.getHighlightedSuggestion();
-                  if (isOpen && !alwaysRenderSuggestions) {
-                    _this3.closeSuggestions();
-                  }
-                  if (highlightedSuggestion != null) {
-                    event.preventDefault();
-                    var _newValue = getSuggestionValue(highlightedSuggestion);
-                    _this3.maybeCallOnChange(event, _newValue, "enter");
-                    _this3.onSuggestionSelected(event, {
-                      suggestion: highlightedSuggestion,
-                      suggestionValue: _newValue,
-                      suggestionIndex: highlightedSuggestionIndex,
-                      sectionIndex: highlightedSectionIndex,
-                      method: "enter"
-                    });
-                    _this3.justSelectedSuggestion = true;
-                    setTimeout(function() {
-                      _this3.justSelectedSuggestion = false;
-                    });
-                  }
-                  break;
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: "suggestion-title",
+                  style: {
+                    fontSize: "14px",
+                    fontWeight: "500",
+                    color: "var(--text-light)",
+                    marginBottom: "4px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis"
+                  },
+                  children: suggestion.name
                 }
-                // Escape
-                case 27: {
-                  if (isOpen) {
-                    event.preventDefault();
-                  }
-                  var willCloseSuggestions = isOpen && !alwaysRenderSuggestions;
-                  if (valueBeforeUpDown === null) {
-                    if (!willCloseSuggestions) {
-                      var _newValue2 = "";
-                      _this3.maybeCallOnChange(event, _newValue2, "escape");
-                      if (shouldRenderSuggestions(_newValue2, REASON_ESCAPE_PRESSED)) {
-                        onSuggestionsFetchRequested({
-                          value: _newValue2,
-                          reason: REASON_ESCAPE_PRESSED
-                        });
-                      } else {
-                        _this3.onSuggestionsClearRequested();
-                      }
-                    }
-                  } else {
-                    _this3.maybeCallOnChange(event, valueBeforeUpDown, "escape");
-                  }
-                  if (willCloseSuggestions) {
-                    _this3.onSuggestionsClearRequested();
-                    _this3.closeSuggestions();
-                  } else {
-                    _this3.resetHighlightedSuggestion();
-                  }
-                  break;
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: "suggestion-subtitle",
+                  style: {
+                    fontSize: "12px",
+                    color: "var(--text-gray)"
+                  },
+                  children: formatDuration2(suggestion.duration)
                 }
-              }
-              _onKeyDown && _onKeyDown(event);
-            }
-          });
-          var renderSuggestionData = {
-            query: this.getQuery()
-          };
-          return /* @__PURE__ */ _react["default"].createElement(_Autowhatever["default"], {
-            multiSection,
-            items,
-            renderInputComponent,
-            renderItemsContainer: this.renderSuggestionsContainer,
-            renderItem: renderSuggestion,
-            renderItemData: renderSuggestionData,
-            renderSectionTitle,
-            getSectionItems: getSectionSuggestions,
-            highlightedSectionIndex,
-            highlightedItemIndex: highlightedSuggestionIndex,
-            containerProps,
-            inputProps: autowhateverInputProps,
-            itemProps: this.itemProps,
-            theme: (0, _theme.mapToAutowhateverTheme)(theme2),
-            id,
-            ref: this.storeAutowhateverRef
-          });
-        }
-      }]);
-      return Autosuggest3;
-    }(_react.Component);
-    exports["default"] = Autosuggest2;
-    _defineProperty2(Autosuggest2, "propTypes", {
-      suggestions: _propTypes["default"].array.isRequired,
-      onSuggestionsFetchRequested: function onSuggestionsFetchRequested(props, propName) {
-        var onSuggestionsFetchRequested2 = props[propName];
-        if (typeof onSuggestionsFetchRequested2 !== "function") {
-          throw new Error("'onSuggestionsFetchRequested' must be implemented. See: https://github.com/moroshko/react-autosuggest#onSuggestionsFetchRequestedProp");
-        }
-      },
-      onSuggestionsClearRequested: function onSuggestionsClearRequested(props, propName) {
-        var onSuggestionsClearRequested2 = props[propName];
-        if (props.alwaysRenderSuggestions === false && typeof onSuggestionsClearRequested2 !== "function") {
-          throw new Error("'onSuggestionsClearRequested' must be implemented. See: https://github.com/moroshko/react-autosuggest#onSuggestionsClearRequestedProp");
-        }
-      },
-      shouldKeepSuggestionsOnSelect: _propTypes["default"].func,
-      onSuggestionSelected: _propTypes["default"].func,
-      onSuggestionHighlighted: _propTypes["default"].func,
-      renderInputComponent: _propTypes["default"].func,
-      renderSuggestionsContainer: _propTypes["default"].func,
-      getSuggestionValue: _propTypes["default"].func.isRequired,
-      renderSuggestion: _propTypes["default"].func.isRequired,
-      inputProps: function inputProps(props, propName) {
-        var inputProps2 = props[propName];
-        if (!inputProps2) {
-          throw new Error("'inputProps' must be passed.");
-        }
-        if (!Object.prototype.hasOwnProperty.call(inputProps2, "value")) {
-          throw new Error("'inputProps' must have 'value'.");
-        }
-        if (!Object.prototype.hasOwnProperty.call(inputProps2, "onChange")) {
-          throw new Error("'inputProps' must have 'onChange'.");
-        }
-      },
-      shouldRenderSuggestions: _propTypes["default"].func,
-      alwaysRenderSuggestions: _propTypes["default"].bool,
-      multiSection: _propTypes["default"].bool,
-      renderSectionTitle: function renderSectionTitle(props, propName) {
-        var renderSectionTitle2 = props[propName];
-        if (props.multiSection === true && typeof renderSectionTitle2 !== "function") {
-          throw new Error("'renderSectionTitle' must be implemented. See: https://github.com/moroshko/react-autosuggest#renderSectionTitleProp");
-        }
-      },
-      getSectionSuggestions: function getSectionSuggestions(props, propName) {
-        var getSectionSuggestions2 = props[propName];
-        if (props.multiSection === true && typeof getSectionSuggestions2 !== "function") {
-          throw new Error("'getSectionSuggestions' must be implemented. See: https://github.com/moroshko/react-autosuggest#getSectionSuggestionsProp");
-        }
-      },
-      focusInputOnSuggestionClick: _propTypes["default"].bool,
-      highlightFirstSuggestion: _propTypes["default"].bool,
-      theme: _propTypes["default"].object,
-      id: _propTypes["default"].string,
-      containerProps: _propTypes["default"].object
-      // Arbitrary container props
-    });
-    _defineProperty2(Autosuggest2, "defaultProps", {
-      renderSuggestionsContainer: defaultRenderSuggestionsContainer,
-      shouldRenderSuggestions: defaultShouldRenderSuggestions,
-      alwaysRenderSuggestions: false,
-      multiSection: false,
-      shouldKeepSuggestionsOnSelect: function shouldKeepSuggestionsOnSelect() {
-        return false;
-      },
-      focusInputOnSuggestionClick: true,
-      highlightFirstSuggestion: false,
-      theme: _theme.defaultTheme,
-      id: "1",
-      containerProps: {}
-    });
-  })(Autosuggest$1);
-  return Autosuggest$1;
-}
-var dist;
-var hasRequiredDist;
-function requireDist() {
-  if (hasRequiredDist) return dist;
-  hasRequiredDist = 1;
-  dist = requireAutosuggest()["default"];
-  return dist;
-}
-var distExports = requireDist();
-const Autosuggest = /* @__PURE__ */ getDefaultExportFromCjs(distExports);
-const Play = () => {
+              )
+            ]
+          }
+        )
+      ]
+    }
+  );
+};
+const Play = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [voiceId, setVoiceId] = reactExports.useState("");
   const [songName, setSongName] = reactExports.useState("");
@@ -35270,13 +32838,26 @@ const Play = () => {
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
+  const [showSuggestions, setShowSuggestions] = reactExports.useState(false);
+  const suggestionsRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedVoiceId = sessionStorage.getItem("voiceId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedVoiceId = sessionStorage.getItem(`voiceId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedVoiceId) setVoiceId(storedVoiceId);
     if (storedPort) setPort(storedPort);
+  }, [userId]);
+  reactExports.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
   const handlePlay = async (event) => {
     event.preventDefault();
@@ -35285,100 +32866,179 @@ const Play = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        sessionStorage.setItem("voiceId", voiceId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/play`, { guildId, voiceId, songName });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        sessionStorage.setItem(`voiceId_${userId}`, voiceId);
+        const { data } = await axios.post(`http://localhost:${port}/play`, { guildId, voiceId, songName });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
     }
   };
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      handlePlay(event);
+  const fetchSearch = async (value) => {
+    if (!value.trim()) {
+      setSuggestions([]);
+      return;
     }
-  };
-  const fetchSearch = async ({ value }) => {
     try {
-      const env2 = await window.electronAPI.getEnv();
-      const { data } = await axios.get(`http://${env2.ip}:3000/search?q=${value}`);
+      const { data } = await axios.get(`http://localhost:${port}/search?q=${value}`);
       const limitedSuggestions = data.songs.slice(0, 5);
       setSuggestions(limitedSuggestions);
+      setShowSuggestions(true);
     } catch (error) {
       console.error("Error fetching suggestions:", error);
     }
   };
-  const fetchSuccess = () => {
-    setSuggestions([]);
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSongName(value);
+    fetchSearch(value);
   };
-  const getSuggestionValue = (suggestion) => suggestion.url;
-  const renderSuggestion = (suggestion) => /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "suggestion-item", children: suggestion.name });
-  const markdownContent = `
-Enter the details below to play a song in a voice channel in your server.
-
-- **Guild ID**
-- **Voice Channel ID**
-- **Song/Url**
-`;
+  const handleSuggestionClick = (suggestion) => {
+    setSongName(suggestion.url);
+    setShowSuggestions(false);
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "play", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Play" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to play a song in a voice channel in your server." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Voice Channel ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Song/Url (ex: https://www.youtube.com/watch?v=dQw4w9WgXcQ)" })
+        ] })
+      ] })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "input",
-        {
-          type: "text",
-          placeholder: "Guild ID",
-          value: guildId,
-          onChange: (e) => setGuildId(e.target.value)
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "input",
-        {
-          type: "text",
-          placeholder: "Voice Channel ID",
-          value: voiceId,
-          onChange: (e) => setVoiceId(e.target.value)
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Autosuggest,
-        {
-          suggestions,
-          onSuggestionsFetchRequested: fetchSearch,
-          onSuggestionsClearRequested: fetchSuccess,
-          getSuggestionValue,
-          renderSuggestion,
-          inputProps: {
-            placeholder: "Song/Url",
-            value: songName,
-            type: "search",
-            onChange: (e, { newValue }) => setSongName(newValue)
-          }
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handlePlay, disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }) })
-    ] }),
-    response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "form",
+      {
+        className: "styled-form",
+        onSubmit: handlePlay,
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "text",
+              placeholder: "Guild ID",
+              value: guildId,
+              onChange: (e) => setGuildId(e.target.value),
+              "aria-label": "Guild ID"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "text",
+              placeholder: "Voice Channel ID",
+              value: voiceId,
+              onChange: (e) => setVoiceId(e.target.value),
+              "aria-label": "Voice Channel ID"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: "autosuggest-container",
+              ref: suggestionsRef,
+              style: { position: "relative" },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "search",
+                    placeholder: "Song/Url",
+                    value: songName,
+                    onChange: handleInputChange,
+                    onFocus: () => setShowSuggestions(true),
+                    "aria-label": "Song or URL",
+                    "aria-expanded": showSuggestions,
+                    "aria-controls": "suggestions-list",
+                    role: "combobox"
+                  }
+                ),
+                showSuggestions && suggestions.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    id: "suggestions-list",
+                    className: "suggestions-list",
+                    role: "listbox",
+                    style: {
+                      position: "absolute",
+                      top: "100%",
+                      left: 0,
+                      right: 0,
+                      background: "var(--bg-dark)",
+                      borderRadius: "8px",
+                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+                      zIndex: 1e3,
+                      maxHeight: "300px",
+                      overflowY: "auto",
+                      marginTop: "4px"
+                    },
+                    children: suggestions.map((suggestion, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "div",
+                      {
+                        className: "suggestion-wrapper",
+                        role: "option",
+                        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          SuggestionItem,
+                          {
+                            suggestion,
+                            onSelect: handleSuggestionClick
+                          }
+                        )
+                      },
+                      index2
+                    ))
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "submit",
+              disabled: isCooldown,
+              style: {
+                opacity: isCooldown ? 0.7 : 1,
+                cursor: isCooldown ? "not-allowed" : "pointer"
+              },
+              children: isCooldown ? "Cooldown..." : "Submit"
+            }
+          ) })
+        ]
+      }
+    ),
+    response && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: "response-container",
+        style: {
+          marginTop: "20px",
+          padding: "16px",
+          background: "var(--bg-dark)",
+          borderRadius: "8px",
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)"
+        },
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response })
+      }
+    )
   ] });
 };
-const Loop = () => {
+const Loop = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [loop, setLoop] = reactExports.useState({ value: "track", label: "Current" });
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleLoop = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35386,9 +33046,8 @@ const Loop = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/loop`, { guildId, loop: loop.value });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/loop`, { guildId, loop: loop.value });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -35400,12 +33059,6 @@ const Loop = () => {
       handleLoop(event);
     }
   };
-  const markdownContent = `
-Enter the details below to loop the current track or queue.
-
-- **Guild ID**
-- **Select Type Mode**
-`;
   const loopOption = [
     { value: "track", label: "Current" },
     { value: "queue", label: "Queue" }
@@ -35413,69 +33066,132 @@ Enter the details below to loop the current track or queue.
   const customStyles = {
     control: (provided) => ({
       ...provided,
-      backgroundColor: "#222831",
-      border: "1px solid #00adb5",
-      color: "#00adb5",
+      backgroundColor: "var(--bg-darker)",
+      border: "2px solid var(--border-color)",
+      color: "var(--text-light)",
       borderRadius: "8px",
-      // Increased border radius for a smoother look
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-      // Slightly increased shadow for better depth
-      transition: "border-color 0.3s, box-shadow 0.3s",
+      minHeight: "42px",
+      boxShadow: "inset 0 2px 4px rgba(0, 0, 0, 0.1)",
+      transition: "all 0.3s ease",
       "&:hover": {
-        borderColor: "#00fff5",
-        boxShadow: "0 0 12px #00fff5"
-        // Increased shadow on hover for a more pronounced effect
+        borderColor: "var(--primary)",
+        boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.1)",
+        transform: "translateY(-1px)"
+      },
+      "&:focus-within": {
+        borderColor: "var(--primary)",
+        boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.1)"
       }
     }),
     menu: (provided) => ({
       ...provided,
-      backgroundColor: "#222831",
-      color: "#00adb5",
-      padding: "10px",
+      backgroundColor: "var(--bg-darker)",
+      padding: "8px",
+      color: "var(--text-light)",
       borderRadius: "8px",
-      // Increased border radius for a smoother look
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)"
-      // Slightly increased shadow for better depth
+      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)",
+      border: "1px solid var(--border-color)",
+      marginTop: "8px",
+      animation: "fadeIn 0.2s ease-out",
+      zIndex: 9999
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isFocused ? "#00adb5" : "#222831",
-      color: state.isFocused ? "#ffffff" : "#00adb5",
-      padding: "12px",
-      // Increased padding for better spacing
-      transition: "background-color 0.3s, color 0.3s",
+      backgroundColor: state.isFocused ? "var(--bg-dark)" : "transparent",
+      color: state.isFocused ? "var(--text-light)" : "var(--text-gray)",
+      padding: "10px 12px",
+      transition: "all 0.2s ease",
+      borderRadius: "6px",
+      cursor: "pointer",
+      fontSize: "0.95rem",
+      fontWeight: state.isSelected ? "600" : "400",
       "&:active": {
-        backgroundColor: "#00fff5",
-        color: "#ffffff"
+        backgroundColor: "var(--primary)",
+        color: "var(--text-light)"
+      },
+      "&:hover": {
+        backgroundColor: "var(--bg-dark)",
+        color: "var(--text-light)",
+        transform: "translateX(4px)"
       }
     }),
     singleValue: (provided) => ({
       ...provided,
-      color: "#00adb5",
-      fontWeight: "bold"
-      // Added bold font weight for better emphasis
+      color: "var(--text-light)",
+      fontWeight: "500",
+      fontSize: "0.95rem"
     }),
     placeholder: (provided) => ({
       ...provided,
-      color: "#00adb5",
-      // Styled the placeholder text
-      fontStyle: "italic"
-      // Added italic style for the placeholder text
+      color: "var(--text-muted)",
+      fontStyle: "normal",
+      fontSize: "0.95rem"
     }),
     dropdownIndicator: (provided) => ({
       ...provided,
-      color: "#00adb5",
-      // Styled the dropdown indicator
+      color: "var(--text-gray)",
+      padding: "0 8px",
+      transition: "all 0.3s ease",
       "&:hover": {
-        color: "#00fff5"
-        // Changed color on hover for the dropdown indicator
+        color: "var(--text-light)",
+        transform: "rotate(180deg)"
+      }
+    }),
+    input: (provided) => ({
+      ...provided,
+      color: "var(--text-light)",
+      fontSize: "0.95rem",
+      margin: "0",
+      padding: "0"
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      padding: "4px 8px"
+    }),
+    indicatorsContainer: (provided) => ({
+      ...provided,
+      padding: "0 4px"
+    }),
+    clearIndicator: (provided) => ({
+      ...provided,
+      color: "var(--text-gray)",
+      padding: "0 8px",
+      transition: "all 0.3s ease",
+      "&:hover": {
+        color: "var(--text-light)",
+        transform: "scale(1.1)"
+      }
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      padding: "4px",
+      "&::-webkit-scrollbar": {
+        width: "8px"
+      },
+      "&::-webkit-scrollbar-track": {
+        background: "var(--bg-darker)",
+        borderRadius: "4px"
+      },
+      "&::-webkit-scrollbar-thumb": {
+        background: "var(--primary)",
+        borderRadius: "4px",
+        border: "2px solid var(--bg-darker)"
+      },
+      "&::-webkit-scrollbar-thumb:hover": {
+        background: "var(--primary-dark)"
       }
     })
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "loop", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Loop" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to loop the current track or queue." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Select Type Mode (ex: Current or Queue)" })
+        ] })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -35505,17 +33221,17 @@ Enter the details below to loop the current track or queue.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Skip = () => {
+const Skip = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleSkip = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35523,9 +33239,8 @@ const Skip = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/skip`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/skip`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -35537,15 +33252,13 @@ const Skip = () => {
       handleSkip(event);
     }
   };
-  const markdownContent = `
-Enter the details below to skip the current song in the queue.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "skip", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Skip" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to skip the current song in the queue." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -35562,17 +33275,17 @@ Enter the details below to skip the current song in the queue.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Clear = () => {
+const Clear = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleClear = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35580,9 +33293,8 @@ const Clear = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/clear`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/clear`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -35594,15 +33306,13 @@ const Clear = () => {
       handleClear(event);
     }
   };
-  const markdownContent = `
-Enter the details below to clear the queue in your server.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "clear", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Clear" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to clear the queue in your server." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -35619,17 +33329,17 @@ Enter the details below to clear the queue in your server.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Previous = () => {
+const Previous = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handlePrevious = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35637,9 +33347,8 @@ const Previous = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/previous`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/previous`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -35651,15 +33360,13 @@ const Previous = () => {
       handlePrevious(event);
     }
   };
-  const markdownContent = `
-Enter the details below to go back to the previous song.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "previous", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Previous" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to go back to the previous song." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -35676,17 +33383,17 @@ Enter the details below to go back to the previous song.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Shuffle = () => {
+const Shuffle = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleShuffle = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35694,9 +33401,8 @@ const Shuffle = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/shuffle`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/shuffle`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -35708,15 +33414,13 @@ const Shuffle = () => {
       handleShuffle(event);
     }
   };
-  const markdownContent = `
-Enter the details below to shuffle the queue.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "shuffle", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Shuffle" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to shuffle the queue." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -35733,18 +33437,18 @@ Enter the details below to shuffle the queue.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Volume = () => {
+const Volume = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [volume, setVolume] = reactExports.useState(50);
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleVolume = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35752,9 +33456,8 @@ const Volume = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/volume`, { guildId, volume });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/volume`, { guildId, volume });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -35777,16 +33480,16 @@ const Volume = () => {
       setVolume(50);
     }
   };
-  const markdownContent = `
-Enter the details below to change the volume of the bot.
-
-- **Guild ID**
-- **Volume (1 to 100)**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "volume", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Volume" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to change the volume of the bot." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Volume (1 to 100)" })
+        ] })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -35815,18 +33518,18 @@ Enter the details below to change the volume of the bot.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Pause = () => {
+const Pause = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [pause, setPause] = reactExports.useState({ value: true, label: "Paused" });
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handlePause = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35834,9 +33537,8 @@ const Pause = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/pause`, { guildId, pause: pause.value });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/pause`, { guildId, pause: pause.value });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -35848,12 +33550,6 @@ const Pause = () => {
       handlePause(event);
     }
   };
-  const markdownContent = `
-Enter the details below to pause or resume the song.
-
-- **Guild ID**
-- **Select Type Mode**
-`;
   const PauseOption = [
     { value: true, label: "Paused" },
     { value: false, label: "Resumed" }
@@ -35861,69 +33557,132 @@ Enter the details below to pause or resume the song.
   const customStyles = {
     control: (provided) => ({
       ...provided,
-      backgroundColor: "#222831",
-      border: "1px solid #00adb5",
-      color: "#00adb5",
+      backgroundColor: "var(--bg-darker)",
+      border: "2px solid var(--border-color)",
+      color: "var(--text-light)",
       borderRadius: "8px",
-      // Increased border radius for a smoother look
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-      // Slightly increased shadow for better depth
-      transition: "border-color 0.3s, box-shadow 0.3s",
+      minHeight: "42px",
+      boxShadow: "inset 0 2px 4px rgba(0, 0, 0, 0.1)",
+      transition: "all 0.3s ease",
       "&:hover": {
-        borderColor: "#00fff5",
-        boxShadow: "0 0 12px #00fff5"
-        // Increased shadow on hover for a more pronounced effect
+        borderColor: "var(--primary)",
+        boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.1)",
+        transform: "translateY(-1px)"
+      },
+      "&:focus-within": {
+        borderColor: "var(--primary)",
+        boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.1)"
       }
     }),
     menu: (provided) => ({
       ...provided,
-      backgroundColor: "#222831",
-      color: "#00adb5",
-      padding: "10px",
+      backgroundColor: "var(--bg-darker)",
+      padding: "8px",
+      color: "var(--text-light)",
       borderRadius: "8px",
-      // Increased border radius for a smoother look
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)"
-      // Slightly increased shadow for better depth
+      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)",
+      border: "1px solid var(--border-color)",
+      marginTop: "8px",
+      animation: "fadeIn 0.2s ease-out",
+      zIndex: 9999
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isFocused ? "#00adb5" : "#222831",
-      color: state.isFocused ? "#ffffff" : "#00adb5",
-      padding: "12px",
-      // Increased padding for better spacing
-      transition: "background-color 0.3s, color 0.3s",
+      backgroundColor: state.isFocused ? "var(--bg-dark)" : "transparent",
+      color: state.isFocused ? "var(--text-light)" : "var(--text-gray)",
+      padding: "10px 12px",
+      transition: "all 0.2s ease",
+      borderRadius: "6px",
+      cursor: "pointer",
+      fontSize: "0.95rem",
+      fontWeight: state.isSelected ? "600" : "400",
       "&:active": {
-        backgroundColor: "#00fff5",
-        color: "#ffffff"
+        backgroundColor: "var(--primary)",
+        color: "var(--text-light)"
+      },
+      "&:hover": {
+        backgroundColor: "var(--bg-dark)",
+        color: "var(--text-light)",
+        transform: "translateX(4px)"
       }
     }),
     singleValue: (provided) => ({
       ...provided,
-      color: "#00adb5",
-      fontWeight: "bold"
-      // Added bold font weight for better emphasis
+      color: "var(--text-light)",
+      fontWeight: "500",
+      fontSize: "0.95rem"
     }),
     placeholder: (provided) => ({
       ...provided,
-      color: "#00adb5",
-      // Styled the placeholder text
-      fontStyle: "italic"
-      // Added italic style for the placeholder text
+      color: "var(--text-muted)",
+      fontStyle: "normal",
+      fontSize: "0.95rem"
     }),
     dropdownIndicator: (provided) => ({
       ...provided,
-      color: "#00adb5",
-      // Styled the dropdown indicator
+      color: "var(--text-gray)",
+      padding: "0 8px",
+      transition: "all 0.3s ease",
       "&:hover": {
-        color: "#00fff5"
-        // Changed color on hover for the dropdown indicator
+        color: "var(--text-light)",
+        transform: "rotate(180deg)"
+      }
+    }),
+    input: (provided) => ({
+      ...provided,
+      color: "var(--text-light)",
+      fontSize: "0.95rem",
+      margin: "0",
+      padding: "0"
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      padding: "4px 8px"
+    }),
+    indicatorsContainer: (provided) => ({
+      ...provided,
+      padding: "0 4px"
+    }),
+    clearIndicator: (provided) => ({
+      ...provided,
+      color: "var(--text-gray)",
+      padding: "0 8px",
+      transition: "all 0.3s ease",
+      "&:hover": {
+        color: "var(--text-light)",
+        transform: "scale(1.1)"
+      }
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      padding: "4px",
+      "&::-webkit-scrollbar": {
+        width: "8px"
+      },
+      "&::-webkit-scrollbar-track": {
+        background: "var(--bg-darker)",
+        borderRadius: "4px"
+      },
+      "&::-webkit-scrollbar-thumb": {
+        background: "var(--primary)",
+        borderRadius: "4px",
+        border: "2px solid var(--bg-darker)"
+      },
+      "&::-webkit-scrollbar-thumb:hover": {
+        background: "var(--primary-dark)"
       }
     })
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "pause", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Pause" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to pause or resume the song." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Select Type Mode (ex: Paused or Resumed)" })
+        ] })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -35953,18 +33712,18 @@ Enter the details below to pause or resume the song.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const TwentyFourSeven = () => {
+const TwentyFourSeven = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [twentyfourseven, setTwentyFourSeven] = reactExports.useState({ value: true, label: "Active" });
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleTwentyFourSeven = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35972,9 +33731,8 @@ const TwentyFourSeven = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/twentyfourseven`, { guildId, twentyfourseven: twentyfourseven.value });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/twentyfourseven`, { guildId, twentyfourseven: twentyfourseven.value });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -35986,12 +33744,6 @@ const TwentyFourSeven = () => {
       handleTwentyFourSeven(event);
     }
   };
-  const markdownContent = `
-Enter the details below to toggle 24/7 mode.
-
-- **Guild ID**
-- **Select Type Mode**
-`;
   const TwentyFourSevenOption = [
     { value: true, label: "Active" },
     { value: false, label: "Deactive" }
@@ -35999,69 +33751,132 @@ Enter the details below to toggle 24/7 mode.
   const customStyles = {
     control: (provided) => ({
       ...provided,
-      backgroundColor: "#222831",
-      border: "1px solid #00adb5",
-      color: "#00adb5",
+      backgroundColor: "var(--bg-darker)",
+      border: "2px solid var(--border-color)",
+      color: "var(--text-light)",
       borderRadius: "8px",
-      // Increased border radius for a smoother look
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-      // Slightly increased shadow for better depth
-      transition: "border-color 0.3s, box-shadow 0.3s",
+      minHeight: "42px",
+      boxShadow: "inset 0 2px 4px rgba(0, 0, 0, 0.1)",
+      transition: "all 0.3s ease",
       "&:hover": {
-        borderColor: "#00fff5",
-        boxShadow: "0 0 12px #00fff5"
-        // Increased shadow on hover for a more pronounced effect
+        borderColor: "var(--primary)",
+        boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.1)",
+        transform: "translateY(-1px)"
+      },
+      "&:focus-within": {
+        borderColor: "var(--primary)",
+        boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.1)"
       }
     }),
     menu: (provided) => ({
       ...provided,
-      backgroundColor: "#222831",
-      color: "#00adb5",
-      padding: "10px",
+      backgroundColor: "var(--bg-darker)",
+      padding: "8px",
+      color: "var(--text-light)",
       borderRadius: "8px",
-      // Increased border radius for a smoother look
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)"
-      // Slightly increased shadow for better depth
+      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)",
+      border: "1px solid var(--border-color)",
+      marginTop: "8px",
+      animation: "fadeIn 0.2s ease-out",
+      zIndex: 9999
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isFocused ? "#00adb5" : "#222831",
-      color: state.isFocused ? "#ffffff" : "#00adb5",
-      padding: "12px",
-      // Increased padding for better spacing
-      transition: "background-color 0.3s, color 0.3s",
+      backgroundColor: state.isFocused ? "var(--bg-dark)" : "transparent",
+      color: state.isFocused ? "var(--text-light)" : "var(--text-gray)",
+      padding: "10px 12px",
+      transition: "all 0.2s ease",
+      borderRadius: "6px",
+      cursor: "pointer",
+      fontSize: "0.95rem",
+      fontWeight: state.isSelected ? "600" : "400",
       "&:active": {
-        backgroundColor: "#00fff5",
-        color: "#ffffff"
+        backgroundColor: "var(--primary)",
+        color: "var(--text-light)"
+      },
+      "&:hover": {
+        backgroundColor: "var(--bg-dark)",
+        color: "var(--text-light)",
+        transform: "translateX(4px)"
       }
     }),
     singleValue: (provided) => ({
       ...provided,
-      color: "#00adb5",
-      fontWeight: "bold"
-      // Added bold font weight for better emphasis
+      color: "var(--text-light)",
+      fontWeight: "500",
+      fontSize: "0.95rem"
     }),
     placeholder: (provided) => ({
       ...provided,
-      color: "#00adb5",
-      // Styled the placeholder text
-      fontStyle: "italic"
-      // Added italic style for the placeholder text
+      color: "var(--text-muted)",
+      fontStyle: "normal",
+      fontSize: "0.95rem"
     }),
     dropdownIndicator: (provided) => ({
       ...provided,
-      color: "#00adb5",
-      // Styled the dropdown indicator
+      color: "var(--text-gray)",
+      padding: "0 8px",
+      transition: "all 0.3s ease",
       "&:hover": {
-        color: "#00fff5"
-        // Changed color on hover for the dropdown indicator
+        color: "var(--text-light)",
+        transform: "rotate(180deg)"
+      }
+    }),
+    input: (provided) => ({
+      ...provided,
+      color: "var(--text-light)",
+      fontSize: "0.95rem",
+      margin: "0",
+      padding: "0"
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      padding: "4px 8px"
+    }),
+    indicatorsContainer: (provided) => ({
+      ...provided,
+      padding: "0 4px"
+    }),
+    clearIndicator: (provided) => ({
+      ...provided,
+      color: "var(--text-gray)",
+      padding: "0 8px",
+      transition: "all 0.3s ease",
+      "&:hover": {
+        color: "var(--text-light)",
+        transform: "scale(1.1)"
+      }
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      padding: "4px",
+      "&::-webkit-scrollbar": {
+        width: "8px"
+      },
+      "&::-webkit-scrollbar-track": {
+        background: "var(--bg-darker)",
+        borderRadius: "4px"
+      },
+      "&::-webkit-scrollbar-thumb": {
+        background: "var(--primary)",
+        borderRadius: "4px",
+        border: "2px solid var(--bg-darker)"
+      },
+      "&::-webkit-scrollbar-thumb:hover": {
+        background: "var(--primary-dark)"
       }
     })
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "twentyfourseven", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "TwentyFourSeven" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to toggle 24/7 mode." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Select Type Mode (ex: Active or Deactive)" })
+        ] })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -36091,17 +33906,17 @@ Enter the details below to toggle 24/7 mode.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Replay = () => {
+const Replay = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleReplay = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -36109,9 +33924,8 @@ const Replay = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/replay`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/replay`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -36123,15 +33937,13 @@ const Replay = () => {
       handleReplay(event);
     }
   };
-  const markdownContent = `
-Enter the details below to replay the current song.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "replay", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Replay" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to replay the current song." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -36148,18 +33960,31 @@ Enter the details below to replay the current song.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const PlaySkip = () => {
+const PlaySkip = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [songName, setSongName] = reactExports.useState("");
   const [suggestions, setSuggestions] = reactExports.useState([]);
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
+  const [showSuggestions, setShowSuggestions] = reactExports.useState(false);
+  const suggestionsRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
+  }, [userId]);
+  reactExports.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
   const handlePlaySkip = async (event) => {
     event.preventDefault();
@@ -36168,89 +33993,180 @@ const PlaySkip = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/playskip`, { guildId, songName });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/playskip`, { guildId, songName });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
     }
   };
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      handlePlaySkip(event);
+  const fetchSearch = async (value) => {
+    if (!value.trim()) {
+      setSuggestions([]);
+      return;
     }
-  };
-  const fetchSearch = async ({ value }) => {
     try {
-      const env2 = await window.electronAPI.getEnv();
-      const { data } = await axios.get(`http://${env2.ip}:3000/search?q=${value}`);
+      const { data } = await axios.get(`http://localhost:${port}/search?q=${value}`);
       const limitedSuggestions = data.songs.slice(0, 5);
       setSuggestions(limitedSuggestions);
+      setShowSuggestions(true);
     } catch (error) {
       console.error("Error fetching suggestions:", error);
     }
   };
-  const fetchSuccess = () => {
-    setSuggestions([]);
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSongName(value);
+    fetchSearch(value);
   };
-  const getSuggestionValue = (suggestion) => suggestion.url;
-  const renderSuggestion = (suggestion) => /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "suggestion-item", children: suggestion.name });
-  const markdownContent = `
-Enter the details below to play and skip to the song.
-
-- **Guild ID**
-- **Song/Url**
-`;
+  const handleSuggestionClick = (suggestion) => {
+    setSongName(suggestion.url);
+    setShowSuggestions(false);
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "playskip", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "PlaySkip" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Play Skip" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to skip and play a song." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Song/Url (ex: https://www.youtube.com/watch?v=dQw4w9WgXcQ)" })
+        ] })
+      ] })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "input",
-        {
-          type: "text",
-          placeholder: "Guild ID",
-          value: guildId,
-          onChange: (e) => setGuildId(e.target.value)
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Autosuggest,
-        {
-          suggestions,
-          onSuggestionsFetchRequested: fetchSearch,
-          onSuggestionsClearRequested: fetchSuccess,
-          getSuggestionValue,
-          renderSuggestion,
-          inputProps: {
-            placeholder: "Song/Url",
-            value: songName,
-            type: "search",
-            onChange: (e, { newValue }) => setSongName(newValue)
-          }
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handlePlaySkip, disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }) })
-    ] }),
-    response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "form",
+      {
+        className: "styled-form",
+        onSubmit: handlePlaySkip,
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "text",
+              placeholder: "Guild ID",
+              value: guildId,
+              onChange: (e) => setGuildId(e.target.value),
+              "aria-label": "Guild ID"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: "autosuggest-container",
+              ref: suggestionsRef,
+              style: { position: "relative" },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "search",
+                    placeholder: "Song/Url",
+                    value: songName,
+                    onChange: handleInputChange,
+                    onFocus: () => setShowSuggestions(true),
+                    "aria-label": "Song or URL",
+                    "aria-expanded": showSuggestions,
+                    "aria-controls": "suggestions-list",
+                    role: "combobox"
+                  }
+                ),
+                showSuggestions && suggestions.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    id: "suggestions-list",
+                    className: "suggestions-list",
+                    role: "listbox",
+                    style: {
+                      position: "absolute",
+                      top: "100%",
+                      left: 0,
+                      right: 0,
+                      background: "var(--bg-dark)",
+                      borderRadius: "8px",
+                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+                      zIndex: 1e3,
+                      maxHeight: "300px",
+                      overflowY: "auto",
+                      marginTop: "4px"
+                    },
+                    children: suggestions.map((suggestion, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "div",
+                      {
+                        className: "suggestion-wrapper",
+                        role: "option",
+                        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          SuggestionItem,
+                          {
+                            suggestion,
+                            onSelect: handleSuggestionClick
+                          }
+                        )
+                      },
+                      index2
+                    ))
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "submit",
+              disabled: isCooldown,
+              style: {
+                opacity: isCooldown ? 0.7 : 1,
+                cursor: isCooldown ? "not-allowed" : "pointer"
+              },
+              children: isCooldown ? "Cooldown..." : "Submit"
+            }
+          ) })
+        ]
+      }
+    ),
+    response && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: "response-container",
+        style: {
+          marginTop: "20px",
+          padding: "16px",
+          background: "var(--bg-dark)",
+          borderRadius: "8px",
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)"
+        },
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response })
+      }
+    )
   ] });
 };
-const PlayTop = () => {
+const PlayTop = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [songName, setSongName] = reactExports.useState("");
   const [suggestions, setSuggestions] = reactExports.useState([]);
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
+  const [showSuggestions, setShowSuggestions] = reactExports.useState(false);
+  const suggestionsRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
+  }, [userId]);
+  reactExports.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
   const handlePlayTop = async (event) => {
     event.preventDefault();
@@ -36259,89 +34175,167 @@ const PlayTop = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/playtop`, { guildId, songName });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/playtop`, { guildId, songName });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
     }
   };
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      handlePlayTop(event);
+  const fetchSearch = async (value) => {
+    if (!value.trim()) {
+      setSuggestions([]);
+      return;
     }
-  };
-  const fetchSearch = async ({ value }) => {
     try {
-      const env2 = await window.electronAPI.getEnv();
-      const { data } = await axios.get(`http://${env2.ip}:3000/search?q=${value}`);
+      const { data } = await axios.get(`http://localhost:${port}/search?q=${value}`);
       const limitedSuggestions = data.songs.slice(0, 5);
       setSuggestions(limitedSuggestions);
+      setShowSuggestions(true);
     } catch (error) {
       console.error("Error fetching suggestions:", error);
     }
   };
-  const fetchSuccess = () => {
-    setSuggestions([]);
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSongName(value);
+    fetchSearch(value);
   };
-  const getSuggestionValue = (suggestion) => suggestion.url;
-  const renderSuggestion = (suggestion) => /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "suggestion-item", children: suggestion.name });
-  const markdownContent = `
-Enter the details below to queue song to the top.
-
-- **Guild ID**
-- **Song/Url**
-`;
+  const handleSuggestionClick = (suggestion) => {
+    setSongName(suggestion.url);
+    setShowSuggestions(false);
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "playtop", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "PlayTop" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Play Top" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to shift song to the top of the queue." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Song/Url (ex: https://www.youtube.com/watch?v=dQw4w9WgXcQ)" })
+        ] })
+      ] })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "input",
-        {
-          type: "text",
-          placeholder: "Guild ID",
-          value: guildId,
-          onChange: (e) => setGuildId(e.target.value)
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Autosuggest,
-        {
-          suggestions,
-          onSuggestionsFetchRequested: fetchSearch,
-          onSuggestionsClearRequested: fetchSuccess,
-          getSuggestionValue,
-          renderSuggestion,
-          inputProps: {
-            placeholder: "Song/Url",
-            value: songName,
-            type: "search",
-            onChange: (e, { newValue }) => setSongName(newValue)
-          }
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handlePlayTop, disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }) })
-    ] }),
-    response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "form",
+      {
+        className: "styled-form",
+        onSubmit: handlePlayTop,
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "text",
+              placeholder: "Guild ID",
+              value: guildId,
+              onChange: (e) => setGuildId(e.target.value),
+              "aria-label": "Guild ID"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: "autosuggest-container",
+              ref: suggestionsRef,
+              style: { position: "relative" },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "search",
+                    placeholder: "Song/Url",
+                    value: songName,
+                    onChange: handleInputChange,
+                    onFocus: () => setShowSuggestions(true),
+                    "aria-label": "Song or URL",
+                    "aria-expanded": showSuggestions,
+                    "aria-controls": "suggestions-list",
+                    role: "combobox"
+                  }
+                ),
+                showSuggestions && suggestions.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    id: "suggestions-list",
+                    className: "suggestions-list",
+                    role: "listbox",
+                    style: {
+                      position: "absolute",
+                      top: "100%",
+                      left: 0,
+                      right: 0,
+                      background: "var(--bg-dark)",
+                      borderRadius: "8px",
+                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+                      zIndex: 1e3,
+                      maxHeight: "300px",
+                      overflowY: "auto",
+                      marginTop: "4px"
+                    },
+                    children: suggestions.map((suggestion, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "div",
+                      {
+                        className: "suggestion-wrapper",
+                        role: "option",
+                        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          SuggestionItem,
+                          {
+                            suggestion,
+                            onSelect: handleSuggestionClick
+                          }
+                        )
+                      },
+                      index2
+                    ))
+                  }
+                )
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "submit",
+              disabled: isCooldown,
+              style: {
+                opacity: isCooldown ? 0.7 : 1,
+                cursor: isCooldown ? "not-allowed" : "pointer"
+              },
+              children: isCooldown ? "Cooldown..." : "Submit"
+            }
+          ) })
+        ]
+      }
+    ),
+    response && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: "response-container",
+        style: {
+          marginTop: "20px",
+          padding: "16px",
+          background: "var(--bg-dark)",
+          borderRadius: "8px",
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)"
+        },
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response })
+      }
+    )
   ] });
 };
-const GoLive = () => {
+const GoLive = ({ userId }) => {
   const [voiceId, setVoiceId] = reactExports.useState("");
   const [linkUrl, setlinkUrl] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedVoiceId = sessionStorage.getItem("voiceId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedVoiceId = sessionStorage.getItem(`voiceId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedPort) setPort(storedPort);
     if (storedVoiceId) setVoiceId(storedVoiceId);
-  }, []);
+  }, [userId]);
   const handleGoLive = async () => {
     setResponse("");
     try {
@@ -36359,9 +34353,8 @@ const GoLive = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("voiceId", voiceId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/golive`, { voiceId, linkUrl });
+        sessionStorage.setItem(`voiceId_${userId}`, voiceId);
+        const { data } = await axios.post(`http://localhost:${port}/golive`, { voiceId, linkUrl });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -36373,16 +34366,16 @@ const GoLive = () => {
       handleGoLive();
     }
   };
-  const markdownContent = `
-Enter the details below to start streaming
-
-- **Voice Channel ID**
-- **linkUrl** (ex: \`http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4\`)
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "golive", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "GoLive" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to start streaming" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Voice Channel ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "linkUrl (ex: https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4)" })
+        ] })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -36408,27 +34401,25 @@ Enter the details below to start streaming
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const EndLive = () => {
+const EndLive = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleEndLive = async (event) => {
-    event.preventDefault();
     setResponse("");
     if (!isCooldown) {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/endlive`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/endlive`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -36437,18 +34428,16 @@ const EndLive = () => {
   };
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      handleEndLive(event);
+      handleEndLive();
     }
   };
-  const markdownContent = `
-Enter the details below to end the live stream.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "endlive", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "EndLive" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to end the live stream." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -36465,17 +34454,17 @@ Enter the details below to end the live stream.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Normal = () => {
+const Normal = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleNormal = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -36483,9 +34472,8 @@ const Normal = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/normal`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/normal`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -36497,15 +34485,13 @@ const Normal = () => {
       handleNormal(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the normal filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "normal", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Normal" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the normal filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -36522,17 +34508,17 @@ Enter the details below to set the normal filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Bass = () => {
+const Bass = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleBass = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -36540,9 +34526,8 @@ const Bass = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/bass`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/bass`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -36554,15 +34539,13 @@ const Bass = () => {
       handleBass(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the bass filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "bass", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Bass" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the bass filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -36579,17 +34562,17 @@ Enter the details below to set the bass filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Earrape = () => {
+const Earrape = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleEarrape = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -36597,9 +34580,8 @@ const Earrape = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/earrape`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/earrape`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -36611,15 +34593,13 @@ const Earrape = () => {
       handleEarrape(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set earrape filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "earrape", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Earrape (Headphone Warning)" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the earrape filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -36636,18 +34616,18 @@ Enter the details below to set earrape filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const BassBoost = () => {
+const BassBoost = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [bassboost, setBassBoost] = reactExports.useState(5);
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleBassBoost = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -36655,9 +34635,8 @@ const BassBoost = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/bassboost`, { guildId, bassboost });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/bassboost`, { guildId, bassboost });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -36680,16 +34659,13 @@ const BassBoost = () => {
       setBassBoost(5);
     }
   };
-  const markdownContent = `
-Enter the details below to set the bassboost filter.
-
-- **Guild ID**
-- **BassBoost (-10 to 10)**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "bassboost", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "BassBoost" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the bassboost filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -36718,17 +34694,17 @@ Enter the details below to set the bassboost filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Nightcore = () => {
+const Nightcore = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleNightcore = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -36736,9 +34712,8 @@ const Nightcore = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/nightcore`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/nightcore`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -36750,15 +34725,13 @@ const Nightcore = () => {
       handleNightcore(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the nightcore filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "nightcore", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Nightcore" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the nightcore filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -36775,17 +34748,17 @@ Enter the details below to set the nightcore filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Vaporwave = () => {
+const Vaporwave = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleVaporwave = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -36793,9 +34766,8 @@ const Vaporwave = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/vaporwave`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/vaporwave`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -36807,15 +34779,13 @@ const Vaporwave = () => {
       handleVaporwave(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the vaporwave filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "vaporwave", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Vaporwave" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the vaporwave filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -36832,17 +34802,17 @@ Enter the details below to set the vaporwave filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const China = () => {
+const China = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleChina = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -36850,9 +34820,8 @@ const China = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/china`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/china`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -36864,15 +34833,13 @@ const China = () => {
       handleChina(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the china filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "china", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "China" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the china filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -36889,17 +34856,17 @@ Enter the details below to set the china filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Chipmunk = () => {
+const Chipmunk = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleChipmunk = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -36907,9 +34874,8 @@ const Chipmunk = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/chipmunk`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/chipmunk`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -36921,15 +34887,13 @@ const Chipmunk = () => {
       handleChipmunk(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the chipmunk filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "chipmunk", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Chipmunk" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the chipmunk filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -36946,17 +34910,17 @@ Enter the details below to set the chipmunk filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Darthvader = () => {
+const Darthvader = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleDathvader = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -36964,9 +34928,8 @@ const Darthvader = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/darthvader`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/darthvader`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -36978,15 +34941,13 @@ const Darthvader = () => {
       handleDathvader(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the dathvader filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "dathvader", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Darthvader" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the darthvader filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -37003,17 +34964,17 @@ Enter the details below to set the dathvader filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Dance = () => {
+const Dance = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleDance = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -37021,9 +34982,8 @@ const Dance = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/dance`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/dance`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -37035,15 +34995,13 @@ const Dance = () => {
       handleDance(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the dance filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "dance", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Dance" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the dance filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -37060,17 +35018,17 @@ Enter the details below to set the dance filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const EightD = () => {
+const EightD = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleEightD = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -37078,9 +35036,8 @@ const EightD = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/eightd`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/eightd`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -37092,15 +35049,13 @@ const EightD = () => {
       handleEightD(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the 8d filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "eightd", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "8D (Headphone Recommended)" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the 8d filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -37117,17 +35072,17 @@ Enter the details below to set the 8d filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Jazz = () => {
+const Jazz = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleJazz = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -37135,9 +35090,8 @@ const Jazz = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/jazz`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/jazz`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -37149,15 +35103,13 @@ const Jazz = () => {
       handleJazz(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the jazz filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "jazz", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Jazz" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the jazz filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -37174,17 +35126,17 @@ Enter the details below to set the jazz filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Pop = () => {
+const Pop = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handlePop = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -37192,9 +35144,8 @@ const Pop = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/pop`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/pop`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -37206,15 +35157,13 @@ const Pop = () => {
       handlePop(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the pop filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "pop", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Pop" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the pop filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -37231,17 +35180,17 @@ Enter the details below to set the pop filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const SlowMotion = () => {
+const SlowMotion = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleSlowMotion = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -37249,9 +35198,8 @@ const SlowMotion = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/slowmotion`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/slowmotion`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -37263,15 +35211,13 @@ const SlowMotion = () => {
       handleSlowMotion(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the slowmotion filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "slowmotion", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "SlowMotion" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the slowmotion filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -37288,17 +35234,17 @@ Enter the details below to set the slowmotion filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Soft = () => {
+const Soft = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleSoft = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -37306,9 +35252,8 @@ const Soft = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/soft`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/soft`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -37320,15 +35265,13 @@ const Soft = () => {
       handleSoft(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the soft filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "soft", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Soft" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the soft filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -37345,17 +35288,17 @@ Enter the details below to set the soft filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const SuperBass = () => {
+const SuperBass = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleSuperBass = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -37363,9 +35306,8 @@ const SuperBass = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/superbass`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/superbass`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -37377,15 +35319,13 @@ const SuperBass = () => {
       handleSuperBass(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the superbass filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "superbass", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "SuperBass" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the superbass filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -37402,17 +35342,17 @@ Enter the details below to set the superbass filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Television = () => {
+const Television = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleTelevision = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -37420,9 +35360,8 @@ const Television = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/television`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/television`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -37434,15 +35373,13 @@ const Television = () => {
       handleTelevision(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the television filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "television", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Television" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the television filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -37459,17 +35396,17 @@ Enter the details below to set the television filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const TrebleBass = () => {
+const TrebleBass = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleTrebleBass = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -37477,9 +35414,8 @@ const TrebleBass = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/treblebass`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/treblebass`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -37491,15 +35427,13 @@ const TrebleBass = () => {
       handleTrebleBass(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the treblebass filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "treblebass", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "TrebleBass" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the treblebass filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -37516,17 +35450,17 @@ Enter the details below to set the treblebass filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Tremolo = () => {
+const Tremolo = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleTremolo = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -37534,9 +35468,8 @@ const Tremolo = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/tremolo`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/tremolo`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -37548,15 +35481,13 @@ const Tremolo = () => {
       handleTremolo(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the tremolo filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "tremolo", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Tremolo" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the tremolo filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -37573,17 +35504,17 @@ Enter the details below to set the tremolo filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Vibrato = () => {
+const Vibrato = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleVibrato = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -37591,9 +35522,8 @@ const Vibrato = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/vibrato`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/vibrato`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -37605,15 +35535,13 @@ const Vibrato = () => {
       handleVibrato(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the vibrato filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "vibrato", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Vibrato" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the vibrato filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -37630,17 +35558,17 @@ Enter the details below to set the vibrato filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Vibrate = () => {
+const Vibrate = ({ userId }) => {
   const [guildId, setGuildId] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem("guildId");
-    const storedPort = sessionStorage.getItem("port");
+    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
+    const storedPort = sessionStorage.getItem(`port_${userId}`);
     if (storedGuildId) setGuildId(storedGuildId);
     if (storedPort) setPort(storedPort);
-  }, []);
+  }, [userId]);
   const handleVibrate = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -37648,9 +35576,8 @@ const Vibrate = () => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem("guildId", guildId);
-        const env2 = await window.electronAPI.getEnv();
-        const { data } = await axios.post(`http://${env2.ip}:${port}/vibrate`, { guildId });
+        sessionStorage.setItem(`guildId_${userId}`, guildId);
+        const { data } = await axios.post(`http://localhost:${port}/vibrate`, { guildId });
         setResponse(data.content);
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
@@ -37662,15 +35589,13 @@ const Vibrate = () => {
       handleVibrate(event);
     }
   };
-  const markdownContent = `
-Enter the details below to set the vibrate filter.
-
-- **Guild ID**
-`;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "vibrate", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Vibrate" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the vibrate filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -37687,49 +35612,109 @@ Enter the details below to set the vibrate filter.
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Login = ({ setIsLoggedIn }) => {
-  const [token2, setToken] = reactExports.useState("");
-  const [port, setPort] = reactExports.useState(3e3);
-  const [saveToken, setSaveToken] = reactExports.useState(false);
+const Login = ({ onLoginSuccess }) => {
+  const [formData, setFormData] = reactExports.useState({
+    token: "",
+    port: 3e3,
+    saveCredentials: false
+  });
   const [response, setResponse] = reactExports.useState("");
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
+  const [savedCredentials, setSavedCredentials] = reactExports.useState([]);
+  const [selectedIndex, setSelectedIndex] = reactExports.useState(-1);
+  const COOLDOWN_DURATION = 3e3;
+  const PORT_RANGE = { min: 3e3, max: 3999 };
   reactExports.useEffect(() => {
-    const storedPort = sessionStorage.getItem("port");
-    if (storedPort) setPort(storedPort);
-    window.electronAPI.getToken().then((storedToken) => {
-      if (storedToken) {
-        setToken(storedToken);
-        setSaveToken(true);
-      }
-    }).catch((error) => {
-    });
+    loadSavedCredentials();
   }, []);
-  const handleLogin = async () => {
-    setResponse("");
-    if (!isCooldown) {
-      setIsCooldown(true);
-      setTimeout(() => setIsCooldown(false), 3e3);
-      try {
-        const checkToken = await window.electronAPI.checkToken(token2);
-        if (!checkToken) {
-          setResponse("Invalid token! Please check your self bot token.");
-          return;
+  const loadSavedCredentials = async () => {
+    try {
+      const data = await window.electronAPI.getCredentials();
+      if (data && Array.isArray(data)) {
+        setSavedCredentials(data);
+        if (data.length > 0) {
+          setSelectedIndex(0);
+          setFormData((prev2) => ({ ...prev2, token: data[0].token }));
         }
-        const checkPort = await window.electronAPI.checkPort(port);
-        if (!checkPort) {
-          setResponse("Port is already in use! Please choose another port.");
-          return;
-        }
-        ;
-        sessionStorage.setItem("port", port);
-        setIsLoggedIn(true);
-        window.electronAPI.startBot(token2, port);
-        if (saveToken) {
-          window.electronAPI.storeToken(token2);
-        }
-      } catch (error) {
-        setResponse(`Error: ${error.response?.data || error.message}`);
       }
+    } catch (error) {
+      setResponse("Error fetching saved credentials");
+    }
+  };
+  const handleInputChange = (e) => {
+    const { name: name2, value, type, checked } = e.target;
+    setFormData((prev2) => ({
+      ...prev2,
+      [name2]: type === "checkbox" ? checked : value
+    }));
+  };
+  const handlePortChange = (e) => {
+    const newPort = parseInt(e.target.value, 10);
+    if (newPort < PORT_RANGE.min || newPort > PORT_RANGE.max) {
+      setResponse(`Port must be between ${PORT_RANGE.min} and ${PORT_RANGE.max}!`);
+      return;
+    }
+    setFormData((prev2) => ({ ...prev2, port: newPort }));
+  };
+  const handleCredentialSelect = (e) => {
+    const index2 = parseInt(e.target.value, 10);
+    setSelectedIndex(index2);
+    if (index2 >= 0 && savedCredentials[index2]) {
+      setFormData((prev2) => ({ ...prev2, token: savedCredentials[index2].token }));
+    } else {
+      setFormData((prev2) => ({ ...prev2, token: "" }));
+    }
+  };
+  const handleDeleteCredential = async () => {
+    if (selectedIndex < 0 || !savedCredentials[selectedIndex]) return;
+    try {
+      const userToken = savedCredentials[selectedIndex].token;
+      await window.electronAPI.deleteCredential(userToken);
+      const updatedCredentials = savedCredentials.filter((_, index2) => index2 !== selectedIndex);
+      setSavedCredentials(updatedCredentials);
+      if (updatedCredentials.length > 0) {
+        setSelectedIndex(0);
+        setFormData((prev2) => ({ ...prev2, token: updatedCredentials[0].token }));
+      } else {
+        setSelectedIndex(-1);
+        setFormData((prev2) => ({ ...prev2, token: "" }));
+      }
+    } catch (error) {
+      setResponse("Error deleting credential");
+    }
+  };
+  const handleLogin = async () => {
+    if (isCooldown) return;
+    setResponse("");
+    setIsCooldown(true);
+    setTimeout(() => setIsCooldown(false), COOLDOWN_DURATION);
+    try {
+      const { token: token2, port, saveCredentials } = formData;
+      const creds = await window.electronAPI.checkToken(token2, saveCredentials);
+      if (!creds.valid) {
+        setResponse("Invalid token! Please check your self bot token.");
+        return;
+      }
+      const activeBots = await window.electronAPI.getActiveBots();
+      if (activeBots && activeBots.includes(creds.id)) {
+        setResponse("This account is already logged in. Please close the existing session first.");
+        return;
+      }
+      const isPortAvailable = await window.electronAPI.checkPort(port);
+      if (!isPortAvailable) {
+        setResponse("Port is already in use! Please choose another port.");
+        return;
+      }
+      const isConfigValid = await window.electronAPI.checkConfig();
+      if (!isConfigValid) {
+        setResponse("Configuration file is missing. You cannot log in until you setup in settings.");
+        return;
+      }
+      window.electronAPI.startBot(token2, port, creds.id, creds.avatar);
+      onLoginSuccess(creds.username, creds.id, port, creds.avatar);
+      setFormData((prev2) => ({ ...prev2, token: "" }));
+    } catch (error) {
+      setResponse(`Error: ${error.response?.data || error.message}`);
     }
   };
   const handleKeyPress = (event) => {
@@ -37737,228 +35722,1452 @@ const Login = ({ setIsLoggedIn }) => {
       handleLogin();
     }
   };
-  const markdownContent = `
-Enter the details below to login
-
-- **Self Bot Token** (ex: \`NzY4NTQ0NjA2NzE3OTI5MjQ1.X3v7Xg.*****\`)
-- **Port** (ex: \`3000\` - \`3999\`)
-`;
+  const renderCredentialSelector = () => {
+    if (savedCredentials.length === 0) return null;
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "credential-select-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("label", { htmlFor: "credentialSelect", children: "Select Saved Bot:" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "credential-select-wrapper", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "select",
+          {
+            id: "credentialSelect",
+            value: selectedIndex,
+            onChange: handleCredentialSelect,
+            children: [
+              savedCredentials.map((cred, index2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("option", { value: index2, children: [
+                cred.username || "Unknown",
+                " (",
+                cred.token.slice(0, 10),
+                "...)"
+              ] }, index2)),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: -1, children: "Add New" })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            className: "delete-credential-button",
+            onClick: handleDeleteCredential,
+            children: "🗑️"
+          }
+        )
+      ] })
+    ] });
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "logins", className: "content", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Self Bot Logins" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: markdownContent })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to login" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Self Bot Token (ex: NzY4NTQ0NjA2NzE3OTI5MjQ1.X3v7Xg.*****)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Port (ex: 3000 - 3999) " })
+        ] })
+      ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "input",
         {
           type: "password",
+          name: "token",
           placeholder: "Put your self bot token in here",
-          value: token2,
-          onChange: (e) => setToken(e.target.value)
+          value: formData.token,
+          onChange: handleInputChange
         }
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "input",
         {
           type: "number",
+          name: "port",
           placeholder: "Put your port in here",
-          min: "3000",
-          max: "3999",
+          min: PORT_RANGE.min,
+          max: PORT_RANGE.max,
           step: "1",
-          value: port,
-          onChange: (e) => {
-            const newPort = parseInt(e.target.value, 10);
-            if (newPort < 3e3 || newPort > 3999) {
-              setResponse("Port must be between 3000 and 3999!");
-            } else {
-              setPort(newPort);
-            }
-          }
+          value: formData.port,
+          onChange: handlePortChange
         }
       ),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginTop: "10px" }, children: [
+      renderCredentialSelector(),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginTop: "1px" }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "input",
           {
             type: "checkbox",
             id: "saveToken",
-            checked: saveToken,
-            onChange: (e) => setSaveToken(e.target.checked)
+            name: "saveCredentials",
+            checked: formData.saveCredentials,
+            onChange: handleInputChange
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { htmlFor: "saveToken", children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { children: "Save Token (Auto Put)" }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { htmlFor: "saveToken", children: /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { children: "Save Bot" }) })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handleLogin, disabled: isCooldown, id: "b1", children: isCooldown ? "Loading..." : "Login" }) })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "10px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "button",
+        {
+          type: "button",
+          onClick: handleLogin,
+          disabled: isCooldown,
+          children: isCooldown ? "Loading..." : "Login"
+        }
+      ) })
     ] }),
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
 };
-const Console = () => {
-  const [botLogs, setBotLogs] = reactExports.useState("Loading logs...");
+const Console = ({ userId }) => {
+  const [botLogs, setBotLogs] = reactExports.useState("");
+  const [isVisible, setIsVisible] = reactExports.useState(false);
+  const consoleRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
-    async function fetchLogs() {
-      const logs = await window.electronAPI.getBotLogs();
-      setBotLogs(logs);
-    }
+    const fetchLogs = async () => {
+      try {
+        const logs = await window.electronAPI.getBotLogs(userId);
+        setBotLogs(logs);
+      } catch (error) {
+        console.error("Error fetching logs:", error);
+      }
+    };
     fetchLogs();
+    const interval = setInterval(fetchLogs, 1e3);
+    return () => clearInterval(interval);
+  }, [userId]);
+  reactExports.useEffect(() => {
+    if (consoleRef.current) {
+      consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+    }
+  }, [botLogs]);
+  reactExports.useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+    return () => clearTimeout(timer);
   }, []);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "content", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Bot Console" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { style: {
-      whiteSpace: "pre-wrap",
-      // Allows the text to wrap
-      wordWrap: "break-word",
-      // Breaks words if needed
-      overflowX: "auto"
-      // Enables horizontal scrolling if necessary
-    }, children: botLogs })
-  ] }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "content", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Bot Console" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "description", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "You can see the bot console logs in here." }) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `console-output ${isVisible ? "visible" : ""}`, ref: consoleRef, children: botLogs.split("\n").map((line2, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "log-entry", style: { animationDelay: `${index2 * 0.05}s` }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "log-content", children: line2 }) }, index2)) })
+  ] });
 };
-const Navbar = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "navbar", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { children: "Advanced SelfBot - Music" }) });
-const Sidebar = ({ setActiveComponent }) => {
+const COMPONENT_MAP = {
+  console: Console,
+  join: Join,
+  leave: Leave,
+  play: Play,
+  autoplay: AutoPlay,
+  queue: Queue,
+  golive: GoLive,
+  loop: Loop,
+  skip: Skip,
+  clear: Clear,
+  previous: Previous,
+  pause: Pause,
+  twentyfourseven: TwentyFourSeven,
+  volume: Volume,
+  shuffle: Shuffle,
+  replay: Replay,
+  endlive: EndLive,
+  bass: Bass,
+  normal: Normal,
+  earrape: Earrape,
+  bassboost: BassBoost,
+  china: China,
+  chipmunk: Chipmunk,
+  dance: Dance,
+  darthvader: Darthvader,
+  eightd: EightD,
+  jazz: Jazz,
+  nightcore: Nightcore,
+  pop: Pop,
+  slowmotion: SlowMotion,
+  soft: Soft,
+  superbass: SuperBass,
+  television: Television,
+  treblebass: TrebleBass,
+  tremolo: Tremolo,
+  vaporwave: Vaporwave,
+  vibrate: Vibrate,
+  vibrato: Vibrato,
+  playskip: PlaySkip,
+  playtop: PlayTop
+};
+const useTabs = () => {
+  const [tabs, setTabs] = reactExports.useState([]);
+  const [activeTabs, setActiveTabs] = reactExports.useState([]);
+  const [currentTab, setCurrentTab] = reactExports.useState(null);
+  const addTab = reactExports.useCallback((tab2) => {
+    setTabs((prev2) => [...prev2, tab2]);
+    setActiveTabs((prev2) => [...prev2, tab2.userId]);
+    setCurrentTab(tab2.userId);
+  }, []);
+  const removeTab = reactExports.useCallback((userId) => {
+    setTabs((prev2) => prev2.filter((tab2) => tab2.userId !== userId));
+    setActiveTabs((prev2) => prev2.filter((id) => id !== userId));
+    if (currentTab === userId) {
+      setCurrentTab(null);
+    }
+  }, [currentTab]);
+  const switchTab = reactExports.useCallback((tabId) => {
+    setCurrentTab(tabId);
+  }, []);
+  const setActiveTabsCallback = reactExports.useCallback((newActiveTabs) => {
+    setActiveTabs(newActiveTabs);
+  }, []);
+  const setCurrentTabCallback = reactExports.useCallback((newCurrentTab) => {
+    setCurrentTab(newCurrentTab);
+  }, []);
+  const tabState = reactExports.useMemo(() => ({
+    tabs,
+    activeTabs,
+    currentTab,
+    addTab,
+    removeTab,
+    switchTab,
+    setCurrentTab: setCurrentTabCallback,
+    setActiveTabs: setActiveTabsCallback
+  }), [tabs, activeTabs, currentTab, addTab, removeTab, switchTab, setCurrentTabCallback, setActiveTabsCallback]);
+  return tabState;
+};
+const useSessionStorage = () => {
+  const setSessionData = (userId, username, port) => {
+    sessionStorage.setItem(`isLoggedIn_${userId}`, "true");
+    sessionStorage.setItem(`port_${userId}`, port.toString());
+    sessionStorage.setItem(`username_${userId}`, username);
+  };
+  const clearSessionData = (userId) => {
+    sessionStorage.removeItem(`port_${userId}`);
+    sessionStorage.removeItem(`isLoggedIn_${userId}`);
+    sessionStorage.removeItem(`username_${userId}`);
+  };
+  const getPort = (userId) => sessionStorage.getItem(`port_${userId}`);
+  return {
+    setSessionData,
+    clearSessionData,
+    getPort
+  };
+};
+const useBotOperations = (tabs, removeTab, setCurrentTab) => {
+  const handleLogout = async (userId) => {
+    if (!userId) return;
+    try {
+      const port = sessionStorage.getItem(`port_${userId}`);
+      if (port) {
+        try {
+          await axios.post(`http://localhost:${port}/logout`);
+        } catch (error) {
+          console.warn("Server logout request failed:", error.message);
+        }
+        try {
+          await window.electronAPI.stopBot(userId);
+        } catch (error) {
+          console.warn("Bot stop request failed:", error.message);
+        }
+        sessionStorage.removeItem(`port_${userId}`);
+        sessionStorage.removeItem(`isLoggedIn_${userId}`);
+        sessionStorage.removeItem(`username_${userId}`);
+      }
+    } catch (error) {
+      console.error("Error during logout cleanup:", error);
+    } finally {
+      removeTab(userId);
+      if (tabs.currentTab === userId) {
+        setCurrentTab(null);
+      }
+    }
+  };
+  return { handleLogout };
+};
+function r(e) {
+  var t, f, n = "";
+  if ("string" == typeof e || "number" == typeof e) n += e;
+  else if ("object" == typeof e) if (Array.isArray(e)) {
+    var o = e.length;
+    for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+  } else for (f in e) e[f] && (n && (n += " "), n += f);
+  return n;
+}
+function clsx() {
+  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
+  return n;
+}
+function Mt(t) {
+  if (typeof document == "undefined") return;
+  let o = document.head || document.getElementsByTagName("head")[0], e = document.createElement("style");
+  e.type = "text/css", o.firstChild ? o.insertBefore(e, o.firstChild) : o.appendChild(e), e.styleSheet ? e.styleSheet.cssText = t : e.appendChild(document.createTextNode(t));
+}
+Mt(`:root{--toastify-color-light: #fff;--toastify-color-dark: #121212;--toastify-color-info: #3498db;--toastify-color-success: #07bc0c;--toastify-color-warning: #f1c40f;--toastify-color-error: hsl(6, 78%, 57%);--toastify-color-transparent: rgba(255, 255, 255, .7);--toastify-icon-color-info: var(--toastify-color-info);--toastify-icon-color-success: var(--toastify-color-success);--toastify-icon-color-warning: var(--toastify-color-warning);--toastify-icon-color-error: var(--toastify-color-error);--toastify-container-width: fit-content;--toastify-toast-width: 320px;--toastify-toast-offset: 16px;--toastify-toast-top: max(var(--toastify-toast-offset), env(safe-area-inset-top));--toastify-toast-right: max(var(--toastify-toast-offset), env(safe-area-inset-right));--toastify-toast-left: max(var(--toastify-toast-offset), env(safe-area-inset-left));--toastify-toast-bottom: max(var(--toastify-toast-offset), env(safe-area-inset-bottom));--toastify-toast-background: #fff;--toastify-toast-padding: 14px;--toastify-toast-min-height: 64px;--toastify-toast-max-height: 800px;--toastify-toast-bd-radius: 6px;--toastify-toast-shadow: 0px 4px 12px rgba(0, 0, 0, .1);--toastify-font-family: sans-serif;--toastify-z-index: 9999;--toastify-text-color-light: #757575;--toastify-text-color-dark: #fff;--toastify-text-color-info: #fff;--toastify-text-color-success: #fff;--toastify-text-color-warning: #fff;--toastify-text-color-error: #fff;--toastify-spinner-color: #616161;--toastify-spinner-color-empty-area: #e0e0e0;--toastify-color-progress-light: linear-gradient(to right, #4cd964, #5ac8fa, #007aff, #34aadc, #5856d6, #ff2d55);--toastify-color-progress-dark: #bb86fc;--toastify-color-progress-info: var(--toastify-color-info);--toastify-color-progress-success: var(--toastify-color-success);--toastify-color-progress-warning: var(--toastify-color-warning);--toastify-color-progress-error: var(--toastify-color-error);--toastify-color-progress-bgo: .2}.Toastify__toast-container{z-index:var(--toastify-z-index);-webkit-transform:translate3d(0,0,var(--toastify-z-index));position:fixed;width:var(--toastify-container-width);box-sizing:border-box;color:#fff;display:flex;flex-direction:column}.Toastify__toast-container--top-left{top:var(--toastify-toast-top);left:var(--toastify-toast-left)}.Toastify__toast-container--top-center{top:var(--toastify-toast-top);left:50%;transform:translate(-50%);align-items:center}.Toastify__toast-container--top-right{top:var(--toastify-toast-top);right:var(--toastify-toast-right);align-items:end}.Toastify__toast-container--bottom-left{bottom:var(--toastify-toast-bottom);left:var(--toastify-toast-left)}.Toastify__toast-container--bottom-center{bottom:var(--toastify-toast-bottom);left:50%;transform:translate(-50%);align-items:center}.Toastify__toast-container--bottom-right{bottom:var(--toastify-toast-bottom);right:var(--toastify-toast-right);align-items:end}.Toastify__toast{--y: 0;position:relative;touch-action:none;width:var(--toastify-toast-width);min-height:var(--toastify-toast-min-height);box-sizing:border-box;margin-bottom:1rem;padding:var(--toastify-toast-padding);border-radius:var(--toastify-toast-bd-radius);box-shadow:var(--toastify-toast-shadow);max-height:var(--toastify-toast-max-height);font-family:var(--toastify-font-family);z-index:0;display:flex;flex:1 auto;align-items:center;word-break:break-word}@media only screen and (max-width: 480px){.Toastify__toast-container{width:100vw;left:env(safe-area-inset-left);margin:0}.Toastify__toast-container--top-left,.Toastify__toast-container--top-center,.Toastify__toast-container--top-right{top:env(safe-area-inset-top);transform:translate(0)}.Toastify__toast-container--bottom-left,.Toastify__toast-container--bottom-center,.Toastify__toast-container--bottom-right{bottom:env(safe-area-inset-bottom);transform:translate(0)}.Toastify__toast-container--rtl{right:env(safe-area-inset-right);left:initial}.Toastify__toast{--toastify-toast-width: 100%;margin-bottom:0;border-radius:0}}.Toastify__toast-container[data-stacked=true]{width:var(--toastify-toast-width)}.Toastify__toast--stacked{position:absolute;width:100%;transform:translate3d(0,var(--y),0) scale(var(--s));transition:transform .3s}.Toastify__toast--stacked[data-collapsed] .Toastify__toast-body,.Toastify__toast--stacked[data-collapsed] .Toastify__close-button{transition:opacity .1s}.Toastify__toast--stacked[data-collapsed=false]{overflow:visible}.Toastify__toast--stacked[data-collapsed=true]:not(:last-child)>*{opacity:0}.Toastify__toast--stacked:after{content:"";position:absolute;left:0;right:0;height:calc(var(--g) * 1px);bottom:100%}.Toastify__toast--stacked[data-pos=top]{top:0}.Toastify__toast--stacked[data-pos=bot]{bottom:0}.Toastify__toast--stacked[data-pos=bot].Toastify__toast--stacked:before{transform-origin:top}.Toastify__toast--stacked[data-pos=top].Toastify__toast--stacked:before{transform-origin:bottom}.Toastify__toast--stacked:before{content:"";position:absolute;left:0;right:0;bottom:0;height:100%;transform:scaleY(3);z-index:-1}.Toastify__toast--rtl{direction:rtl}.Toastify__toast--close-on-click{cursor:pointer}.Toastify__toast-icon{margin-inline-end:10px;width:22px;flex-shrink:0;display:flex}.Toastify--animate{animation-fill-mode:both;animation-duration:.5s}.Toastify--animate-icon{animation-fill-mode:both;animation-duration:.3s}.Toastify__toast-theme--dark{background:var(--toastify-color-dark);color:var(--toastify-text-color-dark)}.Toastify__toast-theme--light,.Toastify__toast-theme--colored.Toastify__toast--default{background:var(--toastify-color-light);color:var(--toastify-text-color-light)}.Toastify__toast-theme--colored.Toastify__toast--info{color:var(--toastify-text-color-info);background:var(--toastify-color-info)}.Toastify__toast-theme--colored.Toastify__toast--success{color:var(--toastify-text-color-success);background:var(--toastify-color-success)}.Toastify__toast-theme--colored.Toastify__toast--warning{color:var(--toastify-text-color-warning);background:var(--toastify-color-warning)}.Toastify__toast-theme--colored.Toastify__toast--error{color:var(--toastify-text-color-error);background:var(--toastify-color-error)}.Toastify__progress-bar-theme--light{background:var(--toastify-color-progress-light)}.Toastify__progress-bar-theme--dark{background:var(--toastify-color-progress-dark)}.Toastify__progress-bar--info{background:var(--toastify-color-progress-info)}.Toastify__progress-bar--success{background:var(--toastify-color-progress-success)}.Toastify__progress-bar--warning{background:var(--toastify-color-progress-warning)}.Toastify__progress-bar--error{background:var(--toastify-color-progress-error)}.Toastify__progress-bar-theme--colored.Toastify__progress-bar--info,.Toastify__progress-bar-theme--colored.Toastify__progress-bar--success,.Toastify__progress-bar-theme--colored.Toastify__progress-bar--warning,.Toastify__progress-bar-theme--colored.Toastify__progress-bar--error{background:var(--toastify-color-transparent)}.Toastify__close-button{color:#fff;position:absolute;top:6px;right:6px;background:transparent;outline:none;border:none;padding:0;cursor:pointer;opacity:.7;transition:.3s ease;z-index:1}.Toastify__toast--rtl .Toastify__close-button{left:6px;right:unset}.Toastify__close-button--light{color:#000;opacity:.3}.Toastify__close-button>svg{fill:currentColor;height:16px;width:14px}.Toastify__close-button:hover,.Toastify__close-button:focus{opacity:1}@keyframes Toastify__trackProgress{0%{transform:scaleX(1)}to{transform:scaleX(0)}}.Toastify__progress-bar{position:absolute;bottom:0;left:0;width:100%;height:100%;z-index:1;opacity:.7;transform-origin:left}.Toastify__progress-bar--animated{animation:Toastify__trackProgress linear 1 forwards}.Toastify__progress-bar--controlled{transition:transform .2s}.Toastify__progress-bar--rtl{right:0;left:initial;transform-origin:right;border-bottom-left-radius:initial}.Toastify__progress-bar--wrp{position:absolute;overflow:hidden;bottom:0;left:0;width:100%;height:5px;border-bottom-left-radius:var(--toastify-toast-bd-radius);border-bottom-right-radius:var(--toastify-toast-bd-radius)}.Toastify__progress-bar--wrp[data-hidden=true]{opacity:0}.Toastify__progress-bar--bg{opacity:var(--toastify-color-progress-bgo);width:100%;height:100%}.Toastify__spinner{width:20px;height:20px;box-sizing:border-box;border:2px solid;border-radius:100%;border-color:var(--toastify-spinner-color-empty-area);border-right-color:var(--toastify-spinner-color);animation:Toastify__spin .65s linear infinite}@keyframes Toastify__bounceInRight{0%,60%,75%,90%,to{animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;transform:translate3d(3000px,0,0)}60%{opacity:1;transform:translate3d(-25px,0,0)}75%{transform:translate3d(10px,0,0)}90%{transform:translate3d(-5px,0,0)}to{transform:none}}@keyframes Toastify__bounceOutRight{20%{opacity:1;transform:translate3d(-20px,var(--y),0)}to{opacity:0;transform:translate3d(2000px,var(--y),0)}}@keyframes Toastify__bounceInLeft{0%,60%,75%,90%,to{animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;transform:translate3d(-3000px,0,0)}60%{opacity:1;transform:translate3d(25px,0,0)}75%{transform:translate3d(-10px,0,0)}90%{transform:translate3d(5px,0,0)}to{transform:none}}@keyframes Toastify__bounceOutLeft{20%{opacity:1;transform:translate3d(20px,var(--y),0)}to{opacity:0;transform:translate3d(-2000px,var(--y),0)}}@keyframes Toastify__bounceInUp{0%,60%,75%,90%,to{animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;transform:translate3d(0,3000px,0)}60%{opacity:1;transform:translate3d(0,-20px,0)}75%{transform:translate3d(0,10px,0)}90%{transform:translate3d(0,-5px,0)}to{transform:translateZ(0)}}@keyframes Toastify__bounceOutUp{20%{transform:translate3d(0,calc(var(--y) - 10px),0)}40%,45%{opacity:1;transform:translate3d(0,calc(var(--y) + 20px),0)}to{opacity:0;transform:translate3d(0,-2000px,0)}}@keyframes Toastify__bounceInDown{0%,60%,75%,90%,to{animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;transform:translate3d(0,-3000px,0)}60%{opacity:1;transform:translate3d(0,25px,0)}75%{transform:translate3d(0,-10px,0)}90%{transform:translate3d(0,5px,0)}to{transform:none}}@keyframes Toastify__bounceOutDown{20%{transform:translate3d(0,calc(var(--y) - 10px),0)}40%,45%{opacity:1;transform:translate3d(0,calc(var(--y) + 20px),0)}to{opacity:0;transform:translate3d(0,2000px,0)}}.Toastify__bounce-enter--top-left,.Toastify__bounce-enter--bottom-left{animation-name:Toastify__bounceInLeft}.Toastify__bounce-enter--top-right,.Toastify__bounce-enter--bottom-right{animation-name:Toastify__bounceInRight}.Toastify__bounce-enter--top-center{animation-name:Toastify__bounceInDown}.Toastify__bounce-enter--bottom-center{animation-name:Toastify__bounceInUp}.Toastify__bounce-exit--top-left,.Toastify__bounce-exit--bottom-left{animation-name:Toastify__bounceOutLeft}.Toastify__bounce-exit--top-right,.Toastify__bounce-exit--bottom-right{animation-name:Toastify__bounceOutRight}.Toastify__bounce-exit--top-center{animation-name:Toastify__bounceOutUp}.Toastify__bounce-exit--bottom-center{animation-name:Toastify__bounceOutDown}@keyframes Toastify__zoomIn{0%{opacity:0;transform:scale3d(.3,.3,.3)}50%{opacity:1}}@keyframes Toastify__zoomOut{0%{opacity:1}50%{opacity:0;transform:translate3d(0,var(--y),0) scale3d(.3,.3,.3)}to{opacity:0}}.Toastify__zoom-enter{animation-name:Toastify__zoomIn}.Toastify__zoom-exit{animation-name:Toastify__zoomOut}@keyframes Toastify__flipIn{0%{transform:perspective(400px) rotateX(90deg);animation-timing-function:ease-in;opacity:0}40%{transform:perspective(400px) rotateX(-20deg);animation-timing-function:ease-in}60%{transform:perspective(400px) rotateX(10deg);opacity:1}80%{transform:perspective(400px) rotateX(-5deg)}to{transform:perspective(400px)}}@keyframes Toastify__flipOut{0%{transform:translate3d(0,var(--y),0) perspective(400px)}30%{transform:translate3d(0,var(--y),0) perspective(400px) rotateX(-20deg);opacity:1}to{transform:translate3d(0,var(--y),0) perspective(400px) rotateX(90deg);opacity:0}}.Toastify__flip-enter{animation-name:Toastify__flipIn}.Toastify__flip-exit{animation-name:Toastify__flipOut}@keyframes Toastify__slideInRight{0%{transform:translate3d(110%,0,0);visibility:visible}to{transform:translate3d(0,var(--y),0)}}@keyframes Toastify__slideInLeft{0%{transform:translate3d(-110%,0,0);visibility:visible}to{transform:translate3d(0,var(--y),0)}}@keyframes Toastify__slideInUp{0%{transform:translate3d(0,110%,0);visibility:visible}to{transform:translate3d(0,var(--y),0)}}@keyframes Toastify__slideInDown{0%{transform:translate3d(0,-110%,0);visibility:visible}to{transform:translate3d(0,var(--y),0)}}@keyframes Toastify__slideOutRight{0%{transform:translate3d(0,var(--y),0)}to{visibility:hidden;transform:translate3d(110%,var(--y),0)}}@keyframes Toastify__slideOutLeft{0%{transform:translate3d(0,var(--y),0)}to{visibility:hidden;transform:translate3d(-110%,var(--y),0)}}@keyframes Toastify__slideOutDown{0%{transform:translate3d(0,var(--y),0)}to{visibility:hidden;transform:translate3d(0,500px,0)}}@keyframes Toastify__slideOutUp{0%{transform:translate3d(0,var(--y),0)}to{visibility:hidden;transform:translate3d(0,-500px,0)}}.Toastify__slide-enter--top-left,.Toastify__slide-enter--bottom-left{animation-name:Toastify__slideInLeft}.Toastify__slide-enter--top-right,.Toastify__slide-enter--bottom-right{animation-name:Toastify__slideInRight}.Toastify__slide-enter--top-center{animation-name:Toastify__slideInDown}.Toastify__slide-enter--bottom-center{animation-name:Toastify__slideInUp}.Toastify__slide-exit--top-left,.Toastify__slide-exit--bottom-left{animation-name:Toastify__slideOutLeft;animation-timing-function:ease-in;animation-duration:.3s}.Toastify__slide-exit--top-right,.Toastify__slide-exit--bottom-right{animation-name:Toastify__slideOutRight;animation-timing-function:ease-in;animation-duration:.3s}.Toastify__slide-exit--top-center{animation-name:Toastify__slideOutUp;animation-timing-function:ease-in;animation-duration:.3s}.Toastify__slide-exit--bottom-center{animation-name:Toastify__slideOutDown;animation-timing-function:ease-in;animation-duration:.3s}@keyframes Toastify__spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}
+`);
+var L = (t) => typeof t == "number" && !isNaN(t), N = (t) => typeof t == "string", P = (t) => typeof t == "function", mt = (t) => N(t) || L(t), B = (t) => N(t) || P(t) ? t : null, pt = (t, o) => t === false || L(t) && t > 0 ? t : o, z = (t) => reactExports.isValidElement(t) || N(t) || P(t) || L(t);
+function Z(t, o, e = 300) {
+  let { scrollHeight: r2, style: s } = t;
+  requestAnimationFrame(() => {
+    s.minHeight = "initial", s.height = r2 + "px", s.transition = `all ${e}ms`, requestAnimationFrame(() => {
+      s.height = "0", s.padding = "0", s.margin = "0", setTimeout(o, e);
+    });
+  });
+}
+function $({ enter: t, exit: o, appendPosition: e = false, collapse: r2 = true, collapseDuration: s = 300 }) {
+  return function({ children: a, position: d, preventExitTransition: c, done: T, nodeRef: g, isIn: v, playToast: x }) {
+    let C = e ? `${t}--${d}` : t, S = e ? `${o}--${d}` : o, E = reactExports.useRef(0);
+    return reactExports.useLayoutEffect(() => {
+      let f = g.current, p = C.split(" "), b = (n) => {
+        n.target === g.current && (x(), f.removeEventListener("animationend", b), f.removeEventListener("animationcancel", b), E.current === 0 && n.type !== "animationcancel" && f.classList.remove(...p));
+      };
+      (() => {
+        f.classList.add(...p), f.addEventListener("animationend", b), f.addEventListener("animationcancel", b);
+      })();
+    }, []), reactExports.useEffect(() => {
+      let f = g.current, p = () => {
+        f.removeEventListener("animationend", p), r2 ? Z(f, T, s) : T();
+      };
+      v || (c ? p() : (() => {
+        E.current = 1, f.className += ` ${S}`, f.addEventListener("animationend", p);
+      })());
+    }, [v]), React.createElement(React.Fragment, null, a);
+  };
+}
+function J(t, o) {
+  return { content: tt(t.content, t.props), containerId: t.props.containerId, id: t.props.toastId, theme: t.props.theme, type: t.props.type, data: t.props.data || {}, isLoading: t.props.isLoading, icon: t.props.icon, reason: t.removalReason, status: o };
+}
+function tt(t, o, e = false) {
+  return reactExports.isValidElement(t) && !N(t.type) ? reactExports.cloneElement(t, { closeToast: o.closeToast, toastProps: o, data: o.data, isPaused: e }) : P(t) ? t({ closeToast: o.closeToast, toastProps: o, data: o.data, isPaused: e }) : t;
+}
+function yt({ closeToast: t, theme: o, ariaLabel: e = "close" }) {
+  return React.createElement("button", { className: `Toastify__close-button Toastify__close-button--${o}`, type: "button", onClick: (r2) => {
+    r2.stopPropagation(), t(true);
+  }, "aria-label": e }, React.createElement("svg", { "aria-hidden": "true", viewBox: "0 0 14 16" }, React.createElement("path", { fillRule: "evenodd", d: "M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z" })));
+}
+function gt({ delay: t, isRunning: o, closeToast: e, type: r2 = "default", hide: s, className: l, controlledProgress: a, progress: d, rtl: c, isIn: T, theme: g }) {
+  let v = s || a && d === 0, x = { animationDuration: `${t}ms`, animationPlayState: o ? "running" : "paused" };
+  a && (x.transform = `scaleX(${d})`);
+  let C = clsx("Toastify__progress-bar", a ? "Toastify__progress-bar--controlled" : "Toastify__progress-bar--animated", `Toastify__progress-bar-theme--${g}`, `Toastify__progress-bar--${r2}`, { ["Toastify__progress-bar--rtl"]: c }), S = P(l) ? l({ rtl: c, type: r2, defaultClassName: C }) : clsx(C, l), E = { [a && d >= 1 ? "onTransitionEnd" : "onAnimationEnd"]: a && d < 1 ? null : () => {
+    T && e();
+  } };
+  return React.createElement("div", { className: "Toastify__progress-bar--wrp", "data-hidden": v }, React.createElement("div", { className: `Toastify__progress-bar--bg Toastify__progress-bar-theme--${g} Toastify__progress-bar--${r2}` }), React.createElement("div", { role: "progressbar", "aria-hidden": v ? "true" : "false", "aria-label": "notification timer", className: S, style: x, ...E }));
+}
+var Xt = 1, at = () => `${Xt++}`;
+function _t(t, o, e) {
+  let r2 = 1, s = 0, l = [], a = [], d = o, c = /* @__PURE__ */ new Map(), T = /* @__PURE__ */ new Set(), g = (i) => (T.add(i), () => T.delete(i)), v = () => {
+    a = Array.from(c.values()), T.forEach((i) => i());
+  }, x = ({ containerId: i, toastId: n, updateId: u }) => {
+    let h = i ? i !== t : t !== 1, m = c.has(n) && u == null;
+    return h || m;
+  }, C = (i, n) => {
+    c.forEach((u) => {
+      var h;
+      (n == null || n === u.props.toastId) && ((h = u.toggle) == null || h.call(u, i));
+    });
+  }, S = (i) => {
+    var n, u;
+    (u = (n = i.props) == null ? void 0 : n.onClose) == null || u.call(n, i.removalReason), i.isActive = false;
+  }, E = (i) => {
+    if (i == null) c.forEach(S);
+    else {
+      let n = c.get(i);
+      n && S(n);
+    }
+    v();
+  }, f = () => {
+    s -= l.length, l = [];
+  }, p = (i) => {
+    var m, _;
+    let { toastId: n, updateId: u } = i.props, h = u == null;
+    i.staleId && c.delete(i.staleId), i.isActive = true, c.set(n, i), v(), e(J(i, h ? "added" : "updated")), h && ((_ = (m = i.props).onOpen) == null || _.call(m));
+  };
+  return { id: t, props: d, observe: g, toggle: C, removeToast: E, toasts: c, clearQueue: f, buildToast: (i, n) => {
+    if (x(n)) return;
+    let { toastId: u, updateId: h, data: m, staleId: _, delay: k } = n, M = h == null;
+    M && s++;
+    let A = { ...d, style: d.toastStyle, key: r2++, ...Object.fromEntries(Object.entries(n).filter(([D, Y]) => Y != null)), toastId: u, updateId: h, data: m, isIn: false, className: B(n.className || d.toastClassName), progressClassName: B(n.progressClassName || d.progressClassName), autoClose: n.isLoading ? false : pt(n.autoClose, d.autoClose), closeToast(D) {
+      c.get(u).removalReason = D, E(u);
+    }, deleteToast() {
+      let D = c.get(u);
+      if (D != null) {
+        if (e(J(D, "removed")), c.delete(u), s--, s < 0 && (s = 0), l.length > 0) {
+          p(l.shift());
+          return;
+        }
+        v();
+      }
+    } };
+    A.closeButton = d.closeButton, n.closeButton === false || z(n.closeButton) ? A.closeButton = n.closeButton : n.closeButton === true && (A.closeButton = z(d.closeButton) ? d.closeButton : true);
+    let R = { content: i, props: A, staleId: _ };
+    d.limit && d.limit > 0 && s > d.limit && M ? l.push(R) : L(k) ? setTimeout(() => {
+      p(R);
+    }, k) : p(R);
+  }, setProps(i) {
+    d = i;
+  }, setToggle: (i, n) => {
+    let u = c.get(i);
+    u && (u.toggle = n);
+  }, isToastActive: (i) => {
+    var n;
+    return (n = c.get(i)) == null ? void 0 : n.isActive;
+  }, getSnapshot: () => a };
+}
+var I = /* @__PURE__ */ new Map(), F = [], st = /* @__PURE__ */ new Set(), Vt = (t) => st.forEach((o) => o(t)), bt = () => I.size > 0;
+function Qt() {
+  F.forEach((t) => nt(t.content, t.options)), F = [];
+}
+var vt = (t, { containerId: o }) => {
+  var e;
+  return (e = I.get(o || 1)) == null ? void 0 : e.toasts.get(t);
+};
+function X(t, o) {
+  var r2;
+  if (o) return !!((r2 = I.get(o)) != null && r2.isToastActive(t));
+  let e = false;
+  return I.forEach((s) => {
+    s.isToastActive(t) && (e = true);
+  }), e;
+}
+function ht(t) {
+  if (!bt()) {
+    F = F.filter((o) => t != null && o.options.toastId !== t);
+    return;
+  }
+  if (t == null || mt(t)) I.forEach((o) => {
+    o.removeToast(t);
+  });
+  else if (t && ("containerId" in t || "id" in t)) {
+    let o = I.get(t.containerId);
+    o ? o.removeToast(t.id) : I.forEach((e) => {
+      e.removeToast(t.id);
+    });
+  }
+}
+var Ct = (t = {}) => {
+  I.forEach((o) => {
+    o.props.limit && (!t.containerId || o.id === t.containerId) && o.clearQueue();
+  });
+};
+function nt(t, o) {
+  z(t) && (bt() || F.push({ content: t, options: o }), I.forEach((e) => {
+    e.buildToast(t, o);
+  }));
+}
+function xt(t) {
+  var o;
+  (o = I.get(t.containerId || 1)) == null || o.setToggle(t.id, t.fn);
+}
+function rt(t, o) {
+  I.forEach((e) => {
+    (o == null || !(o != null && o.containerId) || (o == null ? void 0 : o.containerId) === e.id) && e.toggle(t, o == null ? void 0 : o.id);
+  });
+}
+function Et(t) {
+  let o = t.containerId || 1;
+  return { subscribe(e) {
+    let r2 = _t(o, t, Vt);
+    I.set(o, r2);
+    let s = r2.observe(e);
+    return Qt(), () => {
+      s(), I.delete(o);
+    };
+  }, setProps(e) {
+    var r2;
+    (r2 = I.get(o)) == null || r2.setProps(e);
+  }, getSnapshot() {
+    var e;
+    return (e = I.get(o)) == null ? void 0 : e.getSnapshot();
+  } };
+}
+function Pt(t) {
+  return st.add(t), () => {
+    st.delete(t);
+  };
+}
+function Wt(t) {
+  return t && (N(t.toastId) || L(t.toastId)) ? t.toastId : at();
+}
+function U(t, o) {
+  return nt(t, o), o.toastId;
+}
+function V(t, o) {
+  return { ...o, type: o && o.type || t, toastId: Wt(o) };
+}
+function Q(t) {
+  return (o, e) => U(o, V(t, e));
+}
+function y(t, o) {
+  return U(t, V("default", o));
+}
+y.loading = (t, o) => U(t, V("default", { isLoading: true, autoClose: false, closeOnClick: false, closeButton: false, draggable: false, ...o }));
+function Gt(t, { pending: o, error: e, success: r2 }, s) {
+  let l;
+  o && (l = N(o) ? y.loading(o, s) : y.loading(o.render, { ...s, ...o }));
+  let a = { isLoading: null, autoClose: null, closeOnClick: null, closeButton: null, draggable: null }, d = (T, g, v) => {
+    if (g == null) {
+      y.dismiss(l);
+      return;
+    }
+    let x = { type: T, ...a, ...s, data: v }, C = N(g) ? { render: g } : g;
+    return l ? y.update(l, { ...x, ...C }) : y(C.render, { ...x, ...C }), v;
+  }, c = P(t) ? t() : t;
+  return c.then((T) => d("success", r2, T)).catch((T) => d("error", e, T)), c;
+}
+y.promise = Gt;
+y.success = Q("success");
+y.info = Q("info");
+y.error = Q("error");
+y.warning = Q("warning");
+y.warn = y.warning;
+y.dark = (t, o) => U(t, V("default", { theme: "dark", ...o }));
+function qt(t) {
+  ht(t);
+}
+y.dismiss = qt;
+y.clearWaitingQueue = Ct;
+y.isActive = X;
+y.update = (t, o = {}) => {
+  let e = vt(t, o);
+  if (e) {
+    let { props: r2, content: s } = e, l = { delay: 100, ...r2, ...o, toastId: o.toastId || t, updateId: at() };
+    l.toastId !== t && (l.staleId = t);
+    let a = l.render || s;
+    delete l.render, U(a, l);
+  }
+};
+y.done = (t) => {
+  y.update(t, { progress: 1 });
+};
+y.onChange = Pt;
+y.play = (t) => rt(true, t);
+y.pause = (t) => rt(false, t);
+function It(t) {
+  var a;
+  let { subscribe: o, getSnapshot: e, setProps: r2 } = reactExports.useRef(Et(t)).current;
+  r2(t);
+  let s = (a = reactExports.useSyncExternalStore(o, e, e)) == null ? void 0 : a.slice();
+  function l(d) {
+    if (!s) return [];
+    let c = /* @__PURE__ */ new Map();
+    return t.newestOnTop && s.reverse(), s.forEach((T) => {
+      let { position: g } = T.props;
+      c.has(g) || c.set(g, []), c.get(g).push(T);
+    }), Array.from(c, (T) => d(T[0], T[1]));
+  }
+  return { getToastToRender: l, isToastActive: X, count: s == null ? void 0 : s.length };
+}
+function At(t) {
+  let [o, e] = reactExports.useState(false), [r2, s] = reactExports.useState(false), l = reactExports.useRef(null), a = reactExports.useRef({ start: 0, delta: 0, removalDistance: 0, canCloseOnClick: true, canDrag: false, didMove: false }).current, { autoClose: d, pauseOnHover: c, closeToast: T, onClick: g, closeOnClick: v } = t;
+  xt({ id: t.toastId, containerId: t.containerId, fn: e }), reactExports.useEffect(() => {
+    if (t.pauseOnFocusLoss) return x(), () => {
+      C();
+    };
+  }, [t.pauseOnFocusLoss]);
+  function x() {
+    document.hasFocus() || p(), window.addEventListener("focus", f), window.addEventListener("blur", p);
+  }
+  function C() {
+    window.removeEventListener("focus", f), window.removeEventListener("blur", p);
+  }
+  function S(m) {
+    if (t.draggable === true || t.draggable === m.pointerType) {
+      b();
+      let _ = l.current;
+      a.canCloseOnClick = true, a.canDrag = true, _.style.transition = "none", t.draggableDirection === "x" ? (a.start = m.clientX, a.removalDistance = _.offsetWidth * (t.draggablePercent / 100)) : (a.start = m.clientY, a.removalDistance = _.offsetHeight * (t.draggablePercent === 80 ? t.draggablePercent * 1.5 : t.draggablePercent) / 100);
+    }
+  }
+  function E(m) {
+    let { top: _, bottom: k, left: M, right: A } = l.current.getBoundingClientRect();
+    m.nativeEvent.type !== "touchend" && t.pauseOnHover && m.clientX >= M && m.clientX <= A && m.clientY >= _ && m.clientY <= k ? p() : f();
+  }
+  function f() {
+    e(true);
+  }
+  function p() {
+    e(false);
+  }
+  function b() {
+    a.didMove = false, document.addEventListener("pointermove", n), document.addEventListener("pointerup", u);
+  }
+  function i() {
+    document.removeEventListener("pointermove", n), document.removeEventListener("pointerup", u);
+  }
+  function n(m) {
+    let _ = l.current;
+    if (a.canDrag && _) {
+      a.didMove = true, o && p(), t.draggableDirection === "x" ? a.delta = m.clientX - a.start : a.delta = m.clientY - a.start, a.start !== m.clientX && (a.canCloseOnClick = false);
+      let k = t.draggableDirection === "x" ? `${a.delta}px, var(--y)` : `0, calc(${a.delta}px + var(--y))`;
+      _.style.transform = `translate3d(${k},0)`, _.style.opacity = `${1 - Math.abs(a.delta / a.removalDistance)}`;
+    }
+  }
+  function u() {
+    i();
+    let m = l.current;
+    if (a.canDrag && a.didMove && m) {
+      if (a.canDrag = false, Math.abs(a.delta) > a.removalDistance) {
+        s(true), t.closeToast(true), t.collapseAll();
+        return;
+      }
+      m.style.transition = "transform 0.2s, opacity 0.2s", m.style.removeProperty("transform"), m.style.removeProperty("opacity");
+    }
+  }
+  let h = { onPointerDown: S, onPointerUp: E };
+  return d && c && (h.onMouseEnter = p, t.stacked || (h.onMouseLeave = f)), v && (h.onClick = (m) => {
+    g && g(m), a.canCloseOnClick && T(true);
+  }), { playToast: f, pauseToast: p, isRunning: o, preventExitTransition: r2, toastRef: l, eventHandlers: h };
+}
+var Ot = typeof window != "undefined" ? reactExports.useLayoutEffect : reactExports.useEffect;
+var G = ({ theme: t, type: o, isLoading: e, ...r2 }) => React.createElement("svg", { viewBox: "0 0 24 24", width: "100%", height: "100%", fill: t === "colored" ? "currentColor" : `var(--toastify-icon-color-${o})`, ...r2 });
+function ao(t) {
+  return React.createElement(G, { ...t }, React.createElement("path", { d: "M23.32 17.191L15.438 2.184C14.728.833 13.416 0 11.996 0c-1.42 0-2.733.833-3.443 2.184L.533 17.448a4.744 4.744 0 000 4.368C1.243 23.167 2.555 24 3.975 24h16.05C22.22 24 24 22.044 24 19.632c0-.904-.251-1.746-.68-2.44zm-9.622 1.46c0 1.033-.724 1.823-1.698 1.823s-1.698-.79-1.698-1.822v-.043c0-1.028.724-1.822 1.698-1.822s1.698.79 1.698 1.822v.043zm.039-12.285l-.84 8.06c-.057.581-.408.943-.897.943-.49 0-.84-.367-.896-.942l-.84-8.065c-.057-.624.25-1.095.779-1.095h1.91c.528.005.84.476.784 1.1z" }));
+}
+function so(t) {
+  return React.createElement(G, { ...t }, React.createElement("path", { d: "M12 0a12 12 0 1012 12A12.013 12.013 0 0012 0zm.25 5a1.5 1.5 0 11-1.5 1.5 1.5 1.5 0 011.5-1.5zm2.25 13.5h-4a1 1 0 010-2h.75a.25.25 0 00.25-.25v-4.5a.25.25 0 00-.25-.25h-.75a1 1 0 010-2h1a2 2 0 012 2v4.75a.25.25 0 00.25.25h.75a1 1 0 110 2z" }));
+}
+function no(t) {
+  return React.createElement(G, { ...t }, React.createElement("path", { d: "M12 0a12 12 0 1012 12A12.014 12.014 0 0012 0zm6.927 8.2l-6.845 9.289a1.011 1.011 0 01-1.43.188l-4.888-3.908a1 1 0 111.25-1.562l4.076 3.261 6.227-8.451a1 1 0 111.61 1.183z" }));
+}
+function ro(t) {
+  return React.createElement(G, { ...t }, React.createElement("path", { d: "M11.983 0a12.206 12.206 0 00-8.51 3.653A11.8 11.8 0 000 12.207 11.779 11.779 0 0011.8 24h.214A12.111 12.111 0 0024 11.791 11.766 11.766 0 0011.983 0zM10.5 16.542a1.476 1.476 0 011.449-1.53h.027a1.527 1.527 0 011.523 1.47 1.475 1.475 0 01-1.449 1.53h-.027a1.529 1.529 0 01-1.523-1.47zM11 12.5v-6a1 1 0 012 0v6a1 1 0 11-2 0z" }));
+}
+function io() {
+  return React.createElement("div", { className: "Toastify__spinner" });
+}
+var W = { info: so, warning: ao, success: no, error: ro, spinner: io }, lo = (t) => t in W;
+function Nt({ theme: t, type: o, isLoading: e, icon: r2 }) {
+  let s = null, l = { theme: t, type: o };
+  return r2 === false || (P(r2) ? s = r2({ ...l, isLoading: e }) : reactExports.isValidElement(r2) ? s = reactExports.cloneElement(r2, l) : e ? s = W.spinner() : lo(o) && (s = W[o](l))), s;
+}
+var wt = (t) => {
+  let { isRunning: o, preventExitTransition: e, toastRef: r2, eventHandlers: s, playToast: l } = At(t), { closeButton: a, children: d, autoClose: c, onClick: T, type: g, hideProgressBar: v, closeToast: x, transition: C, position: S, className: E, style: f, progressClassName: p, updateId: b, role: i, progress: n, rtl: u, toastId: h, deleteToast: m, isIn: _, isLoading: k, closeOnClick: M, theme: A, ariaLabel: R } = t, D = clsx("Toastify__toast", `Toastify__toast-theme--${A}`, `Toastify__toast--${g}`, { ["Toastify__toast--rtl"]: u }, { ["Toastify__toast--close-on-click"]: M }), Y = P(E) ? E({ rtl: u, position: S, type: g, defaultClassName: D }) : clsx(D, E), ft = Nt(t), dt = !!n || !c, j = { closeToast: x, type: g, theme: A }, H = null;
+  return a === false || (P(a) ? H = a(j) : reactExports.isValidElement(a) ? H = reactExports.cloneElement(a, j) : H = yt(j)), React.createElement(C, { isIn: _, done: m, position: S, preventExitTransition: e, nodeRef: r2, playToast: l }, React.createElement("div", { id: h, tabIndex: 0, onClick: T, "data-in": _, className: Y, ...s, style: f, ref: r2, ..._ && { role: i, "aria-label": R } }, ft != null && React.createElement("div", { className: clsx("Toastify__toast-icon", { ["Toastify--animate-icon Toastify__zoom-enter"]: !k }) }, ft), tt(d, t, !o), H, !t.customProgressBar && React.createElement(gt, { ...b && !dt ? { key: `p-${b}` } : {}, rtl: u, theme: A, delay: c, isRunning: o, isIn: _, closeToast: x, hide: v, type: g, className: p, controlledProgress: dt, progress: n || 0 })));
+};
+var K = (t, o = false) => ({ enter: `Toastify--animate Toastify__${t}-enter`, exit: `Toastify--animate Toastify__${t}-exit`, appendPosition: o }), lt = $(K("bounce", true));
+var _o = { position: "top-right", transition: lt, autoClose: 5e3, closeButton: true, pauseOnHover: true, pauseOnFocusLoss: true, draggable: "touch", draggablePercent: 80, draggableDirection: "x", role: "alert", theme: "light", "aria-label": "Notifications Alt+T", hotKeys: (t) => t.altKey && t.code === "KeyT" };
+function Lt(t) {
+  let o = { ..._o, ...t }, e = t.stacked, [r2, s] = reactExports.useState(true), l = reactExports.useRef(null), { getToastToRender: a, isToastActive: d, count: c } = It(o), { className: T, style: g, rtl: v, containerId: x, hotKeys: C } = o;
+  function S(f) {
+    let p = clsx("Toastify__toast-container", `Toastify__toast-container--${f}`, { ["Toastify__toast-container--rtl"]: v });
+    return P(T) ? T({ position: f, rtl: v, defaultClassName: p }) : clsx(p, B(T));
+  }
+  function E() {
+    e && (s(true), y.play());
+  }
+  return Ot(() => {
+    var f;
+    if (e) {
+      let p = l.current.querySelectorAll('[data-in="true"]'), b = 12, i = (f = o.position) == null ? void 0 : f.includes("top"), n = 0, u = 0;
+      Array.from(p).reverse().forEach((h, m) => {
+        let _ = h;
+        _.classList.add("Toastify__toast--stacked"), m > 0 && (_.dataset.collapsed = `${r2}`), _.dataset.pos || (_.dataset.pos = i ? "top" : "bot");
+        let k = n * (r2 ? 0.2 : 1) + (r2 ? 0 : b * m);
+        _.style.setProperty("--y", `${i ? k : k * -1}px`), _.style.setProperty("--g", `${b}`), _.style.setProperty("--s", `${1 - (r2 ? u : 0)}`), n += _.offsetHeight, u += 0.025;
+      });
+    }
+  }, [r2, c, e]), reactExports.useEffect(() => {
+    function f(p) {
+      var i;
+      let b = l.current;
+      C(p) && ((i = b.querySelector('[tabIndex="0"]')) == null || i.focus(), s(false), y.pause()), p.key === "Escape" && (document.activeElement === b || b != null && b.contains(document.activeElement)) && (s(true), y.play());
+    }
+    return document.addEventListener("keydown", f), () => {
+      document.removeEventListener("keydown", f);
+    };
+  }, [C]), React.createElement("section", { ref: l, className: "Toastify", id: x, onMouseEnter: () => {
+    e && (s(false), y.pause());
+  }, onMouseLeave: E, "aria-live": "polite", "aria-atomic": "false", "aria-relevant": "additions text", "aria-label": o["aria-label"] }, a((f, p) => {
+    let b = p.length ? { ...g } : { ...g, pointerEvents: "none" };
+    return React.createElement("div", { tabIndex: -1, className: S(f), "data-stacked": e, style: b, key: `c-${f}` }, p.map(({ content: i, props: n }) => React.createElement(wt, { ...n, stacked: e, collapseAll: E, isIn: d(n.toastId, n.containerId), key: `t-${n.key}` }, i)));
+  }));
+}
+const TOAST_POSITION = "bottom-right";
+const TOAST_THEME = "dark";
+const BASE_TOAST_STYLES = {
+  background: "var(--bg-darker)",
+  color: "var(--text-light)",
+  border: "1px solid var(--border-color)",
+  borderRadius: "8px",
+  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+  padding: "16px",
+  marginBottom: "12px",
+  minHeight: "initial",
+  width: "auto",
+  maxWidth: "400px"
+};
+const PROGRESS_STYLES = {
+  background: "var(--primary)",
+  height: "3px"
+};
+const TOAST_OPTIONS = {
+  position: TOAST_POSITION,
+  hideProgressBar: false,
+  closeOnClick: false,
+  pauseOnHover: false,
+  draggable: false,
+  progress: void 0,
+  pauseOnFocusLoss: false,
+  theme: TOAST_THEME,
+  style: BASE_TOAST_STYLES,
+  progressStyle: PROGRESS_STYLES,
+  bodyStyle: {
+    margin: 0,
+    padding: 0
+  },
+  closeButton: true
+};
+const TOAST_TYPES = {
+  PLAYER_START: {
+    type: "info",
+    duration: 5e3
+  },
+  PLAYER_END: {
+    type: "warning",
+    duration: 5e3
+  },
+  PLAYER_EMPTY: {
+    type: "warning",
+    duration: 5e3
+  },
+  PLAYER_DESTROY: {
+    type: "warning",
+    duration: 5e3
+  }
+};
+const useToast = () => {
+  const showToast = (content2, type, customDuration) => {
+    if (!y) return;
+    try {
+      y.dismiss(type);
+      const toastConfig = TOAST_TYPES[type] || TOAST_TYPES.PLAYER_START;
+      const options2 = {
+        ...TOAST_OPTIONS,
+        autoClose: customDuration || toastConfig.duration,
+        toastId: type,
+        type: toastConfig.type
+      };
+      const toastId = y(content2, options2);
+      return toastId;
+    } catch (error) {
+    }
+  };
+  return { showToast };
+};
+const formatDuration = (ms) => {
+  if (!ms || isNaN(ms)) return "00:00";
+  const totalSeconds = Math.floor(ms / 1e3);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+};
+const TOAST_STYLES = {
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+  padding: "8px",
+  color: "var(--text-light)",
+  fontSize: "14px",
+  fontWeight: "500"
+};
+const ICON_STYLES = {
+  color: "var(--primary)",
+  fontSize: "16px"
+};
+const BOT_NAME_STYLES = {
+  color: "var(--text-gray)",
+  fontSize: "12px",
+  opacity: 0.8
+};
+const THUMBNAIL_STYLES = {
+  width: "48px",
+  height: "48px",
+  borderRadius: "8px",
+  objectFit: "cover",
+  flexShrink: 0
+};
+const PLAYED_CONTENT_STYLES = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "2px",
+  minWidth: 0,
+  flex: 1,
+  maxWidth: "calc(100% - 56px)"
+};
+const SONG_NAME_STYLES = {
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  fontSize: "14px",
+  fontWeight: "500",
+  color: "var(--text-light)",
+  maxWidth: "100%",
+  lineHeight: "1.4"
+};
+const PLAYED_TOAST_STYLES = {
+  ...TOAST_STYLES,
+  padding: "12px",
+  gap: "12px"
+};
+const Played = ({ song, bot, duration }) => {
+  const formattedDuration = formatDuration(duration);
+  const displayName = song.name || "Unknown Song";
+  const truncatedName = displayName.length > 45 ? displayName.substring(0, 42) + "..." : displayName;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: PLAYED_TOAST_STYLES, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "img",
+      {
+        src: song.thumbnail || "https://i.imgur.com/4M34hi2.png",
+        alt: truncatedName,
+        style: THUMBNAIL_STYLES,
+        onError: (e) => {
+          e.target.src = "https://i.imgur.com/4M34hi2.png";
+        }
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: PLAYED_CONTENT_STYLES, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: SONG_NAME_STYLES, title: displayName, children: truncatedName }),
+      bot?.name && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: BOT_NAME_STYLES, children: [
+        "by ",
+        bot.name,
+        " • ",
+        formattedDuration
+      ] })
+    ] })
+  ] });
+};
+const Ended = ({ bot }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: TOAST_STYLES, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: ICON_STYLES, children: "⏹️" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Player is Ended" }),
+    bot?.name && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: BOT_NAME_STYLES, children: [
+      "by ",
+      bot.name
+    ] })
+  ] });
+};
+const Destroyed = ({ bot }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: TOAST_STYLES, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: ICON_STYLES, children: "💥" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Player is Destroyed" }),
+    bot?.name && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: BOT_NAME_STYLES, children: [
+      "by ",
+      bot.name
+    ] })
+  ] });
+};
+const RECONNECT_DELAY = 5e3;
+const DEFAULT_THUMBNAIL = "https://i.imgur.com/4M34hi2.png";
+const activeConnections = /* @__PURE__ */ new Map();
+const useSSEConnection = () => {
+  const { showToast } = useToast();
+  const connect = reactExports.useCallback((userId) => {
+    if (activeConnections.has(userId)) return;
+    const port = sessionStorage.getItem(`port_${userId}`);
+    if (!port) return;
+    const url = `http://localhost:${port}/song-events`;
+    try {
+      const eventSource = new EventSource(url);
+      activeConnections.set(userId, {
+        eventSource,
+        reconnectTimeout: null
+      });
+      eventSource.addEventListener("playerStart", (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          const toastContent = /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Played,
+            {
+              song: {
+                name: data.name || "Unknown Song",
+                url: data.url,
+                thumbnail: data.thumbnail || DEFAULT_THUMBNAIL,
+                author: data.author
+              },
+              bot: {
+                name: data.botUsername,
+                avatar: data.botAvatar
+              },
+              duration: data.duration
+            }
+          );
+          showToast(toastContent, "PLAYER_START");
+        } catch (error) {
+        }
+      });
+      eventSource.addEventListener("playerEnd", (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          const toastContent = /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Ended,
+            {
+              bot: {
+                name: data.botUsername,
+                avatar: data.botAvatar
+              }
+            }
+          );
+          showToast(toastContent, "PLAYER_END");
+        } catch (error) {
+        }
+      });
+      eventSource.addEventListener("playerDestroy", (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          const toastContent = /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Destroyed,
+            {
+              bot: {
+                name: data.botUsername,
+                avatar: data.botAvatar
+              }
+            }
+          );
+          showToast(toastContent, "PLAYER_DESTROY");
+        } catch (error) {
+        }
+      });
+      eventSource.addEventListener("connected", (event) => {
+      });
+      eventSource.onerror = (error) => {
+        disconnect(userId);
+        scheduleReconnect(userId);
+      };
+    } catch (error) {
+    }
+  }, [showToast]);
+  const disconnect = reactExports.useCallback((userId) => {
+    const connection = activeConnections.get(userId);
+    if (connection) {
+      if (connection.eventSource) {
+        connection.eventSource.close();
+      }
+      if (connection.reconnectTimeout) {
+        clearTimeout(connection.reconnectTimeout);
+      }
+      activeConnections.delete(userId);
+    }
+  }, []);
+  const scheduleReconnect = reactExports.useCallback((userId) => {
+    const connection = activeConnections.get(userId);
+    if (connection) {
+      if (connection.reconnectTimeout) {
+        clearTimeout(connection.reconnectTimeout);
+      }
+      connection.reconnectTimeout = setTimeout(() => {
+        if (!activeConnections.has(userId)) {
+          connect(userId);
+        }
+      }, RECONNECT_DELAY);
+    }
+  }, [connect]);
+  return { connect, disconnect };
+};
+const Settings = ({ isOpen, onClose, onSave }) => {
+  const DEFAULT_SETTINGS = {
+    leave_empty: "12000",
+    nodes: [
+      {
+        name: "ExpertiseX",
+        url: "localhost:5555",
+        auth: "youshallnotpass"
+      }
+    ]
+  };
+  const [formValues, setFormValues] = reactExports.useState(DEFAULT_SETTINGS);
+  reactExports.useEffect(() => {
+    loadConfig();
+  }, []);
+  const loadConfig = async () => {
+    try {
+      const config = await window.electronAPI.loadConfig();
+      setFormValues(config || DEFAULT_SETTINGS);
+    } catch (error) {
+      console.error("Error loading config:", error);
+      setFormValues(DEFAULT_SETTINGS);
+    }
+  };
+  const handleChange = (e) => {
+    const { name: name2, value } = e.target;
+    setFormValues((prev2) => ({ ...prev2, [name2]: value }));
+  };
+  const handleNodeChange = (field, value) => {
+    setFormValues((prev2) => ({
+      ...prev2,
+      nodes: prev2.nodes.map(
+        (node2, index2) => index2 === 0 ? { ...node2, [field]: value } : node2
+      )
+    }));
+  };
+  const handleResetToDefault = () => {
+    setFormValues(DEFAULT_SETTINGS);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const valuesToSave = {
+        ...formValues,
+        leave_empty: formValues.leave_empty.trim() || DEFAULT_SETTINGS.leave_empty
+      };
+      await window.electronAPI.saveConfig(valuesToSave);
+      onSave?.(valuesToSave);
+      onClose();
+    } catch (error) {
+      console.error("Error saving settings:", error);
+    }
+  };
+  const renderBotSettings = () => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "settings-section", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "settings-header", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Bot Settings" }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "settings-form", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Leave Voice Empty (ms):" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "number",
+          name: "leave_empty",
+          value: formValues.leave_empty,
+          placeholder: DEFAULT_SETTINGS.leave_empty,
+          onChange: handleChange,
+          className: "settings-input"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "input-description", children: "Time in milliseconds before bot leaves an empty voice channel" })
+    ] }) })
+  ] });
+  const renderLavaLinkSettings = () => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "settings-section", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "settings-header", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "LavaLink Settings" }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "settings-form", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Node Name:" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "input",
+          {
+            type: "text",
+            name: "node_name",
+            value: formValues.nodes[0].name,
+            placeholder: DEFAULT_SETTINGS.nodes[0].name,
+            onChange: (e) => handleNodeChange("name", e.target.value),
+            className: "settings-input"
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Node Host/Port:" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "input",
+          {
+            type: "text",
+            name: "node_host",
+            value: formValues.nodes[0].url,
+            placeholder: DEFAULT_SETTINGS.nodes[0].url,
+            onChange: (e) => handleNodeChange("url", e.target.value),
+            className: "settings-input"
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Node Password:" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "input",
+          {
+            type: "password",
+            name: "node_password",
+            value: formValues.nodes[0].auth,
+            placeholder: DEFAULT_SETTINGS.nodes[0].auth,
+            onChange: (e) => handleNodeChange("auth", e.target.value),
+            className: "settings-input"
+          }
+        )
+      ] })
+    ] })
+  ] });
+  const renderButtons = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "settings-buttons-right", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "button",
+      {
+        type: "button",
+        onClick: handleResetToDefault,
+        className: "settings-button primary",
+        children: "Reset to Default"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "button",
+      {
+        type: "button",
+        onClick: onClose,
+        className: "settings-button secondary",
+        children: "Cancel"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "button",
+      {
+        type: "submit",
+        className: "settings-button primary",
+        children: "Save Changes"
+      }
+    )
+  ] }) });
+  if (!isOpen) return null;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "settings-overlay", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "settings-modal", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, className: "settings-form", children: [
+    renderBotSettings(),
+    renderLavaLinkSettings(),
+    renderButtons()
+  ] }) }) });
+};
+const Navbar = ({ username, userId, tabs, removeTab, setCurrentTab, avatar }) => {
+  const version = window.electronAPI.getVersion();
+  const [isSettingsOpen, setIsSettingsOpen] = reactExports.useState(false);
+  const { handleLogout } = useBotOperations(tabs, removeTab, setCurrentTab);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "navbar", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "navbar-left", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { children: "ExpertiseX - SelfBot Music" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "version-badge", children: [
+        "v",
+        version
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "navbar-right", children: username ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "user-section", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "user-info", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "user-avatar", children: avatar ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "img",
+          {
+            src: avatar,
+            alt: `${username}'s avatar`,
+            className: "avatar-image"
+          }
+        ) : /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx: "12", cy: "7", r: "4" })
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "user-details", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "username", children: username }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "user-id", children: [
+            "ID: ",
+            userId
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "logout-button", onClick: () => handleLogout(userId), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("polyline", { points: "16 17 21 12 16 7" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "21", y1: "12", x2: "9", y2: "12" })
+      ] }) })
+    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "settings-button", onClick: () => setIsSettingsOpen(true), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12 15a3 3 0 100-6 3 3 0 000 6z" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" })
+    ] }) }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Settings, { isOpen: isSettingsOpen, onClose: () => setIsSettingsOpen(false), onSave: console.log })
+  ] });
+};
+const Sidebar = ({ setActiveComponent, activeComponent }) => {
   const [isSpecialCollapsed, setIsSpecialCollapsed] = reactExports.useState(false);
   const [isMusicCollapsed, setIsMusicCollapsed] = reactExports.useState(false);
   const [isFilterCollapsed, setIsFilterCollapsed] = reactExports.useState(false);
+  const [searchQuery, setSearchQuery] = reactExports.useState("");
+  const categories = [
+    {
+      name: "Special Control",
+      isCollapsed: isSpecialCollapsed,
+      setIsCollapsed: setIsSpecialCollapsed,
+      items: [
+        { id: "console", label: "Console", icon: "📊" },
+        { id: "golive", label: "GoLive", icon: "🎥" },
+        { id: "endlive", label: "EndLive", icon: "⏹️" }
+      ]
+    },
+    {
+      name: "Music Control",
+      isCollapsed: isMusicCollapsed,
+      setIsCollapsed: setIsMusicCollapsed,
+      items: [
+        { id: "autoplay", label: "AutoPlay", icon: "▶️" },
+        { id: "join", label: "Join", icon: "🎵" },
+        { id: "leave", label: "Leave", icon: "🚪" },
+        { id: "play", label: "Play", icon: "🎧" },
+        { id: "playskip", label: "PlaySkip", icon: "⏭️" },
+        { id: "playtop", label: "PlayTop", icon: "⏫" },
+        { id: "skip", label: "Skip", icon: "⏩" },
+        { id: "queue", label: "Queue", icon: "📋" },
+        { id: "clear", label: "Clear", icon: "🗑️" },
+        { id: "replay", label: "Replay", icon: "🔄" },
+        { id: "previous", label: "Previous", icon: "⏮️" },
+        { id: "loop", label: "Loop", icon: "🔁" },
+        { id: "shuffle", label: "Shuffle", icon: "🔀" },
+        { id: "volume", label: "Volume", icon: "🔊" },
+        { id: "pause", label: "Pause", icon: "⏸️" },
+        { id: "twentyfourseven", label: "24/7", icon: "⏰" }
+      ]
+    },
+    {
+      name: "Filter Control",
+      isCollapsed: isFilterCollapsed,
+      setIsCollapsed: setIsFilterCollapsed,
+      items: [
+        { id: "normal", label: "Normal", icon: "🎚️" },
+        { id: "earrape", label: "Earrape", icon: "🔊" },
+        { id: "bass", label: "Bass", icon: "🎵" },
+        { id: "bassboost", label: "BassBoost", icon: "🎵" },
+        { id: "nightcore", label: "Nightcore", icon: "🌙" },
+        { id: "vaporwave", label: "Vaporwave", icon: "🌊" },
+        { id: "pop", label: "Pop", icon: "🎵" },
+        { id: "china", label: "China", icon: "🇨🇳" },
+        { id: "chipmunk", label: "Chipmunk", icon: "🐿️" },
+        { id: "dance", label: "Dance", icon: "💃" },
+        { id: "darthvader", label: "Darthvader", icon: "⚫" },
+        { id: "eightd", label: "8D", icon: "🎧" },
+        { id: "jazz", label: "Jazz", icon: "🎷" },
+        { id: "slowmotion", label: "SlowMotion", icon: "⏱️" },
+        { id: "soft", label: "Soft", icon: "🎵" },
+        { id: "superbass", label: "SuperBass", icon: "🎵" },
+        { id: "television", label: "Television", icon: "📺" },
+        { id: "treblebass", label: "TrebleBass", icon: "🎵" },
+        { id: "tremolo", label: "Tremolo", icon: "🎵" },
+        { id: "vibrate", label: "Vibrate", icon: "📳" },
+        { id: "vibrato", label: "Vibrato", icon: "🎵" }
+      ]
+    }
+  ];
+  const filteredCategories = categories.map((category) => ({
+    ...category,
+    items: category.items.filter(
+      (item) => item.label.toLowerCase().includes(searchQuery.toLowerCase()) || item.id.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  }));
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("aside", { className: "sidebar", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sidebar-content", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "search-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "input",
+      {
+        type: "text",
+        placeholder: "Search components...",
+        value: searchQuery,
+        onChange: (e) => setSearchQuery(e.target.value),
+        className: "search-input"
+      }
+    ) }),
+    filteredCategories.map((category, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "sidebar-category", children: category.items.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          className: "category-header",
+          onClick: () => category.setIsCollapsed(!category.isCollapsed),
+          "aria-expanded": !category.isCollapsed,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: category.name }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "collapse-icon", children: "▼" })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `category-items ${!category.isCollapsed ? "expanded" : ""}`, children: category.items.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "button",
+        {
+          className: `sidebar-button ${activeComponent === item.id ? "active" : ""}`,
+          onClick: () => setActiveComponent(item.id),
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "button-icon", children: item.icon }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "button-label", children: item.label })
+          ]
+        },
+        item.id
+      )) })
+    ] }) }, index2))
+  ] }) });
+};
+const Footer = ({ tabs, currentTab, onTabSwitch, onTabClose, onNewTab }) => {
+  const tabsContainerRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
-  }, []);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sidebar", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "category", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Special Control" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "collapse-button", onClick: () => setIsSpecialCollapsed(!isSpecialCollapsed), children: isSpecialCollapsed ? ">" : "v" })
-    ] }),
-    !isSpecialCollapsed && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("console"), children: "Console" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("golive"), children: "GoLive" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("endlive"), children: "EndLive" })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "category", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Music Control" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "collapse-button", onClick: () => setIsMusicCollapsed(!isMusicCollapsed), children: isMusicCollapsed ? ">" : "v" })
-    ] }),
-    !isMusicCollapsed && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("autoplay"), children: "AutoPlay" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("join"), children: "Join" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("leave"), children: "Leave" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("play"), children: "Play" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("playskip"), children: "PlaySkip" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("playtop"), children: "PlayTop" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("skip"), children: "Skip" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("queue"), children: "Queue" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("clear"), children: "Clear" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("replay"), children: "Replay" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("previous"), children: "Previous" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("loop"), children: "Loop" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("shuffle"), children: "Shuffle" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("volume"), children: "Volume" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("pause"), children: "Pause" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("twentyfourseven"), children: "TwentyFourSeven" })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "category", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Filter Control" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "collapse-button", onClick: () => setIsFilterCollapsed(!isFilterCollapsed), children: isFilterCollapsed ? ">" : "v" })
-    ] }),
-    !isFilterCollapsed && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("normal"), children: "Normal" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("earrape"), children: "Earrape" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("bass"), children: "Bass" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("bassboost"), children: "BassBoost" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("nightcore"), children: "Nightcore" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("vaporwave"), children: "Vaporwave" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("pop"), children: "Pop" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("china"), children: "China" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("chipmunk"), children: "Chipmunk" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("dance"), children: "Dance" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("darthvader"), children: "Darthvader" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("eightd"), children: "8D" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("jazz"), children: "Jazz" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("slowmotion"), children: "SlowMotion" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("soft"), children: "Soft" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("superbass"), children: "SuperBass" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("television"), children: "Television" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("treblebass"), children: "TrebleBass" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("tremolo"), children: "Tremolo" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("vibrate"), children: "Vibrate" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "sidebar-button", onClick: () => setActiveComponent("vibrato"), children: "Vibrato" })
+    if (tabsContainerRef.current && currentTab) {
+      const activeTab = tabsContainerRef.current.querySelector(".active");
+      if (activeTab) {
+        activeTab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      }
+    }
+  }, [currentTab]);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "footer-tabs", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tabs-container", ref: tabsContainerRef, children: [
+    tabs.map((tab2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: `tab ${currentTab === tab2.userId ? "active" : ""}`,
+        onClick: () => onTabSwitch(tab2.userId),
+        title: tab2.username,
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: tab2.username }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              className: "close-tab",
+              onClick: (e) => {
+                e.stopPropagation();
+                onTabClose(tab2.userId);
+              },
+              title: "Close tab",
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "close-tab-text", children: "×" })
+            }
+          )
+        ]
+      },
+      tab2.userId
+    )),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "button",
+      {
+        className: "new-tab-button",
+        onClick: onNewTab,
+        title: "Add new account",
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "new-tab-icon", children: "+" })
+      }
+    )
+  ] }) });
+};
+const TitleBar = ({ tabs, onTabClose }) => {
+  const handleMinimize = () => {
+    window.electronAPI.windowMinimize();
+  };
+  const handleMaximize = () => {
+    window.electronAPI.windowMaximize();
+  };
+  const handleClose = async () => {
+    if (tabs && tabs.length > 0) {
+      for (const tab2 of tabs) {
+        await onTabClose(tab2.userId);
+      }
+    }
+    window.electronAPI.windowClose();
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "titlebar", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "titlebar-drag-region", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "window-title", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", className: "titlebar-icon", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" }) }),
+      "ExpertiseX"
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "window-controls", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "window-control minimize", onClick: handleMinimize, title: "Minimize", children: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { width: "10", height: "1", viewBox: "0 0 10 1", children: /* @__PURE__ */ jsxRuntimeExports.jsx("rect", { width: "10", height: "1", fill: "currentColor" }) }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "window-control maximize", onClick: handleMaximize, title: "Maximize", children: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { width: "10", height: "10", viewBox: "0 0 10 10", children: /* @__PURE__ */ jsxRuntimeExports.jsx("rect", { width: "9", height: "9", x: "0.5", y: "0.5", fill: "none", stroke: "currentColor", strokeWidth: "1" }) }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "window-control close", onClick: handleClose, title: "Close", children: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { width: "10", height: "10", viewBox: "0 0 10 10", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "path",
+        {
+          d: "M1 1L9 9M1 9L9 1",
+          stroke: "currentColor",
+          strokeWidth: "1.2",
+          strokeLinecap: "round",
+          fill: "none"
+        }
+      ) }) })
     ] })
   ] });
 };
 const App = () => {
   const [activeComponent, setActiveComponent] = reactExports.useState("logins");
-  const [isLoggedIn, setIsLoggedIn] = reactExports.useState(false);
+  const tabs = useTabs();
+  const sessionStorageSet = useSessionStorage();
+  const { handleLogout } = useBotOperations(tabs, tabs.removeTab, tabs.setCurrentTab);
+  const { connect: connectSSE, disconnect: disconnectSSE } = useSSEConnection();
+  const connectSSERef = reactExports.useRef(connectSSE);
   reactExports.useEffect(() => {
-    window.electronAPI.onWindowClose(async () => {
-      const port = sessionStorage.getItem("port");
-      const env2 = window.electronAPI.getEnv();
-      if (port) {
-        await axios.post(`http://${env2.ip}:${port}/logout`);
-        sessionStorage.removeItem("isLoggedIn");
-        sessionStorage.removeItem("port");
+    connectSSERef.current = connectSSE;
+  }, [connectSSE]);
+  reactExports.useEffect(() => {
+    let isMounted = true;
+    const loadActiveBots = async () => {
+      try {
+        const activeBots = await window.electronAPI.getActiveBots();
+        if (!isMounted) return;
+        if (activeBots && Array.isArray(activeBots) && activeBots.length > 0) {
+          tabs.setActiveTabs(activeBots);
+          activeBots.forEach((bot) => {
+            if (bot.userId) {
+              connectSSERef.current(bot.userId);
+            }
+          });
+        } else {
+        }
+      } catch (error) {
       }
-    });
-    const storedLoginState = sessionStorage.getItem("isLoggedIn");
-    if (storedLoginState === "true") {
-      setIsLoggedIn(true);
-      setActiveComponent("join");
-    }
+    };
+    loadActiveBots();
+    return () => {
+      isMounted = false;
+    };
   }, []);
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
-    sessionStorage.setItem("isLoggedIn", "true");
-    setActiveComponent("join");
+  const handleLoginSuccess = (loggedInUsername, loggedInUserId, port, avatar) => {
+    const newTab = {
+      id: loggedInUserId,
+      username: loggedInUsername,
+      userId: loggedInUserId,
+      port,
+      avatar
+    };
+    tabs.addTab(newTab);
+    setActiveComponent("console");
+    sessionStorageSet.setSessionData(loggedInUserId, loggedInUsername, port, avatar);
+    connectSSERef.current(loggedInUserId);
   };
+  const handleNewTab = () => {
+    tabs.setCurrentTab(null);
+    setActiveComponent("logins");
+  };
+  const handleTabSwitch = (tabId) => {
+    tabs.switchTab(tabId);
+    setActiveComponent("console");
+  };
+  const handleLogoutWithSSE = async (userId) => {
+    disconnectSSE(userId);
+    await handleLogout(userId);
+  };
+  const renderMainContent = () => {
+    if (!tabs.currentTab) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(Login, { onLoginSuccess: handleLoginSuccess });
+    }
+    const ActiveComponent = COMPONENT_MAP[activeComponent];
+    return ActiveComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(ActiveComponent, { userId: tabs.currentTab }) : null;
+  };
+  const currentUsername = tabs.tabs.find((tab2) => tab2.userId === tabs.currentTab)?.username;
+  const currentAvatar = tabs.tabs.find((tab2) => tab2.userId === tabs.currentTab)?.avatar;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "App", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Navbar, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TitleBar,
+      {
+        tabs: tabs.tabs,
+        onTabClose: handleLogoutWithSSE
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Navbar,
+      {
+        username: currentUsername,
+        userId: tabs.currentTab,
+        tabs,
+        removeTab: tabs.removeTab,
+        setCurrentTab: tabs.setCurrentTab,
+        avatar: currentAvatar,
+        onLogout: handleLogoutWithSSE
+      }
+    ),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "dashboard", children: [
-      isLoggedIn && /* @__PURE__ */ jsxRuntimeExports.jsx(Sidebar, { setActiveComponent, setIsLoggedIn }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "main-content", children: [
-        !isLoggedIn && /* @__PURE__ */ jsxRuntimeExports.jsx(Login, { setIsLoggedIn: handleLoginSuccess }),
-        isLoggedIn && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "logged-in-content", children: [
-          activeComponent === "console" && /* @__PURE__ */ jsxRuntimeExports.jsx(Console, {}),
-          activeComponent === "join" && /* @__PURE__ */ jsxRuntimeExports.jsx(Join, {}),
-          activeComponent === "leave" && /* @__PURE__ */ jsxRuntimeExports.jsx(Leave, {}),
-          activeComponent === "play" && /* @__PURE__ */ jsxRuntimeExports.jsx(Play, {}),
-          activeComponent === "autoplay" && /* @__PURE__ */ jsxRuntimeExports.jsx(AutoPlay, {}),
-          activeComponent === "queue" && /* @__PURE__ */ jsxRuntimeExports.jsx(Queue, {}),
-          activeComponent === "golive" && /* @__PURE__ */ jsxRuntimeExports.jsx(GoLive, {}),
-          activeComponent === "loop" && /* @__PURE__ */ jsxRuntimeExports.jsx(Loop, {}),
-          activeComponent === "skip" && /* @__PURE__ */ jsxRuntimeExports.jsx(Skip, {}),
-          activeComponent === "clear" && /* @__PURE__ */ jsxRuntimeExports.jsx(Clear, {}),
-          activeComponent === "previous" && /* @__PURE__ */ jsxRuntimeExports.jsx(Previous, {}),
-          activeComponent === "pause" && /* @__PURE__ */ jsxRuntimeExports.jsx(Pause, {}),
-          activeComponent === "twentyfourseven" && /* @__PURE__ */ jsxRuntimeExports.jsx(TwentyFourSeven, {}),
-          activeComponent === "volume" && /* @__PURE__ */ jsxRuntimeExports.jsx(Volume, {}),
-          activeComponent === "shuffle" && /* @__PURE__ */ jsxRuntimeExports.jsx(Shuffle, {}),
-          activeComponent === "replay" && /* @__PURE__ */ jsxRuntimeExports.jsx(Replay, {}),
-          activeComponent === "endlive" && /* @__PURE__ */ jsxRuntimeExports.jsx(EndLive, {}),
-          activeComponent === "bass" && /* @__PURE__ */ jsxRuntimeExports.jsx(Bass, {}),
-          activeComponent === "normal" && /* @__PURE__ */ jsxRuntimeExports.jsx(Normal, {}),
-          activeComponent === "earrape" && /* @__PURE__ */ jsxRuntimeExports.jsx(Earrape, {}),
-          activeComponent === "bassboost" && /* @__PURE__ */ jsxRuntimeExports.jsx(BassBoost, {}),
-          activeComponent === "china" && /* @__PURE__ */ jsxRuntimeExports.jsx(China, {}),
-          activeComponent === "chipmunk" && /* @__PURE__ */ jsxRuntimeExports.jsx(Chipmunk, {}),
-          activeComponent === "dance" && /* @__PURE__ */ jsxRuntimeExports.jsx(Dance, {}),
-          activeComponent === "darthvader" && /* @__PURE__ */ jsxRuntimeExports.jsx(Darthvader, {}),
-          activeComponent === "eightd" && /* @__PURE__ */ jsxRuntimeExports.jsx(EightD, {}),
-          activeComponent === "jazz" && /* @__PURE__ */ jsxRuntimeExports.jsx(Jazz, {}),
-          activeComponent === "nightcore" && /* @__PURE__ */ jsxRuntimeExports.jsx(Nightcore, {}),
-          activeComponent === "pop" && /* @__PURE__ */ jsxRuntimeExports.jsx(Pop, {}),
-          activeComponent === "slowmotion" && /* @__PURE__ */ jsxRuntimeExports.jsx(SlowMotion, {}),
-          activeComponent === "soft" && /* @__PURE__ */ jsxRuntimeExports.jsx(Soft, {}),
-          activeComponent === "superbass" && /* @__PURE__ */ jsxRuntimeExports.jsx(SuperBass, {}),
-          activeComponent === "television" && /* @__PURE__ */ jsxRuntimeExports.jsx(Television, {}),
-          activeComponent === "treblebass" && /* @__PURE__ */ jsxRuntimeExports.jsx(TrebleBass, {}),
-          activeComponent === "tremolo" && /* @__PURE__ */ jsxRuntimeExports.jsx(Tremolo, {}),
-          activeComponent === "vaporwave" && /* @__PURE__ */ jsxRuntimeExports.jsx(Vaporwave, {}),
-          activeComponent === "vibrate" && /* @__PURE__ */ jsxRuntimeExports.jsx(Vibrate, {}),
-          activeComponent === "vibrato" && /* @__PURE__ */ jsxRuntimeExports.jsx(Vibrato, {}),
-          activeComponent === "playskip" && /* @__PURE__ */ jsxRuntimeExports.jsx(PlaySkip, {}),
-          activeComponent === "playtop" && /* @__PURE__ */ jsxRuntimeExports.jsx(PlayTop, {})
-        ] })
-      ] })
-    ] })
+      tabs.currentTab && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Sidebar,
+        {
+          setActiveComponent,
+          setIsLoggedIn: () => handleLogoutWithSSE(tabs.currentTab),
+          activeComponent
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "main-content", children: renderMainContent() })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Footer,
+      {
+        tabs: tabs.tabs,
+        currentTab: tabs.currentTab,
+        onTabSwitch: handleTabSwitch,
+        onTabClose: handleLogoutWithSSE,
+        onNewTab: handleNewTab
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Lt,
+      {}
+    )
   ] });
 };
-clientExports.createRoot(document.getElementById("root")).render(
-  /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) })
+const container = document.getElementById("root");
+const root = clientExports.createRoot(container);
+root.render(
+  /* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) })
 );

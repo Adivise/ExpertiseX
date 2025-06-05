@@ -18,7 +18,7 @@
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
         font-src 'self' https://fonts.gstatic.com;
         img-src 'self' data: https: https://cdn.discordapp.com;
-        connect-src 'self' http://localhost:*;
+        connect-src 'self' http://localhost:* ws://localhost:*;
         worker-src 'self';
         child-src 'self';
         frame-src 'self'"
@@ -29,4 +29,4 @@
     <div id="root"></div>
     <script type="module" src="/src/Main.jsx"></script>
   </body>
-</html>
+</html> 

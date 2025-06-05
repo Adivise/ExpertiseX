@@ -2,7 +2,6 @@ export {};
 declare global {
   interface Window {
     electronAPI: {
-      onWindowClose: (callback: (event: any) => void) => void;
       startBot: (token: string, port: string, userId: string, avatar: string) => void;
       stopBot: (userId: string) => Promise<void>;
       getActiveBots: () => Promise<string[]>;
@@ -18,6 +17,9 @@ declare global {
       saveConfig: (config: Record<string, any>) => Promise<boolean>;
       checkConfig: () => Promise<boolean>;
       getVersion: () => string;
+      windowMinimize: () => Promise<void>;
+      windowMaximize: () => Promise<void>;
+      windowClose: () => Promise<void>;
     };
   }
 }

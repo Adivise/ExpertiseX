@@ -738,6 +738,14 @@ select option:checked {
     line-height: 1.5;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.console-output.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .console-output::before {
@@ -1016,4 +1024,15 @@ select option:checked {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 } 
