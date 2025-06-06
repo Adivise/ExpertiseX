@@ -14,14 +14,25 @@ const Play = ({ userId }) => {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const suggestionsRef = useRef(null);
 
+    // Load saved values on mount
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-        const storedVoiceId = sessionStorage.getItem(`voiceId_${userId}`);
-        const storedPort = sessionStorage.getItem(`port_${userId}`);
-        if (storedGuildId) setGuildId(storedGuildId);
-        if (storedVoiceId) setVoiceId(storedVoiceId);
-        if (storedPort) setPort(storedPort);
+        const loadSavedValues = async () => {
+            try {
+                const sessionData = await window.electronAPI.getSessionData(userId);
+                if (sessionData) {
+                    if (sessionData.guildId) setGuildId(sessionData.guildId);
+                    if (sessionData.voiceId) setVoiceId(sessionData.voiceId);
+                }
+                const storedPort = sessionStorage.getItem(`port_${userId}`);
+                if (storedPort) setPort(storedPort);
+            } catch (error) {
+                console.error('Error loading saved values:', error);
+            }
+        };
+        loadSavedValues();
     }, [userId]);
+
+    // Remove auto-save effect since we'll save on submit
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -36,6 +47,21 @@ const Play = ({ userId }) => {
         };
     }, []);
 
+    const saveValues = async () => {
+        try {
+            // Get existing data first
+            const existingData = await window.electronAPI.getSessionData(userId) || {};
+            // Merge existing data with new values, keeping existing values if new ones aren't provided
+            await window.electronAPI.saveSessionData(userId, {
+                ...existingData,
+                guildId: guildId || existingData.guildId,
+                voiceId: voiceId || existingData.voiceId
+            });
+        } catch (error) {
+            console.error('Error saving values:', error);
+        }
+    };
+
     const handlePlay = async (event) => {
         event.preventDefault();
         setResponse(''); // Clear the old response
@@ -43,10 +69,10 @@ const Play = ({ userId }) => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
-                sessionStorage.setItem(`guildId_${userId}`, guildId);
-                sessionStorage.setItem(`voiceId_${userId}`, voiceId);
                 const { data } = await axios.post(`http://localhost:${port}/play`, { guildId, voiceId, songName });
                 setResponse(data.content);
+                // Save values after successful play
+                await saveValues();
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
             }

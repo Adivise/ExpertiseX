@@ -10,11 +10,34 @@ const GoLive = ({ userId }) => {
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedVoiceId = sessionStorage.getItem(`voiceId_${userId}`);
-        const storedPort = sessionStorage.getItem(`port_${userId}`);
-        if (storedPort) setPort(storedPort);
-        if (storedVoiceId) setVoiceId(storedVoiceId);
+        const loadSavedValues = async () => {
+            try {
+                const sessionData = await window.electronAPI.getSessionData(userId);
+                if (sessionData) {
+                    if (sessionData.voiceId) setVoiceId(sessionData.voiceId);
+                }
+                const storedPort = sessionStorage.getItem(`port_${userId}`);
+                if (storedPort) setPort(storedPort);
+            } catch (error) {
+                console.error('Error loading saved values:', error);
+            }
+        };
+        loadSavedValues();
     }, [userId]);
+
+    const saveValues = async () => {
+        try {
+            // Get existing data first
+            const existingData = await window.electronAPI.getSessionData(userId) || {};
+            // Only update guildId while preserving voiceId and other data
+            await window.electronAPI.saveSessionData(userId, {
+                ...existingData,  // Keep all existing data
+                voiceId: voiceId  // Only update voiceId
+            });
+        } catch (error) {
+            console.error('Error saving values:', error);
+        }
+    };
 
     const handleGoLive = async () => {
         setResponse(''); // Clear the old response
@@ -23,7 +46,7 @@ const GoLive = ({ userId }) => {
             if (!hasFFmpeg) {
                 setResponse("FFmpeg not found. Downloading FFmpeg, please wait...");
                 await window.electronAPI.downloadFFmpeg();
-                setResponse("FFmpeg downloaded successfully.");
+                setResponse("FFmpeg downloaded successfully, joining voice channel...");
             }
         } catch {
             setResponse("Error checking/downloading FFmpeg: " + err.message);
@@ -34,9 +57,10 @@ const GoLive = ({ userId }) => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
-                sessionStorage.setItem(`voiceId_${userId}`, voiceId);
                 const { data } = await axios.post(`http://localhost:${port}/golive`, { voiceId, linkUrl });
                 setResponse(data.content);
+                // Save values after successful play
+                await saveValues();
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
             }

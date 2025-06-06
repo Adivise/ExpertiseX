@@ -47,7 +47,8 @@ const isPortAvailable = (port) => {
 const PATHS = {
   CREDENTIALS: path.join(process.cwd(), "credentials.json"),
   FFMPEG: path.join(process.cwd(), "ffmpeg.exe"),
-  CONFIG: path.join(process.cwd(), "config.json")
+  CONFIG: path.join(process.cwd(), "config.json"),
+  SESSION_DATA: path.join(process.cwd(), "session-data.json")
 };
 const configManager = {
   loadConfig: async () => {
@@ -203,6 +204,44 @@ const botManager = {
   },
   getActiveBots: () => Array.from(botProcesses.keys())
 };
+const sessionsManager = {
+  saveSessionData: (userId, { guildId, voiceId }) => {
+    try {
+      let voiceData = {};
+      if (fs.existsSync(PATHS.SESSION_DATA)) {
+        const fileContent = fs.readFileSync(PATHS.SESSION_DATA, "utf-8");
+        if (fileContent?.trim()) {
+          voiceData = JSON.parse(fileContent);
+        }
+      }
+      voiceData[userId] = {
+        guildId: guildId || null,
+        voiceId: voiceId || null,
+        lastUpdated: (/* @__PURE__ */ new Date()).toISOString()
+      };
+      fs.writeFileSync(PATHS.SESSION_DATA, JSON.stringify(voiceData, null, 2), "utf-8");
+      return true;
+    } catch (error) {
+      console.error("Error saving voice data:", error);
+      return false;
+    }
+  },
+  getSessionData: (userId) => {
+    try {
+      if (fs.existsSync(PATHS.SESSION_DATA)) {
+        const fileContent = fs.readFileSync(PATHS.SESSION_DATA, "utf-8");
+        if (fileContent?.trim()) {
+          const voiceData = JSON.parse(fileContent);
+          return voiceData[userId] || null;
+        }
+      }
+      return null;
+    } catch (error) {
+      console.error("Error reading voice data:", error);
+      return null;
+    }
+  }
+};
 const setupIpcHandlers = (mainWindow2) => {
   electron.ipcMain.handle("load-config", configManager.loadConfig);
   electron.ipcMain.handle("save-config", (_, config) => configManager.saveConfig(config));
@@ -237,6 +276,8 @@ const setupIpcHandlers = (mainWindow2) => {
   electron.ipcMain.on("window-close", () => {
     if (mainWindow2) mainWindow2.close();
   });
+  electron.ipcMain.handle("save-session-data", (_, userId, sessionData) => sessionsManager.saveSessionData(userId, sessionData));
+  electron.ipcMain.handle("get-session-data", (_, userId) => sessionsManager.getSessionData(userId));
 };
 const icon = path.join(__dirname, "../../resources/icon.png");
 let mainWindow = null;

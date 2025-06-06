@@ -17344,7 +17344,7 @@ function MultiValueRemove(_ref5) {
 }
 var MultiValue = function MultiValue2(props) {
   var children = props.children, components2 = props.components, data = props.data, innerProps = props.innerProps, isDisabled = props.isDisabled, removeProps3 = props.removeProps, selectProps = props.selectProps;
-  var Container = components2.Container, Label = components2.Label, Remove = components2.Remove;
+  var Container = components2.Container, Label = components2.Label, Remove2 = components2.Remove;
   return jsx(Container, {
     data,
     innerProps: _objectSpread2(_objectSpread2({}, getStyleProps(props, "multiValue", {
@@ -17358,7 +17358,7 @@ var MultiValue = function MultiValue2(props) {
       "multi-value__label": true
     })),
     selectProps
-  }, children), jsx(Remove, {
+  }, children), jsx(Remove2, {
     data,
     innerProps: _objectSpread2(_objectSpread2({}, getStyleProps(props, "multiValueRemove", {
       "multi-value__remove": true
@@ -32371,11 +32371,33 @@ const AutoPlay = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleAutoPlay = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -32383,9 +32405,9 @@ const AutoPlay = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/autoplay`, { guildId, autoplay: autoplay.value });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -32565,13 +32587,36 @@ const Join = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedVoiceId = sessionStorage.getItem(`voiceId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedVoiceId) setVoiceId(storedVoiceId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+          if (sessionData.voiceId) setVoiceId(sessionData.voiceId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId,
+        // Only update guildId
+        voiceId
+        // Only update voiceId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleJoin = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -32579,10 +32624,9 @@ const Join = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
-        sessionStorage.setItem(`voiceId_${userId}`, voiceId);
         const { data } = await axios.post(`http://localhost:${port}/join`, { guildId, voiceId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -32634,11 +32678,33 @@ const Leave = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleLeave = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -32646,9 +32712,9 @@ const Leave = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/leave`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -32688,11 +32754,33 @@ const Queue = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleQueue = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -32700,9 +32788,9 @@ const Queue = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/queue`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -32841,12 +32929,20 @@ const Play = ({ userId }) => {
   const [showSuggestions, setShowSuggestions] = reactExports.useState(false);
   const suggestionsRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedVoiceId = sessionStorage.getItem(`voiceId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedVoiceId) setVoiceId(storedVoiceId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+          if (sessionData.voiceId) setVoiceId(sessionData.voiceId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
   reactExports.useEffect(() => {
     const handleClickOutside = (event) => {
@@ -32859,6 +32955,18 @@ const Play = ({ userId }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        guildId: guildId || existingData.guildId,
+        voiceId: voiceId || existingData.voiceId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handlePlay = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -32866,10 +32974,9 @@ const Play = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
-        sessionStorage.setItem(`voiceId_${userId}`, voiceId);
         const { data } = await axios.post(`http://localhost:${port}/play`, { guildId, voiceId, songName });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -33034,11 +33141,33 @@ const Loop = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleLoop = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -33046,9 +33175,9 @@ const Loop = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/loop`, { guildId, loop: loop.value });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -33227,11 +33356,33 @@ const Skip = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleSkip = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -33239,9 +33390,9 @@ const Skip = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/skip`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -33281,11 +33432,33 @@ const Clear = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleClear = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -33293,9 +33466,9 @@ const Clear = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/clear`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -33335,11 +33508,33 @@ const Previous = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handlePrevious = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -33347,9 +33542,9 @@ const Previous = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/previous`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -33389,11 +33584,33 @@ const Shuffle = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleShuffle = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -33401,9 +33618,9 @@ const Shuffle = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/shuffle`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -33444,11 +33661,33 @@ const Volume = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleVolume = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -33456,9 +33695,9 @@ const Volume = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/volume`, { guildId, volume });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -33525,11 +33764,33 @@ const Pause = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handlePause = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -33537,9 +33798,9 @@ const Pause = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/pause`, { guildId, pause: pause.value });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -33719,11 +33980,33 @@ const TwentyFourSeven = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleTwentyFourSeven = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -33731,9 +34014,9 @@ const TwentyFourSeven = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/twentyfourseven`, { guildId, twentyfourseven: twentyfourseven.value });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -33912,11 +34195,33 @@ const Replay = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleReplay = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -33924,9 +34229,9 @@ const Replay = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/replay`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -33970,22 +34275,33 @@ const PlaySkip = ({ userId }) => {
   const [showSuggestions, setShowSuggestions] = reactExports.useState(false);
   const suggestionsRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
-  }, [userId]);
-  reactExports.useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target)) {
-        setShowSuggestions(false);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+    loadSavedValues();
+  }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handlePlaySkip = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -33993,9 +34309,9 @@ const PlaySkip = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/playskip`, { guildId, songName });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -34152,10 +34468,19 @@ const PlayTop = ({ userId }) => {
   const [showSuggestions, setShowSuggestions] = reactExports.useState(false);
   const suggestionsRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
   reactExports.useEffect(() => {
     const handleClickOutside = (event) => {
@@ -34168,6 +34493,19 @@ const PlayTop = ({ userId }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handlePlayTop = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -34175,9 +34513,9 @@ const PlayTop = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/playtop`, { guildId, songName });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -34324,6 +34662,565 @@ const PlayTop = ({ userId }) => {
     )
   ] });
 };
+const Forward = ({ userId }) => {
+  const [guildId, setGuildId] = reactExports.useState("");
+  const [seconds, setSeconds] = reactExports.useState(10);
+  const [response, setResponse] = reactExports.useState("");
+  const [isCooldown, setIsCooldown] = reactExports.useState(false);
+  const [port, setPort] = reactExports.useState("");
+  reactExports.useEffect(() => {
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
+  }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
+  const handleForward = async (event) => {
+    event.preventDefault();
+    setResponse("");
+    if (!isCooldown) {
+      setIsCooldown(true);
+      setTimeout(() => setIsCooldown(false), 3e3);
+      try {
+        const { data } = await axios.post(`http://localhost:${port}/forward`, {
+          guildId,
+          seconds: parseInt(seconds) || 10
+        });
+        setResponse(data.content);
+        await saveValues();
+      } catch (error) {
+        setResponse(`Error: ${error.response?.data || error.message}`);
+      }
+    }
+  };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleForward(event);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "forward", className: "content", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Forward" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to forward the currently playing song." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Seconds to forward (default: 10)" })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "text",
+          placeholder: "Guild ID",
+          value: guildId,
+          onChange: (e) => setGuildId(e.target.value)
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "number",
+          placeholder: "Seconds",
+          value: seconds,
+          onChange: (e) => setSeconds(Math.max(1, parseInt(e.target.value) || 10)),
+          min: "1"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handleForward, disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }) })
+    ] }),
+    response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
+  ] });
+};
+const Rewind = ({ userId }) => {
+  const [guildId, setGuildId] = reactExports.useState("");
+  const [seconds, setSeconds] = reactExports.useState(10);
+  const [response, setResponse] = reactExports.useState("");
+  const [isCooldown, setIsCooldown] = reactExports.useState(false);
+  const [port, setPort] = reactExports.useState("");
+  reactExports.useEffect(() => {
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
+  }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
+  const handleRewind = async (event) => {
+    event.preventDefault();
+    setResponse("");
+    if (!isCooldown) {
+      setIsCooldown(true);
+      setTimeout(() => setIsCooldown(false), 3e3);
+      try {
+        const { data } = await axios.post(`http://localhost:${port}/rewind`, {
+          guildId,
+          seconds: parseInt(seconds) || 10
+        });
+        setResponse(data.content);
+        await saveValues();
+      } catch (error) {
+        setResponse(`Error: ${error.response?.data || error.message}`);
+      }
+    }
+  };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleRewind(event);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "rewind", className: "content", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Rewind" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to rewind the currently playing song." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Seconds to rewind (default: 10)" })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "text",
+          placeholder: "Guild ID",
+          value: guildId,
+          onChange: (e) => setGuildId(e.target.value)
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "number",
+          placeholder: "Seconds",
+          value: seconds,
+          onChange: (e) => setSeconds(Math.max(1, parseInt(e.target.value) || 10)),
+          min: "1"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handleRewind, disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }) })
+    ] }),
+    response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
+  ] });
+};
+const Seek = ({ userId }) => {
+  const [guildId, setGuildId] = reactExports.useState("");
+  const [seconds, setSeconds] = reactExports.useState(0);
+  const [response, setResponse] = reactExports.useState("");
+  const [isCooldown, setIsCooldown] = reactExports.useState(false);
+  const [port, setPort] = reactExports.useState("");
+  reactExports.useEffect(() => {
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
+  }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
+  const handleSeek = async (event) => {
+    event.preventDefault();
+    setResponse("");
+    if (!isCooldown) {
+      setIsCooldown(true);
+      setTimeout(() => setIsCooldown(false), 3e3);
+      try {
+        const { data } = await axios.post(`http://localhost:${port}/seek`, {
+          guildId,
+          seconds: parseInt(seconds) || 0
+        });
+        setResponse(data.content);
+        await saveValues();
+      } catch (error) {
+        setResponse(`Error: ${error.response?.data || error.message}`);
+      }
+    }
+  };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSeek(event);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "seek", className: "content", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Seek" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to seek to a specific timestamp in the currently playing song." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Seconds to seek to (must be greater than 0 and less than song duration)" })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "text",
+          placeholder: "Guild ID",
+          value: guildId,
+          onChange: (e) => setGuildId(e.target.value)
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "number",
+          placeholder: "Seconds",
+          value: seconds,
+          onChange: (e) => setSeconds(Math.max(0, parseInt(e.target.value) || 0)),
+          min: "0"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handleSeek, disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }) })
+    ] }),
+    response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
+  ] });
+};
+const Move = ({ userId }) => {
+  const [guildId, setGuildId] = reactExports.useState("");
+  const [fromPosition, setFromPosition] = reactExports.useState(1);
+  const [toPosition, setToPosition] = reactExports.useState(1);
+  const [response, setResponse] = reactExports.useState("");
+  const [isCooldown, setIsCooldown] = reactExports.useState(false);
+  const [port, setPort] = reactExports.useState("");
+  reactExports.useEffect(() => {
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
+  }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
+  const handleMove = async (event) => {
+    event.preventDefault();
+    setResponse("");
+    if (!isCooldown) {
+      setIsCooldown(true);
+      setTimeout(() => setIsCooldown(false), 3e3);
+      try {
+        const { data } = await axios.post(`http://localhost:${port}/move`, {
+          guildId,
+          from: parseInt(fromPosition) || 1,
+          to: parseInt(toPosition) || 1
+        });
+        setResponse(data.content);
+        await saveValues();
+      } catch (error) {
+        setResponse(`Error: ${error.response?.data || error.message}`);
+      }
+    }
+  };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleMove(event);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "move", className: "content", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Move" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to change a song's position in the queue." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "From Position: The current position of the song in the queue" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "To Position: The new position where you want to move the song" })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "text",
+          placeholder: "Guild ID",
+          value: guildId,
+          onChange: (e) => setGuildId(e.target.value)
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "number",
+          placeholder: "From Position",
+          value: fromPosition,
+          onChange: (e) => setFromPosition(Math.max(1, parseInt(e.target.value) || 1)),
+          min: "1"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "number",
+          placeholder: "To Position",
+          value: toPosition,
+          onChange: (e) => setToPosition(Math.max(1, parseInt(e.target.value) || 1)),
+          min: "1"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handleMove, disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }) })
+    ] }),
+    response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
+  ] });
+};
+const Remove = ({ userId }) => {
+  const [guildId, setGuildId] = reactExports.useState("");
+  const [position2, setPosition] = reactExports.useState(1);
+  const [response, setResponse] = reactExports.useState("");
+  const [isCooldown, setIsCooldown] = reactExports.useState(false);
+  const [port, setPort] = reactExports.useState("");
+  reactExports.useEffect(() => {
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
+  }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
+  const handleRemove = async (event) => {
+    event.preventDefault();
+    setResponse("");
+    if (!isCooldown) {
+      setIsCooldown(true);
+      setTimeout(() => setIsCooldown(false), 3e3);
+      try {
+        const { data } = await axios.post(`http://localhost:${port}/remove`, {
+          guildId,
+          position: parseInt(position2) || 1
+        });
+        setResponse(data.content);
+        await saveValues();
+      } catch (error) {
+        setResponse(`Error: ${error.response?.data || error.message}`);
+      }
+    }
+  };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleRemove(event);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "remove", className: "content", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Remove" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to remove a song from the queue." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Position: The position of the song in the queue that you want to remove" })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "text",
+          placeholder: "Guild ID",
+          value: guildId,
+          onChange: (e) => setGuildId(e.target.value)
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "number",
+          placeholder: "Position",
+          value: position2,
+          onChange: (e) => setPosition(Math.max(1, parseInt(e.target.value) || 1)),
+          min: "1"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handleRemove, disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }) })
+    ] }),
+    response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
+  ] });
+};
+const SkipTo = ({ userId }) => {
+  const [guildId, setGuildId] = reactExports.useState("");
+  const [position2, setPosition] = reactExports.useState(1);
+  const [response, setResponse] = reactExports.useState("");
+  const [isCooldown, setIsCooldown] = reactExports.useState(false);
+  const [port, setPort] = reactExports.useState("");
+  reactExports.useEffect(() => {
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
+  }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
+  const handleSkipTo = async (event) => {
+    event.preventDefault();
+    setResponse("");
+    if (!isCooldown) {
+      setIsCooldown(true);
+      setTimeout(() => setIsCooldown(false), 3e3);
+      try {
+        const { data } = await axios.post(`http://localhost:${port}/skipto`, {
+          guildId,
+          position: parseInt(position2) || 1
+        });
+        setResponse(data.content);
+        await saveValues();
+      } catch (error) {
+        setResponse(`Error: ${error.response?.data || error.message}`);
+      }
+    }
+  };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSkipTo(event);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "skipto", className: "content", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Skip To" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to skip to a specific song in the queue." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Position: The position of the song in the queue that you want to skip to" })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "text",
+          placeholder: "Guild ID",
+          value: guildId,
+          onChange: (e) => setGuildId(e.target.value)
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "number",
+          placeholder: "Position",
+          value: position2,
+          onChange: (e) => setPosition(Math.max(1, parseInt(e.target.value) || 1)),
+          min: "1"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handleSkipTo, disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }) })
+    ] }),
+    response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
+  ] });
+};
 const GoLive = ({ userId }) => {
   const [voiceId, setVoiceId] = reactExports.useState("");
   const [linkUrl, setlinkUrl] = reactExports.useState("");
@@ -34331,11 +35228,33 @@ const GoLive = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedVoiceId = sessionStorage.getItem(`voiceId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedPort) setPort(storedPort);
-    if (storedVoiceId) setVoiceId(storedVoiceId);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.voiceId) setVoiceId(sessionData.voiceId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        voiceId
+        // Only update voiceId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleGoLive = async () => {
     setResponse("");
     try {
@@ -34343,7 +35262,7 @@ const GoLive = ({ userId }) => {
       if (!hasFFmpeg) {
         setResponse("FFmpeg not found. Downloading FFmpeg, please wait...");
         await window.electronAPI.downloadFFmpeg();
-        setResponse("FFmpeg downloaded successfully.");
+        setResponse("FFmpeg downloaded successfully, joining voice channel...");
       }
     } catch {
       setResponse("Error checking/downloading FFmpeg: " + err.message);
@@ -34353,9 +35272,9 @@ const GoLive = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`voiceId_${userId}`, voiceId);
         const { data } = await axios.post(`http://localhost:${port}/golive`, { voiceId, linkUrl });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -34407,20 +35326,42 @@ const EndLive = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleEndLive = async (event) => {
     setResponse("");
     if (!isCooldown) {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/endlive`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -34460,11 +35401,33 @@ const Normal = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleNormal = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -34472,9 +35435,9 @@ const Normal = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/normal`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -34514,11 +35477,33 @@ const Bass = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleBass = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -34526,9 +35511,9 @@ const Bass = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/bass`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -34568,11 +35553,33 @@ const Earrape = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleEarrape = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -34580,9 +35587,9 @@ const Earrape = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/earrape`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -34623,11 +35630,33 @@ const BassBoost = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleBassBoost = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -34635,9 +35664,9 @@ const BassBoost = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/bassboost`, { guildId, bassboost });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -34664,7 +35693,10 @@ const BassBoost = ({ userId }) => {
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "BassBoost" }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the bassboost filter." }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "BassBoost (-10 to 10)" })
+        ] })
       ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
@@ -34700,11 +35732,33 @@ const Nightcore = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleNightcore = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -34712,9 +35766,9 @@ const Nightcore = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/nightcore`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -34754,11 +35808,33 @@ const Vaporwave = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleVaporwave = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -34766,9 +35842,9 @@ const Vaporwave = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/vaporwave`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -34808,11 +35884,33 @@ const China = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleChina = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -34820,9 +35918,9 @@ const China = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/china`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -34862,11 +35960,33 @@ const Chipmunk = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleChipmunk = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -34874,9 +35994,9 @@ const Chipmunk = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/chipmunk`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -34916,11 +36036,33 @@ const Darthvader = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleDathvader = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -34928,9 +36070,9 @@ const Darthvader = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/darthvader`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -34970,11 +36112,33 @@ const Dance = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleDance = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -34982,9 +36146,9 @@ const Dance = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/dance`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -35024,11 +36188,33 @@ const EightD = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleEightD = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35036,9 +36222,9 @@ const EightD = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/eightd`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -35078,11 +36264,33 @@ const Jazz = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleJazz = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35090,9 +36298,9 @@ const Jazz = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/jazz`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -35132,11 +36340,33 @@ const Pop = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handlePop = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35144,9 +36374,9 @@ const Pop = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/pop`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -35186,11 +36416,33 @@ const SlowMotion = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleSlowMotion = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35198,9 +36450,9 @@ const SlowMotion = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/slowmotion`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -35240,11 +36492,33 @@ const Soft = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleSoft = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35252,9 +36526,9 @@ const Soft = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/soft`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -35294,11 +36568,33 @@ const SuperBass = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleSuperBass = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35306,9 +36602,9 @@ const SuperBass = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/superbass`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -35348,11 +36644,33 @@ const Television = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleTelevision = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35360,9 +36678,9 @@ const Television = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/television`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -35402,11 +36720,33 @@ const TrebleBass = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleTrebleBass = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35414,9 +36754,9 @@ const TrebleBass = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/treblebass`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -35456,11 +36796,33 @@ const Tremolo = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleTremolo = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35468,9 +36830,9 @@ const Tremolo = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/tremolo`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -35510,11 +36872,33 @@ const Vibrato = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleVibrato = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35522,9 +36906,9 @@ const Vibrato = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/vibrato`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -35564,11 +36948,33 @@ const Vibrate = ({ userId }) => {
   const [isCooldown, setIsCooldown] = reactExports.useState(false);
   const [port, setPort] = reactExports.useState("");
   reactExports.useEffect(() => {
-    const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-    const storedPort = sessionStorage.getItem(`port_${userId}`);
-    if (storedGuildId) setGuildId(storedGuildId);
-    if (storedPort) setPort(storedPort);
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
   }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
   const handleVibrate = async (event) => {
     event.preventDefault();
     setResponse("");
@@ -35576,9 +36982,9 @@ const Vibrate = ({ userId }) => {
       setIsCooldown(true);
       setTimeout(() => setIsCooldown(false), 3e3);
       try {
-        sessionStorage.setItem(`guildId_${userId}`, guildId);
         const { data } = await axios.post(`http://localhost:${port}/vibrate`, { guildId });
         setResponse(data.content);
+        await saveValues();
       } catch (error) {
         setResponse(`Error: ${error.response?.data || error.message}`);
       }
@@ -35608,6 +37014,640 @@ const Vibrate = ({ userId }) => {
         }
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handleVibrate, disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }) })
+    ] }),
+    response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
+  ] });
+};
+const Equalizer = ({ userId }) => {
+  const [guildId, setGuildId] = reactExports.useState("");
+  const [response, setResponse] = reactExports.useState("");
+  const [isCooldown, setIsCooldown] = reactExports.useState(false);
+  const [port, setPort] = reactExports.useState("");
+  const [bands, setBands] = reactExports.useState(() => {
+    const savedBands = sessionStorage.getItem("equalizerBands");
+    return savedBands ? JSON.parse(savedBands) : Array(14).fill(0);
+  });
+  reactExports.useEffect(() => {
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
+  }, [userId]);
+  reactExports.useEffect(() => {
+    sessionStorage.setItem("equalizerBands", JSON.stringify(bands));
+  }, [bands]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
+  const handleEqualizer = async (event) => {
+    event.preventDefault();
+    setResponse("");
+    if (!isCooldown) {
+      setIsCooldown(true);
+      setTimeout(() => setIsCooldown(false), 3e3);
+      try {
+        const { data } = await axios.post(`http://localhost:${port}/equalizer`, {
+          guildId,
+          bands: bands.join(" ")
+        });
+        setResponse(data.content);
+        await saveValues();
+      } catch (error) {
+        setResponse(
+          error.response?.data?.content ? `Error: ${error.response.data.content}` : `Error: ${error.message}`
+        );
+      }
+    }
+  };
+  const handleReset = async () => {
+    setBands(Array(14).fill(0));
+    try {
+      const { data } = await axios.post(`http://localhost:${port}/equalizer`, {
+        guildId,
+        bands: "reset"
+      });
+      setResponse(data.content);
+      await saveValues();
+    } catch (error) {
+      setResponse(
+        error.response?.data?.content ? `Error: ${error.response.data.content}` : `Error: ${error.message}`
+      );
+    }
+  };
+  const handleBandChange = (index2, value) => {
+    const newBands = [...bands];
+    newBands[index2] = Math.max(-10, Math.min(10, value));
+    setBands(newBands);
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "equalizer", className: "content", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Equalizer" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the equalizer filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onSubmit: handleEqualizer, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "text",
+          placeholder: "Guild ID",
+          value: guildId,
+          onChange: (e) => setGuildId(e.target.value)
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "filter-controls", style: {
+        display: "flex",
+        gap: "12px",
+        marginTop: "20px"
+      }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handleReset, children: "Reset" })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "equalizer-grid", style: {
+      display: "grid",
+      gridTemplateColumns: "repeat(7, 1fr)",
+      gap: "12px",
+      marginTop: "20px",
+      marginBottom: "20px",
+      padding: "20px",
+      background: "var(--bg-dark)",
+      borderRadius: "8px",
+      border: "1px solid var(--border-color)",
+      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.05)"
+    }, children: bands.map((value, index2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "equalizer-band", style: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: "8px",
+      padding: "4px",
+      borderRadius: "6px",
+      transition: "background-color 0.2s ease",
+      ":hover": {
+        background: "var(--bg-darker)"
+      }
+    }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "range",
+          min: "-10",
+          max: "10",
+          value,
+          onChange: (e) => handleBandChange(index2, parseInt(e.target.value)),
+          style: {
+            width: "100%",
+            height: "120px",
+            writingMode: "vertical-lr",
+            direction: "rtl",
+            background: "var(--bg-darker)",
+            borderRadius: "8px",
+            outline: "none",
+            cursor: "pointer",
+            transform: "rotate(180deg)",
+            padding: "0 4px",
+            border: "1px solid var(--border-color)"
+          }
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: {
+        color: "var(--text-gray)",
+        fontSize: "12px",
+        fontWeight: "500",
+        background: "var(--bg-darker)",
+        padding: "2px 6px",
+        borderRadius: "4px",
+        minWidth: "32px",
+        textAlign: "center"
+      }, children: value }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: {
+        color: "var(--text-muted)",
+        fontSize: "11px",
+        fontWeight: "500"
+      }, children: [
+        "Band ",
+        index2 + 1
+      ] })
+    ] }, index2)) }),
+    response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
+  ] });
+};
+const Daycore = ({ userId }) => {
+  const [guildId, setGuildId] = reactExports.useState("");
+  const [response, setResponse] = reactExports.useState("");
+  const [isCooldown, setIsCooldown] = reactExports.useState(false);
+  const [port, setPort] = reactExports.useState("");
+  reactExports.useEffect(() => {
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
+  }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
+  const handleDaycore = async (event) => {
+    event.preventDefault();
+    setResponse("");
+    if (!isCooldown) {
+      setIsCooldown(true);
+      setTimeout(() => setIsCooldown(false), 3e3);
+      try {
+        const { data } = await axios.post(`http://localhost:${port}/daycore`, { guildId });
+        setResponse(data.content);
+        await saveValues();
+      } catch (error) {
+        setResponse(`Error: ${error.response?.data || error.message}`);
+      }
+    }
+  };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleDaycore(event);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "daycore", className: "content", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Daycore" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the daycore filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "text",
+          placeholder: "Guild ID",
+          value: guildId,
+          onChange: (e) => setGuildId(e.target.value)
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handleDaycore, disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }) })
+    ] }),
+    response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
+  ] });
+};
+const DoubleTime = ({ userId }) => {
+  const [guildId, setGuildId] = reactExports.useState("");
+  const [response, setResponse] = reactExports.useState("");
+  const [isCooldown, setIsCooldown] = reactExports.useState(false);
+  const [port, setPort] = reactExports.useState("");
+  reactExports.useEffect(() => {
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
+  }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
+  const handleDoubleTime = async (event) => {
+    event.preventDefault();
+    setResponse("");
+    if (!isCooldown) {
+      setIsCooldown(true);
+      setTimeout(() => setIsCooldown(false), 3e3);
+      try {
+        const { data } = await axios.post(`http://localhost:${port}/doubleTime`, { guildId });
+        setResponse(data.content);
+        await saveValues();
+      } catch (error) {
+        setResponse(`Error: ${error.response?.data || error.message}`);
+      }
+    }
+  };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleDoubleTime(event);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "doubletime", className: "content", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Double-Time" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the double-time filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }) })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "text",
+          placeholder: "Guild ID",
+          value: guildId,
+          onChange: (e) => setGuildId(e.target.value)
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handleDoubleTime, disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }) })
+    ] }),
+    response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
+  ] });
+};
+const Pitch = ({ userId }) => {
+  const [guildId, setGuildId] = reactExports.useState("");
+  const [pitch, setPitch] = reactExports.useState(5);
+  const [response, setResponse] = reactExports.useState("");
+  const [isCooldown, setIsCooldown] = reactExports.useState(false);
+  const [port, setPort] = reactExports.useState("");
+  reactExports.useEffect(() => {
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
+  }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
+  const handlePitch = async (event) => {
+    event.preventDefault();
+    setResponse("");
+    if (!isCooldown) {
+      setIsCooldown(true);
+      setTimeout(() => setIsCooldown(false), 3e3);
+      try {
+        const { data } = await axios.post(`http://localhost:${port}/pitch`, { guildId, pitch });
+        setResponse(data.content);
+        await saveValues();
+      } catch (error) {
+        setResponse(`Error: ${error.response?.data || error.message}`);
+      }
+    }
+  };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handlePitch(event);
+    }
+  };
+  const handleBetween = (e) => {
+    const value = e.target.value;
+    if (value === "" || value >= 0 && value <= 10) {
+      setPitch(value);
+    }
+  };
+  const handleBlur = () => {
+    if (pitch === "") {
+      setPitch(5);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "pitch", className: "content", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Pitch" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the pitch filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Pitch (0 to 10)" })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "text",
+          placeholder: "Guild ID",
+          value: guildId,
+          onChange: (e) => setGuildId(e.target.value)
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "number",
+          placeholder: "0 to 10",
+          value: pitch,
+          onChange: handleBetween,
+          onBlur: handleBlur,
+          min: 0,
+          max: 10
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handlePitch, disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }) })
+    ] }),
+    response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
+  ] });
+};
+const Rate = ({ userId }) => {
+  const [guildId, setGuildId] = reactExports.useState("");
+  const [rate, setRate] = reactExports.useState(5);
+  const [response, setResponse] = reactExports.useState("");
+  const [isCooldown, setIsCooldown] = reactExports.useState(false);
+  const [port, setPort] = reactExports.useState("");
+  reactExports.useEffect(() => {
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
+  }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
+  const handleRate = async (event) => {
+    event.preventDefault();
+    setResponse("");
+    if (!isCooldown) {
+      setIsCooldown(true);
+      setTimeout(() => setIsCooldown(false), 3e3);
+      try {
+        const { data } = await axios.post(`http://localhost:${port}/rate`, { guildId, rate });
+        setResponse(data.content);
+        await saveValues();
+      } catch (error) {
+        setResponse(`Error: ${error.response?.data || error.message}`);
+      }
+    }
+  };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleRate(event);
+    }
+  };
+  const handleBetween = (e) => {
+    const value = e.target.value;
+    if (value === "" || value >= 0 && value <= 10) {
+      setRate(value);
+    }
+  };
+  const handleBlur = () => {
+    if (rate === "") {
+      setRate(5);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "rate", className: "content", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Rate" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the rate filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Rate (0 to 10)" })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "text",
+          placeholder: "Guild ID",
+          value: guildId,
+          onChange: (e) => setGuildId(e.target.value)
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "number",
+          placeholder: "0 to 10",
+          value: rate,
+          onChange: handleBetween,
+          onBlur: handleBlur,
+          min: 0,
+          max: 10
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handleRate, disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }) })
+    ] }),
+    response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
+  ] });
+};
+const Speed = ({ userId }) => {
+  const [guildId, setGuildId] = reactExports.useState("");
+  const [speed, setSpeed] = reactExports.useState(5);
+  const [response, setResponse] = reactExports.useState("");
+  const [isCooldown, setIsCooldown] = reactExports.useState(false);
+  const [port, setPort] = reactExports.useState("");
+  reactExports.useEffect(() => {
+    const loadSavedValues = async () => {
+      try {
+        const sessionData = await window.electronAPI.getSessionData(userId);
+        if (sessionData) {
+          if (sessionData.guildId) setGuildId(sessionData.guildId);
+        }
+        const storedPort = sessionStorage.getItem(`port_${userId}`);
+        if (storedPort) setPort(storedPort);
+      } catch (error) {
+        console.error("Error loading saved values:", error);
+      }
+    };
+    loadSavedValues();
+  }, [userId]);
+  const saveValues = async () => {
+    try {
+      const existingData = await window.electronAPI.getSessionData(userId) || {};
+      await window.electronAPI.saveSessionData(userId, {
+        ...existingData,
+        // Keep all existing data
+        guildId
+        // Only update guildId
+      });
+    } catch (error) {
+      console.error("Error saving values:", error);
+    }
+  };
+  const handleSpeed = async (event) => {
+    event.preventDefault();
+    setResponse("");
+    if (!isCooldown) {
+      setIsCooldown(true);
+      setTimeout(() => setIsCooldown(false), 3e3);
+      try {
+        const { data } = await axios.post(`http://localhost:${port}/speed`, { guildId, speed });
+        setResponse(data.content);
+        await saveValues();
+      } catch (error) {
+        setResponse(`Error: ${error.response?.data || error.message}`);
+      }
+    }
+  };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSpeed(event);
+    }
+  };
+  const handleBetween = (e) => {
+    const value = e.target.value;
+    if (value === "" || value >= 0 && value <= 10) {
+      setSpeed(value);
+    }
+  };
+  const handleBlur = () => {
+    if (speed === "") {
+      setSpeed(5);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { id: "speed", className: "content", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "markdown-container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Speed" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "description", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Enter the details below to set the speed filter." }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Guild ID (ex: 1234567890)" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Speed (0 to 10)" })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "styled-form", onKeyDown: handleKeyPress, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "text",
+          placeholder: "Guild ID",
+          value: guildId,
+          onChange: (e) => setGuildId(e.target.value)
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
+        {
+          type: "number",
+          placeholder: "0 to 10",
+          value: speed,
+          onChange: handleBetween,
+          onBlur: handleBlur,
+          min: 0,
+          max: 10
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "20px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", onClick: handleSpeed, disabled: isCooldown, children: isCooldown ? "Cooldown..." : "Submit" }) })
     ] }),
     response && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "response-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MarkdownRenderer, { content: response }) })
   ] });
@@ -35894,7 +37934,19 @@ const COMPONENT_MAP = {
   vibrate: Vibrate,
   vibrato: Vibrato,
   playskip: PlaySkip,
-  playtop: PlayTop
+  playtop: PlayTop,
+  equalizer: Equalizer,
+  daycore: Daycore,
+  doubletime: DoubleTime,
+  pitch: Pitch,
+  rate: Rate,
+  speed: Speed,
+  forward: Forward,
+  rewind: Rewind,
+  seek: Seek,
+  move: Move,
+  remove: Remove,
+  skipto: SkipTo
 };
 const useTabs = () => {
   const [tabs, setTabs] = reactExports.useState([]);
@@ -36461,19 +38513,24 @@ const TOAST_STYLES = {
   display: "flex",
   alignItems: "center",
   gap: "8px",
-  padding: "8px",
+  padding: "0",
   color: "var(--text-light)",
-  fontSize: "14px",
-  fontWeight: "500"
+  fontSize: "13px",
+  fontWeight: "500",
+  width: "100%"
 };
 const ICON_STYLES = {
   color: "var(--primary)",
-  fontSize: "16px"
+  fontSize: "16px",
+  flexShrink: 0
 };
 const BOT_NAME_STYLES = {
   color: "var(--text-gray)",
   fontSize: "12px",
-  opacity: 0.8
+  opacity: 0.8,
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis"
 };
 const THUMBNAIL_STYLES = {
   width: "48px",
@@ -36485,7 +38542,7 @@ const THUMBNAIL_STYLES = {
 const PLAYED_CONTENT_STYLES = {
   display: "flex",
   flexDirection: "column",
-  gap: "2px",
+  gap: "4px",
   minWidth: 0,
   flex: 1,
   maxWidth: "calc(100% - 56px)"
@@ -36494,7 +38551,7 @@ const SONG_NAME_STYLES = {
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
-  fontSize: "14px",
+  fontSize: "13px",
   fontWeight: "500",
   color: "var(--text-light)",
   maxWidth: "100%",
@@ -36502,7 +38559,6 @@ const SONG_NAME_STYLES = {
 };
 const PLAYED_TOAST_STYLES = {
   ...TOAST_STYLES,
-  padding: "12px",
   gap: "12px"
 };
 const Played = ({ song, bot, duration }) => {
@@ -36862,6 +38918,23 @@ const Sidebar = ({ setActiveComponent, activeComponent }) => {
   const [isMusicCollapsed, setIsMusicCollapsed] = reactExports.useState(false);
   const [isFilterCollapsed, setIsFilterCollapsed] = reactExports.useState(false);
   const [searchQuery, setSearchQuery] = reactExports.useState("");
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = reactExports.useState(false);
+  reactExports.useEffect(() => {
+    if (searchQuery.trim()) {
+      const hasSpecialMatch = categories[0].items.some(
+        (item) => item.label.toLowerCase().includes(searchQuery.toLowerCase()) || item.id.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      const hasMusicMatch = categories[1].items.some(
+        (item) => item.label.toLowerCase().includes(searchQuery.toLowerCase()) || item.id.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      const hasFilterMatch = categories[2].items.some(
+        (item) => item.label.toLowerCase().includes(searchQuery.toLowerCase()) || item.id.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      if (hasSpecialMatch) setIsSpecialCollapsed(false);
+      if (hasMusicMatch) setIsMusicCollapsed(false);
+      if (hasFilterMatch) setIsFilterCollapsed(false);
+    }
+  }, [searchQuery]);
   const categories = [
     {
       name: "Special Control",
@@ -36893,7 +38966,13 @@ const Sidebar = ({ setActiveComponent, activeComponent }) => {
         { id: "shuffle", label: "Shuffle", icon: "🔀" },
         { id: "volume", label: "Volume", icon: "🔊" },
         { id: "pause", label: "Pause", icon: "⏸️" },
-        { id: "twentyfourseven", label: "24/7", icon: "⏰" }
+        { id: "twentyfourseven", label: "24/7", icon: "⏰" },
+        { id: "forward", label: "Forward", icon: "⏩" },
+        { id: "rewind", label: "Rewind", icon: "⏪" },
+        { id: "seek", label: "Seek", icon: "⏱️" },
+        { id: "move", label: "Move", icon: "↔️" },
+        { id: "remove", label: "Remove", icon: "❌" },
+        { id: "skipto", label: "SkipTo", icon: "⏩" }
       ]
     },
     {
@@ -36902,10 +38981,16 @@ const Sidebar = ({ setActiveComponent, activeComponent }) => {
       setIsCollapsed: setIsFilterCollapsed,
       items: [
         { id: "normal", label: "Normal", icon: "🎚️" },
+        { id: "equalizer", label: "Equalizer", icon: "🎛️" },
         { id: "earrape", label: "Earrape", icon: "🔊" },
         { id: "bass", label: "Bass", icon: "🎵" },
         { id: "bassboost", label: "BassBoost", icon: "🎵" },
+        { id: "daycore", label: "Daycore", icon: "☀️" },
+        { id: "doubletime", label: "DoubleTime", icon: "⏩" },
         { id: "nightcore", label: "Nightcore", icon: "🌙" },
+        { id: "pitch", label: "Pitch", icon: "🎯" },
+        { id: "rate", label: "Rate", icon: "📊" },
+        { id: "speed", label: "Speed", icon: "⚡" },
         { id: "vaporwave", label: "Vaporwave", icon: "🌊" },
         { id: "pop", label: "Pop", icon: "🎵" },
         { id: "china", label: "China", icon: "🇨🇳" },
@@ -36931,44 +39016,65 @@ const Sidebar = ({ setActiveComponent, activeComponent }) => {
       (item) => item.label.toLowerCase().includes(searchQuery.toLowerCase()) || item.id.toLowerCase().includes(searchQuery.toLowerCase())
     )
   }));
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("aside", { className: "sidebar", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sidebar-content", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "search-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "input",
-      {
-        type: "text",
-        placeholder: "Search components...",
-        value: searchQuery,
-        onChange: (e) => setSearchQuery(e.target.value),
-        className: "search-input"
-      }
-    ) }),
-    filteredCategories.map((category, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "sidebar-category", children: category.items.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "div",
+  const toggleSidebar = () => {
+    setIsSidebarCollapsed(!isSidebarCollapsed);
+    if (!isSidebarCollapsed) {
+      setIsSpecialCollapsed(false);
+      setIsMusicCollapsed(false);
+      setIsFilterCollapsed(false);
+    }
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sidebar-container", style: { position: "relative", height: "100%" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("aside", { className: `sidebar ${isSidebarCollapsed ? "collapsed" : ""}`, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sidebar-content", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "search-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "input",
         {
-          className: "category-header",
-          onClick: () => category.setIsCollapsed(!category.isCollapsed),
-          "aria-expanded": !category.isCollapsed,
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: category.name }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "collapse-icon", children: "▼" })
-          ]
+          type: "text",
+          placeholder: "Search components...",
+          value: searchQuery,
+          onChange: (e) => setSearchQuery(e.target.value),
+          className: "search-input"
         }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `category-items ${!category.isCollapsed ? "expanded" : ""}`, children: category.items.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "button",
-        {
-          className: `sidebar-button ${activeComponent === item.id ? "active" : ""}`,
-          onClick: () => setActiveComponent(item.id),
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "button-icon", children: item.icon }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "button-label", children: item.label })
-          ]
-        },
-        item.id
-      )) })
-    ] }) }, index2))
-  ] }) });
+      ) }),
+      filteredCategories.map((category, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "sidebar-category", children: category.items.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "category-header",
+            onClick: () => !isSidebarCollapsed && category.setIsCollapsed(!category.isCollapsed),
+            "aria-expanded": !category.isCollapsed,
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: category.name }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `collapse-icon ${isSidebarCollapsed ? "hidden" : ""}`, children: "▼" })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `category-items ${!category.isCollapsed || isSidebarCollapsed ? "expanded" : ""}`, children: category.items.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            className: `sidebar-button ${activeComponent === item.id ? "active" : ""}`,
+            onClick: () => setActiveComponent(item.id),
+            title: isSidebarCollapsed ? item.label : "",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "button-icon", children: item.icon }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "button-label", children: item.label })
+            ]
+          },
+          item.id
+        )) })
+      ] }) }, index2))
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "button",
+      {
+        className: "sidebar-toggle",
+        onClick: toggleSidebar,
+        title: isSidebarCollapsed ? "Expand Sidebar (Collapse Button)" : "Collapse Sidebar (Collapse Button)",
+        style: { position: "absolute", top: "50%", left: "100%", transform: "translateY(-50%)", zIndex: 100 },
+        children: isSidebarCollapsed ? ">" : "<"
+      }
+    )
+  ] });
 };
 const Footer = ({ tabs, currentTab, onTabSwitch, onTabClose, onNewTab }) => {
   const tabsContainerRef = reactExports.useRef(null);
@@ -37095,7 +39201,7 @@ const App = () => {
     };
     tabs.addTab(newTab);
     setActiveComponent("console");
-    sessionStorageSet.setSessionData(loggedInUserId, loggedInUsername, port, avatar);
+    sessionStorageSet.setSessionData(loggedInUserId, loggedInUsername, port);
     connectSSERef.current(loggedInUserId);
   };
   const handleNewTab = () => {

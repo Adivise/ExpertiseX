@@ -72,7 +72,7 @@ const App = () => {
 
         tabs.addTab(newTab);
         setActiveComponent('console');
-        sessionStorageSet.setSessionData(loggedInUserId, loggedInUsername, port, avatar);
+        sessionStorageSet.setSessionData(loggedInUserId, loggedInUsername, port);
         connectSSERef.current(loggedInUserId);
     };
 

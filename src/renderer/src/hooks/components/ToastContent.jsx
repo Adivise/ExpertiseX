@@ -6,21 +6,26 @@ const TOAST_STYLES = {
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    padding: '8px',
+    padding: '0',
     color: 'var(--text-light)',
-    fontSize: '14px',
-    fontWeight: '500'
+    fontSize: '13px',
+    fontWeight: '500',
+    width: '100%'
 };
 
 const ICON_STYLES = {
     color: 'var(--primary)',
-    fontSize: '16px'
+    fontSize: '16px',
+    flexShrink: 0
 };
 
 const BOT_NAME_STYLES = {
     color: 'var(--text-gray)',
     fontSize: '12px',
-    opacity: 0.8
+    opacity: 0.8,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
 };
 
 // Styles specific to Played toast
@@ -35,7 +40,7 @@ const THUMBNAIL_STYLES = {
 const PLAYED_CONTENT_STYLES = {
     display: 'flex',
     flexDirection: 'column',
-    gap: '2px',
+    gap: '4px',
     minWidth: 0,
     flex: 1,
     maxWidth: 'calc(100% - 56px)'
@@ -45,7 +50,7 @@ const SONG_NAME_STYLES = {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    fontSize: '14px',
+    fontSize: '13px',
     fontWeight: '500',
     color: 'var(--text-light)',
     maxWidth: '100%',
@@ -55,7 +60,6 @@ const SONG_NAME_STYLES = {
 // Update TOAST_STYLES for Played component
 const PLAYED_TOAST_STYLES = {
     ...TOAST_STYLES,
-    padding: '12px',
     gap: '12px'
 };
 

@@ -4,6 +4,7 @@ import { ffmpegManager } from '../managers/ffmpeg.js';
 import { credentialsManager } from '../managers/credentials.js';
 import { discordClient } from '../managers/discord.js';
 import { botManager } from '../managers/bot.js';
+import { sessionsManager } from '../managers/sessions.js';
 import { isPortAvailable } from '../utils/index.js';
 import fs from 'fs';
 import { join } from 'path';
@@ -55,4 +56,8 @@ export const setupIpcHandlers = (mainWindow) => {
   ipcMain.on('window-close', () => {
     if (mainWindow) mainWindow.close();
   });
+
+  // Session data handlers
+  ipcMain.handle('save-session-data', (_, userId, sessionData) => sessionsManager.saveSessionData(userId, sessionData));
+  ipcMain.handle('get-session-data', (_, userId) => sessionsManager.getSessionData(userId));
 }; 

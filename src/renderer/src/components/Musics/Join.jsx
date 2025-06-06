@@ -10,13 +10,36 @@ const Join = ({ userId }) => {
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-        const storedVoiceId = sessionStorage.getItem(`voiceId_${userId}`);
-        const storedPort = sessionStorage.getItem(`port_${userId}`);
-        if (storedGuildId) setGuildId(storedGuildId);
-        if (storedVoiceId) setVoiceId(storedVoiceId);
-        if (storedPort) setPort(storedPort);
+        const loadSavedValues = async () => {
+            try {
+                const sessionData = await window.electronAPI.getSessionData(userId);
+                if (sessionData) {
+                    if (sessionData.guildId) setGuildId(sessionData.guildId);
+                    if (sessionData.voiceId) setVoiceId(sessionData.voiceId);
+                }
+                const storedPort = sessionStorage.getItem(`port_${userId}`);
+                if (storedPort) setPort(storedPort);
+            } catch (error) {
+                console.error('Error loading saved values:', error);
+            }
+        };
+        loadSavedValues();
     }, [userId]);
+
+    const saveValues = async () => {
+        try {
+            // Get existing data first
+            const existingData = await window.electronAPI.getSessionData(userId) || {};
+            // Only update guildId while preserving voiceId and other data
+            await window.electronAPI.saveSessionData(userId, {
+                ...existingData,  // Keep all existing data
+                guildId: guildId,  // Only update guildId
+                voiceId: voiceId  // Only update voiceId
+            });
+        } catch (error) {
+            console.error('Error saving values:', error);
+        }
+    };
 
     const handleJoin = async (event) => {
         event.preventDefault();
@@ -25,10 +48,10 @@ const Join = ({ userId }) => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
-                sessionStorage.setItem(`guildId_${userId}`, guildId);
-                sessionStorage.setItem(`voiceId_${userId}`, voiceId);
                 const { data } = await axios.post(`http://localhost:${port}/join`, { guildId, voiceId });
                 setResponse(data.content);
+                // Save values after successful play
+                await saveValues();
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
             }

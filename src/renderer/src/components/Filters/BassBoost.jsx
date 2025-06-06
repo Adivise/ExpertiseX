@@ -10,11 +10,34 @@ const BassBoost = ({ userId }) => {
     const [port, setPort] = useState('');
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-        const storedPort = sessionStorage.getItem(`port_${userId}`);
-        if (storedGuildId) setGuildId(storedGuildId);
-        if (storedPort) setPort(storedPort);
+        const loadSavedValues = async () => {
+            try {
+                const sessionData = await window.electronAPI.getSessionData(userId);
+                if (sessionData) {
+                    if (sessionData.guildId) setGuildId(sessionData.guildId);
+                }
+                const storedPort = sessionStorage.getItem(`port_${userId}`);
+                if (storedPort) setPort(storedPort);
+            } catch (error) {
+                console.error('Error loading saved values:', error);
+            }
+        };
+        loadSavedValues();
     }, [userId]);
+
+    const saveValues = async () => {
+        try {
+            // Get existing data first
+            const existingData = await window.electronAPI.getSessionData(userId) || {};
+            // Only update guildId while preserving voiceId and other data
+            await window.electronAPI.saveSessionData(userId, {
+                ...existingData,  // Keep all existing data
+                guildId: guildId  // Only update guildId
+            });
+        } catch (error) {
+            console.error('Error saving values:', error);
+        }
+    };
 
     const handleBassBoost = async (event) => {
         event.preventDefault();
@@ -23,9 +46,10 @@ const BassBoost = ({ userId }) => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown 
             try {
-                sessionStorage.setItem(`guildId_${userId}`, guildId);
                 const { data } = await axios.post(`http://localhost:${port}/bassboost`, { guildId, bassboost });
                 setResponse(data.content);
+                // Save values after successful play
+                await saveValues();
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
             }
@@ -60,6 +84,7 @@ const BassBoost = ({ userId }) => {
                     <p>Enter the details below to set the bassboost filter.</p>
                     <ul>
                         <li>Guild ID (ex: 1234567890)</li>
+                        <li>BassBoost (-10 to 10)</li>
                     </ul>
                 </div>
             </div>

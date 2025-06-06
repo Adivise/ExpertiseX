@@ -1,10 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Sidebar = ({ setActiveComponent, activeComponent }) => {
     const [isSpecialCollapsed, setIsSpecialCollapsed] = useState(false);
     const [isMusicCollapsed, setIsMusicCollapsed] = useState(false);
     const [isFilterCollapsed, setIsFilterCollapsed] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+
+    // Add effect to expand categories with search matches
+    useEffect(() => {
+        if (searchQuery.trim()) {
+            // Check each category for matches
+            const hasSpecialMatch = categories[0].items.some(item => 
+                item.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.id.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            const hasMusicMatch = categories[1].items.some(item => 
+                item.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.id.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            const hasFilterMatch = categories[2].items.some(item => 
+                item.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.id.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+
+            // Expand categories with matches
+            if (hasSpecialMatch) setIsSpecialCollapsed(false);
+            if (hasMusicMatch) setIsMusicCollapsed(false);
+            if (hasFilterMatch) setIsFilterCollapsed(false);
+        }
+    }, [searchQuery]);
 
     const categories = [
         {
@@ -37,7 +62,13 @@ const Sidebar = ({ setActiveComponent, activeComponent }) => {
                 { id: 'shuffle', label: 'Shuffle', icon: '🔀' },
                 { id: 'volume', label: 'Volume', icon: '🔊' },
                 { id: 'pause', label: 'Pause', icon: '⏸️' },
-                { id: 'twentyfourseven', label: '24/7', icon: '⏰' }
+                { id: 'twentyfourseven', label: '24/7', icon: '⏰' },
+                { id: 'forward', label: 'Forward', icon: '⏩' },
+                { id: 'rewind', label: 'Rewind', icon: '⏪' },
+                { id: 'seek', label: 'Seek', icon: '⏱️' },
+                { id: 'move', label: 'Move', icon: '↔️' },
+                { id: 'remove', label: 'Remove', icon: '❌' },
+                { id: 'skipto', label: 'SkipTo', icon: '⏩' }
             ]
         },
         {
@@ -46,10 +77,16 @@ const Sidebar = ({ setActiveComponent, activeComponent }) => {
             setIsCollapsed: setIsFilterCollapsed,
             items: [
                 { id: 'normal', label: 'Normal', icon: '🎚️' },
+                { id: 'equalizer', label: 'Equalizer', icon: '🎛️' },
                 { id: 'earrape', label: 'Earrape', icon: '🔊' },
                 { id: 'bass', label: 'Bass', icon: '🎵' },
                 { id: 'bassboost', label: 'BassBoost', icon: '🎵' },
+                { id: 'daycore', label: 'Daycore', icon: '☀️' },
+                { id: 'doubletime', label: 'DoubleTime', icon: '⏩' },
                 { id: 'nightcore', label: 'Nightcore', icon: '🌙' },
+                { id: 'pitch', label: 'Pitch', icon: '🎯' },
+                { id: 'rate', label: 'Rate', icon: '📊' },
+                { id: 'speed', label: 'Speed', icon: '⚡' },
                 { id: 'vaporwave', label: 'Vaporwave', icon: '🌊' },
                 { id: 'pop', label: 'Pop', icon: '🎵' },
                 { id: 'china', label: 'China', icon: '🇨🇳' },
@@ -78,48 +115,69 @@ const Sidebar = ({ setActiveComponent, activeComponent }) => {
         )
     }));
 
+    const toggleSidebar = () => {
+        setIsSidebarCollapsed(!isSidebarCollapsed);
+        // Expand all categories when collapsing sidebar
+        if (!isSidebarCollapsed) {
+            setIsSpecialCollapsed(false);
+            setIsMusicCollapsed(false);
+            setIsFilterCollapsed(false);
+        }
+    };
+
     return (
-        <aside className="sidebar">
-            <div className="sidebar-content">
-                <div className="search-container">
-                    <input
-                        type="text"
-                        placeholder="Search components..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="search-input"
-                    />
-                </div>
-                {filteredCategories.map((category, index) => (
-                    <div key={index} className="sidebar-category">
-                        {category.items.length > 0 && (
-                            <>
-                                <div 
-                                    className="category-header" 
-                                    onClick={() => category.setIsCollapsed(!category.isCollapsed)}
-                                    aria-expanded={!category.isCollapsed}
-                                >
-                                    <h2>{category.name}</h2>
-                                    <span className="collapse-icon">▼</span>
-                                </div>
-                                <div className={`category-items ${!category.isCollapsed ? 'expanded' : ''}`}>
-                                    {category.items.map((item) => (
-                                        <button
-                                            key={item.id}
-                                            className={`sidebar-button ${activeComponent === item.id ? 'active' : ''}`}
-                                            onClick={() => setActiveComponent(item.id)}
-                                        >
-                                            <span className="button-icon">{item.icon}</span>
-                                            <span className="button-label">{item.label}</span>
-                                        </button>
-                                    ))}
-                                </div>
-                            </>
-                        )}
+        <div className="sidebar-container" style={{ position: 'relative', height: '100%' }}>
+            <aside className={`sidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+                <div className="sidebar-content">
+                    <div className="search-container">
+                        <input
+                            type="text"
+                            placeholder="Search components..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="search-input"
+                        />
                     </div>
-                ))}
-            </div>
-        </aside>
+                    {filteredCategories.map((category, index) => (
+                        <div key={index} className="sidebar-category">
+                            {category.items.length > 0 && (
+                                <>
+                                    <div 
+                                        className="category-header" 
+                                        onClick={() => !isSidebarCollapsed && category.setIsCollapsed(!category.isCollapsed)}
+                                        aria-expanded={!category.isCollapsed}
+                                    >
+                                        <h2>{category.name}</h2>
+                                        <span className={`collapse-icon ${isSidebarCollapsed ? 'hidden' : ''}`}>▼</span>
+                                    </div>
+                                    <div className={`category-items ${!category.isCollapsed || isSidebarCollapsed ? 'expanded' : ''}`}>
+                                        {category.items.map((item) => (
+                                            <button
+                                                key={item.id}
+                                                className={`sidebar-button ${activeComponent === item.id ? 'active' : ''}`}
+                                                onClick={() => setActiveComponent(item.id)}
+                                                title={isSidebarCollapsed ? item.label : ''}
+                                            >
+                                                <span className="button-icon">{item.icon}</span>
+                                                <span className="button-label">{item.label}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </aside>
+            <button 
+                className="sidebar-toggle" 
+                onClick={toggleSidebar}
+                title={isSidebarCollapsed ? "Expand Sidebar (Collapse Button)" : "Collapse Sidebar (Collapse Button)"}
+                style={{ position: 'absolute', top: '50%', left: '100%', transform: 'translateY(-50%)', zIndex: 100 }}
+            >
+                {isSidebarCollapsed ? ">" : "<"}
+            </button>
+        </div>
     );
 };
 

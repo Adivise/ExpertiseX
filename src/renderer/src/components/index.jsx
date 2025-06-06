@@ -14,6 +14,12 @@ export { default as TwentyFourSeven } from './Musics/TwentyFourSeven.jsx';
 export { default as Replay } from './Musics/Replay.jsx';
 export { default as PlaySkip } from './Musics/PlaySkip.jsx';
 export { default as PlayTop } from './Musics/PlayTop.jsx';
+export { default as Forward } from './Musics/Forward.jsx';
+export { default as Rewind } from './Musics/Rewind.jsx';
+export { default as Seek } from './Musics/Seek.jsx';
+export { default as Move } from './Musics/Move.jsx';
+export { default as Remove } from './Musics/Remove.jsx';
+export { default as SkipTo } from './Musics/SkipTo.jsx';
 
 export { default as GoLive } from './Specials/GoLive.jsx';
 export { default as EndLive } from './Specials/EndLive.jsx';
@@ -39,6 +45,12 @@ export { default as TrebleBass } from './Filters/TrebleBass.jsx';
 export { default as Tremolo } from './Filters/Tremolo.jsx';
 export { default as Vibrato } from './Filters/Vibrato.jsx';
 export { default as Vibrate } from './Filters/Vibrate.jsx';
+export { default as Equalizer } from './Filters/Equalizer.jsx';
+export { default as Daycore } from './Filters/Daycore.jsx';
+export { default as DoubleTime } from './Filters/DoubleTime.jsx';
+export { default as Pitch } from './Filters/Pitch.jsx';
+export { default as Rate } from './Filters/Rate.jsx';
+export { default as Speed } from './Filters/Speed.jsx';
 
 export { default as Logins } from './Tokens/Logins.jsx';
 export { default as Console } from './Tokens/Console.jsx';

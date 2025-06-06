@@ -14,24 +14,34 @@ const PlaySkip = ({ userId }) => {
     const suggestionsRef = useRef(null);
 
     useEffect(() => {
-        const storedGuildId = sessionStorage.getItem(`guildId_${userId}`);
-        const storedPort = sessionStorage.getItem(`port_${userId}`);
-        if (storedGuildId) setGuildId(storedGuildId);
-        if (storedPort) setPort(storedPort);
-    }, [userId]);
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (suggestionsRef.current && !suggestionsRef.current.contains(event.target)) {
-                setShowSuggestions(false);
+        const loadSavedValues = async () => {
+            try {
+                const sessionData = await window.electronAPI.getSessionData(userId);
+                if (sessionData) {
+                    if (sessionData.guildId) setGuildId(sessionData.guildId);
+                }
+                const storedPort = sessionStorage.getItem(`port_${userId}`);
+                if (storedPort) setPort(storedPort);
+            } catch (error) {
+                console.error('Error loading saved values:', error);
             }
         };
+        loadSavedValues();
+    }, [userId]);
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
+    const saveValues = async () => {
+        try {
+            // Get existing data first
+            const existingData = await window.electronAPI.getSessionData(userId) || {};
+            // Only update guildId while preserving voiceId and other data
+            await window.electronAPI.saveSessionData(userId, {
+                ...existingData,  // Keep all existing data
+                guildId: guildId  // Only update guildId
+            });
+        } catch (error) {
+            console.error('Error saving values:', error);
+        }
+    };
 
     const handlePlaySkip = async (event) => {
         event.preventDefault();
@@ -40,9 +50,10 @@ const PlaySkip = ({ userId }) => {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown
             try {
-                sessionStorage.setItem(`guildId_${userId}`, guildId);
                 const { data } = await axios.post(`http://localhost:${port}/playskip`, { guildId, songName });
                 setResponse(data.content);
+                // Save values after successful play
+                await saveValues();
             } catch (error) {
                 setResponse(`Error: ${error.response?.data || error.message}`);
             }

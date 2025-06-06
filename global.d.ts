@@ -20,6 +20,8 @@ declare global {
       windowMinimize: () => Promise<void>;
       windowMaximize: () => Promise<void>;
       windowClose: () => Promise<void>;
+      saveSessionData: (userId: string, sessionData: Record<string, any>) => Promise<boolean>;
+      getSessionData: (userId: string) => Promise<Record<string, any> | null>;
     };
   }
 }

@@ -1,8 +1,24 @@
-# 🎵 ExpertiseX - Discord Music Selfbot
-
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=ExpertiseX-v2&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient"/>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=ExpertiseX&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient"/>
 </p>
+
+## 📝 Description
+
+**ExpertiseX** is a powerful, user-friendly desktop application designed for advanced Discord self-bot music and utility management. With a modern interface and robust feature set, ExpertiseX empowers users to control music playback, apply audio filters, manage multiple bots, and monitor activity—all from a single, intuitive dashboard.
+
+Whether you're running a music server, managing multiple bots, or just want seamless control over your Discord experience, ExpertiseX provides everything you need. Enjoy real-time logging, secure token management, session persistence, and a highly customizable sidebar with over 50 components, all enhanced by smooth animations and a responsive design.
+
+**Key highlights:**
+- 🎵 Effortless music and filter control
+- 🤖 Secure, multi-bot management
+- 📊 Real-time system feedback and notifications
+- 🔍 Smart search and auto-suggest for rapid navigation
+- 📁 Session data saver for seamless continuity
+- 📏 Sidebar collapse for a focused
+- ⚡ Over 50+ modular components
+- ...and much more!
+
+Take your Discord automation and music experience to the next level with ExpertiseX.
 
 ## 🌟 Join Our Community
 
@@ -39,6 +55,68 @@
 - ⚙️ **Easy Configuration** - Simple and intuitive setup in one click
 - 🔔 **Toast Notifications** - Real-time system notifications and alerts
 - 🔎 **Component Search** - Quick access to search and filter components
+- 📁 **Session Data Saver** - Automatically saves and restores your session data
+- 📏 **Sidebar Collapse Button** - Easily collapse or expand the sidebar for more workspace
+
+## 📃 Available (Over 50+) Components
+
+### Special Control
+- 📊 **Console** - View logs and monitor bot activity in real time
+- 🎥 **GoLive** - Start a Go Live stream in your server
+- ⏹️ **EndLive** - Stop the current Go Live stream
+
+### Music Control
+- ▶️ **AutoPlay** - Automatically play music from a playlist or queue
+- 🎵 **Join** - Make the bot join a voice channel
+- 🚪 **Leave** - Make the bot leave the voice channel
+- 🎧 **Play** - Play a song or URL in the voice channel
+- ⏭️ **PlaySkip** - Instantly play and skip to a new song
+- ⏫ **PlayTop** - Play a song at the top of the queue
+- ⏩ **Skip** - Skip the current song
+- 📋 **Queue** - Show the current music queue
+- 🗑️ **Clear** - Clear the music queue
+- 🔄 **Replay** - Replay the current song
+- ⏮️ **Previous** - Play the previous song
+- 🔁 **Loop** - Loop the current song or queue
+- 🔀 **Shuffle** - Shuffle the queue for random playback
+- 🔊 **Volume** - Adjust the playback volume
+- ⏸️ **Pause** - Pause the current song
+- ⏰ **24/7** - Keep the bot in the voice channel 24/7
+- ⏩ **Forward** - Fast forward the current song
+- ⏪ **Rewind** - Rewind the current song
+- ⏱️ **Seek** - Seek to a specific time in the song
+- ↔️ **Move** - Move a song to a different position in the queue
+- ❌ **Remove** - Remove a song from the queue
+- ⏩ **SkipTo** - Skip to a specific song in the queue
+
+### Filter Control
+- 🎚️ **Normal** - Reset all audio filters to default
+- 🎛️ **Equalizer** - Apply a custom equalizer to the audio
+- 🔊 **Earrape** - Apply an extreme volume boost filter
+- 🎵 **Bass** - Add a bass effect to the audio
+- 🎵 **BassBoost** - Boost the bass frequencies
+- ☀️ **Daycore** - Slow down and pitch down the audio
+- ⏩ **DoubleTime** - Speed up the audio playback
+- 🌙 **Nightcore** - Speed up and pitch up the audio
+- 🎯 **Pitch** - Change the pitch of the audio
+- 📊 **Rate** - Change the playback rate
+- ⚡ **Speed** - Change the speed of the audio
+- 🌊 **Vaporwave** - Apply a vaporwave filter
+- 🎵 **Pop** - Apply a pop music filter
+- 🇨🇳 **China** - Apply a "China" style filter
+- 🐿️ **Chipmunk** - Apply a chipmunk effect
+- 💃 **Dance** - Apply a dance music filter
+- ⚫ **Darthvader** - Apply a Darth Vader voice effect
+- 🎧 **EightD** - Apply an 8D audio effect
+- 🎷 **Jazz** - Apply a jazz music filter
+- ⏱️ **SlowMotion** - Slow down the audio
+- 🎵 **Soft** - Apply a softening filter
+- 🎵 **SuperBass** - Apply a super bass boost
+- 📺 **Television** - Apply a television sound effect
+- 🎵 **TrebleBass** - Boost both treble and bass
+- 🎵 **Tremolo** - Apply a tremolo effect
+- 📳 **Vibrate** - Add a vibration effect
+- 🎵 **Vibrato** - Add a vibrato effect
 
 ## 📋 Requirements
 
@@ -52,9 +130,9 @@
 ### For Regular Users
 
 #### Windows Users
-- **Single Executable** (Portable) - [Download Latest](https://github.com/Adivise/ExpertiseX/releases/download/v2.7.0/expertisex-2.7.0-single.exe)
+- **Single Executable** (Portable) - [Download Latest](https://github.com/Adivise/ExpertiseX/releases/download/v2.8.0/expertisex-2.8.0-single.exe)
   > *Note: Settings reset when closing the application*
-- **Installer** - [Download Latest](https://github.com/Adivise/ExpertiseX/releases/download/v2.7.0/expertisex-2.7.0-setup.exe)
+- **Installer** - [Download Latest](https://github.com/Adivise/ExpertiseX/releases/download/v2.8.0/expertisex-2.8.0-setup.exe)
   > *Note: All configuration will saved*
 
 #### MacOS & Linux Users

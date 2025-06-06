@@ -5,7 +5,8 @@ import {
     BassBoost, China, Chipmunk, Dance, Darthvader, EightD, 
     Jazz, Nightcore, Pop, SlowMotion, Soft, SuperBass, 
     Television, TrebleBass, Tremolo, Vaporwave, Vibrate, 
-    Vibrato, Console 
+    Vibrato, Console, Equalizer, Daycore, DoubleTime,
+    Pitch, Rate, Speed, Forward, Rewind, Seek, Move, Remove, SkipTo
 } from '../components';
 
 export const COMPONENT_MAP = {
@@ -48,5 +49,17 @@ export const COMPONENT_MAP = {
     vibrate: Vibrate,
     vibrato: Vibrato,
     playskip: PlaySkip,
-    playtop: PlayTop
+    playtop: PlayTop,
+    equalizer: Equalizer,
+    daycore: Daycore,
+    doubletime: DoubleTime,
+    pitch: Pitch,
+    rate: Rate,
+    speed: Speed,
+    forward: Forward,
+    rewind: Rewind,
+    seek: Seek,
+    move: Move,
+    remove: Remove,
+    skipto: SkipTo
 }; 

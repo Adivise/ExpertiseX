@@ -1,6 +1,6 @@
 {
   "name": "expertisex",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "description": "ExpertiseX v2 - A Discord Selfbot with advanced features and a user-friendly interface.",
   "main": "./out/main/main.js",
   "author": "Adivise",
