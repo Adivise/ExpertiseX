@@ -15,12 +15,9 @@ files:
 asarUnpack:
   - "resources/**"
 win:
-  publisherName: Adivise
+  signtoolOptions:
+    publisherName: Adivise
   target:
-    - target: nsis-web
-      arch:
-        - x64
-        - ia32
     - target: nsis
       arch:
         - x64
@@ -33,6 +30,7 @@ win:
       arch:
         - x64
         - ia32
+  sign: false
 portable:
   artifactName: ${name}-${version}-portable.${ext}
 msi:
