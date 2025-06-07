@@ -22,6 +22,26 @@ jobs:
           node-version: 20
           cache: 'npm'
 
+      - name: Install snapcraft (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo snap install snapcraft --classic
+          sudo snap install core
+
+      - name: Cleanup previous builds
+        if: runner.os == 'Windows'
+        run: |
+          taskkill /F /IM 7za.exe || true
+          if exist dist rmdir /S /Q dist
+          if exist out rmdir /S /Q out
+        shell: cmd
+
+      - name: Cleanup previous builds (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          pkill -f 7za || true
+          rm -rf dist out
+
       - name: Install dependencies
         run: npm ci
 
