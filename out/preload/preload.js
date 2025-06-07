@@ -19,7 +19,7 @@ if (process.contextIsolated) {
       loadConfig: () => electron.ipcRenderer.invoke("load-config"),
       saveConfig: (config) => electron.ipcRenderer.invoke("save-config", config),
       checkConfig: () => electron.ipcRenderer.invoke("check-config"),
-      getVersion: () => process.env.npm_package_version || "2.8.4",
+      getVersion: () => process.env.npm_package_version || "2.8.5",
       windowMinimize: () => electron.ipcRenderer.send("window-minimize"),
       windowMaximize: () => electron.ipcRenderer.send("window-maximize"),
       windowClose: () => electron.ipcRenderer.send("window-close"),
