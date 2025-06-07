@@ -33,14 +33,6 @@ win:
       arch:
         - x64
         - ia32
-    - target: zip
-      arch:
-        - x64
-        - ia32
-    - target: 7z
-      arch:
-        - x64
-        - ia32
 portable:
   artifactName: ${name}-${version}-portable.${ext}
 msi:
@@ -64,7 +56,6 @@ nsis:
 mac:
   target:
     - dmg
-    - zip
     - pkg
   entitlementsInherit: build/entitlements.mac.plist
   # No special permissions required for current features
@@ -76,8 +67,6 @@ linux:
     - AppImage
     - deb
     - rpm
-    - tar.gz
-    - snap
   maintainer: electronjs.org
   category: Utility
   icon: build/icon.png
@@ -89,3 +78,4 @@ publish:
   owner: Adivise
   repo: ExpertiseX
   private: false
+  releaseType: release

@@ -22,25 +22,23 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: Install snapcraft (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          sudo snap install snapcraft --classic
-          sudo snap install core
-
-      - name: Cleanup previous builds
+      - name: Cleanup previous builds (Windows)
         if: runner.os == 'Windows'
         run: |
           taskkill /F /IM 7za.exe || true
+          taskkill /F /IM electron.exe || true
           if exist dist rmdir /S /Q dist
           if exist out rmdir /S /Q out
+          if exist "node_modules\7zip-bin\win\x64\7za.exe" del /F /Q "node_modules\7zip-bin\win\x64\7za.exe"
         shell: cmd
 
       - name: Cleanup previous builds (Unix)
         if: runner.os != 'Windows'
         run: |
           pkill -f 7za || true
+          pkill -f electron || true
           rm -rf dist out
+          rm -f node_modules/7zip-bin/linux/x64/7za
 
       - name: Install dependencies
         run: npm ci
@@ -52,4 +50,5 @@ jobs:
           release: true
         env:
           GH_TOKEN: ${{ secrets.github_token }}
-          ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES: true 
+          ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES: true
+          ELECTRON_BUILDER_ARCHIVE_FORMAT: zip  # Use only zip format to avoid 7z issues 

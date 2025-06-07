@@ -6,13 +6,11 @@
   "author": "Adivise",
   "scripts": {
     "dev": "electron-vite dev",
-    "build": "electron-vite build",
+    "clean": "rimraf dist",
+    "build": "npm run clean && electron-vite build",
     "build:win": "npm run build && electron-builder --win",
-    "build:win-portable": "npm run build && electron-builder build --win portable",
-    "build:win-setup": "npm run build && electron-builder build --win nsis",
-    "build:win-all": "npm run build && electron-builder build --win portable nsis",
     "build:mac": "npm run build && electron-builder --mac",
-    "build:linux": "npm run build && electron-builder --linux AppImage",
+    "build:linux": "npm run build && electron-builder --linux",
     "build:all": "npm run build && electron-builder -mw"
   },
   "dependencies": {
