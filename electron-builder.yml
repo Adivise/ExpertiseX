@@ -21,7 +21,6 @@ win:
     - target: nsis
     - target: portable
     - target: msi
-  sign: false
 portable:
   artifactName: ${name}-${version}-portable.${ext}
 msi:
