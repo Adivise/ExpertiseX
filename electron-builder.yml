@@ -73,4 +73,3 @@ publish:
   repo: ExpertiseX
   private: false
   releaseType: release
-  releaseName: ExpertiseX v${version}
