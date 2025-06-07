@@ -19,13 +19,8 @@ win:
     publisherName: Adivise
   target:
     - target: nsis
-      arch:
-        - x64
-        - ia32
     - target: portable
-      arch:
-        - x64
-        - ia32
+    - target: msi
   sign: false
 portable:
   artifactName: ${name}-${version}-portable.${ext}
@@ -43,6 +38,7 @@ nsis:
   oneClick: false
   perMachine: true
   allowToChangeInstallationDirectory: true
+  differentialPackage: false
   installerIcon: build/icon.ico
   uninstallerIcon: build/icon.ico
   installerHeaderIcon: build/icon.ico
@@ -54,8 +50,10 @@ mac:
   entitlementsInherit: build/entitlements.mac.plist
   # No special permissions required for current features
   notarize: false
+  icon: build/icon.icns
 dmg:
   artifactName: ${name}-${version}.${ext}
+  icon: build/icon.icns
 linux:
   target:
     - AppImage

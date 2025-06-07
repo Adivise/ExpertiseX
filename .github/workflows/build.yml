@@ -32,4 +32,8 @@ jobs:
           release: true
         env:
           GH_TOKEN: ${{ secrets.github_token }}
-          ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES: true 
+          ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES: true
+
+      - name: Remove all .blockmap files from dist
+        run: rm -f dist/*.blockmap dist/**/*.blockmap
+        shell: bash 
