@@ -22,10 +22,6 @@ win:
       arch:
         - x64
         - ia32
-    - target: msi
-      arch:
-        - x64
-        - ia32
     - target: portable
       arch:
         - x64
@@ -77,3 +73,4 @@ publish:
   repo: ExpertiseX
   private: false
   releaseType: release
+  releaseName: ExpertiseX v${version}
