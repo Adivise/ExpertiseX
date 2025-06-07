@@ -7,6 +7,7 @@ const net = require("net");
 const https = require("https");
 const discord_jsSelfbotV13 = require("discord.js-selfbot-v13");
 const child_process = require("child_process");
+const electronUpdater = require("electron-updater");
 const clearAllLogs = () => {
   try {
     const files = fs.readdirSync(process.cwd());
@@ -316,8 +317,9 @@ electron.app.whenReady().then(() => {
   clearAllLogs();
   const mainWindow2 = createWindow();
   setupIpcHandlers(mainWindow2);
+  setTimeout(checkForUpdates, 3e3);
   electron.app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    if (electron.BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
 electron.app.on("web-contents-created", (_, contents) => {
@@ -331,4 +333,25 @@ electron.app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     electron.app.quit();
   }
+});
+electronUpdater.autoUpdater.setFeedURL({
+  provider: "github",
+  owner: "Adivise",
+  repo: "ExpertiseX"
+});
+function checkForUpdates() {
+  electronUpdater.autoUpdater.checkForUpdates();
+}
+electronUpdater.autoUpdater.on("update-available", (info) => {
+  electron.dialog.showMessageBox({
+    type: "info",
+    title: "Update Available",
+    message: `Version ${info.version} is available for download.`,
+    buttons: ["Download", "Later"],
+    defaultId: 0
+  }).then(({ response }) => {
+    if (response === 0) {
+      electron.shell.openExternal("https://github.com/Adivise/ExpertiseX/releases/latest");
+    }
+  });
 });

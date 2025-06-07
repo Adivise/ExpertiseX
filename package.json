@@ -1,14 +1,19 @@
 {
   "name": "expertisex",
-  "version": "2.8.0",
-  "description": "ExpertiseX v2 - A Discord Selfbot with advanced features and a user-friendly interface.",
+  "version": "2.8.3",
+  "description": "ExpertiseX - A Discord Selfbot with advanced features and a user-friendly interface.",
   "main": "./out/main/main.js",
   "author": "Adivise",
   "scripts": {
     "dev": "electron-vite dev",
     "build": "electron-vite build",
     "build:win": "npm run build && electron-builder --win",
-    "build:win-portable": "npm run build && electron-builder build --win portable"
+    "build:win-portable": "npm run build && electron-builder build --win portable",
+    "build:win-setup": "npm run build && electron-builder build --win nsis",
+    "build:win-all": "npm run build && electron-builder build --win portable nsis",
+    "build:mac": "npm run build && electron-builder --mac",
+    "build:linux": "npm run build && electron-builder --linux AppImage",
+    "build:all": "npm run build && electron-builder -mw"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
