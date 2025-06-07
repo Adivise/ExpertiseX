@@ -1,6 +1,5 @@
 import { ipcMain } from 'electron';
 import { configManager } from '../managers/config.js';
-import { ffmpegManager } from '../managers/ffmpeg.js';
 import { credentialsManager } from '../managers/credentials.js';
 import { discordClient } from '../managers/discord.js';
 import { botManager } from '../managers/bot.js';
@@ -14,10 +13,6 @@ export const setupIpcHandlers = (mainWindow) => {
   ipcMain.handle('load-config', configManager.loadConfig);
   ipcMain.handle('save-config', (_, config) => configManager.saveConfig(config));
   ipcMain.handle('check-config', configManager.checkConfig);
-
-  // FFmpeg handlers
-  ipcMain.handle("check-ffmpeg", ffmpegManager.checkFFmpeg);
-  ipcMain.handle("download-ffmpeg", ffmpegManager.downloadFFmpeg);
 
   // Log handlers
   ipcMain.handle("get-bot-logs", (_, userId) => {

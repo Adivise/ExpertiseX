@@ -121,6 +121,7 @@ Take your Discord automation and music experience to the next level with Experti
 ## 📋 Requirements
 
 - [Node.js](https://nodejs.org/en/download/) - Latest LTS version
+- [SelfBot Token](https://roze.lol/faq?question=How+do+I+add+a+token+to+my+account%3F) - Get selfbot token for logins
 - [Java 17 SE](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) - Required for LavaLink (Choose OS)
 - [LavaLink](https://lavalink.dev/getting-started/index.html) - Music Server
   - [Alternative Config](https://github.com/Adivise/ExpertiseX/releases/download/v2.1.0/LavaLink.zip)

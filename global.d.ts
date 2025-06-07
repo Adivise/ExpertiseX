@@ -11,8 +11,6 @@ declare global {
       checkPort: (port: number) => Promise<boolean>;
       removeListener: (channel: string, callback: (...args: any[]) => void) => void;
       deleteCredential: (token: string) => Promise<void>;
-      checkFFmpeg: () => Promise<boolean>;
-      downloadFFmpeg: () => Promise<void>;
       loadConfig: () => Promise<Record<string, any> | null>;
       saveConfig: (config: Record<string, any>) => Promise<boolean>;
       checkConfig: () => Promise<boolean>;
