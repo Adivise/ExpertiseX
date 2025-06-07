@@ -44,6 +44,14 @@ mac:
   notarize: false
 dmg:
   artifactName: ${name}-${version}.${ext}
+linux:
+  target:
+    - AppImage
+  maintainer: electronjs.org
+  category: Utility
+  icon: build/icon.png
+appImage:
+  artifactName: ${name}-${version}.${ext}
 npmRebuild: true
 publish:
   provider: github
