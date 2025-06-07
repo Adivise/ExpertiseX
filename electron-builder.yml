@@ -17,14 +17,42 @@ asarUnpack:
 win:
   publisherName: Adivise
   target:
-    - portable
-    - nsis
+    - target: nsis-web
+      arch:
+        - x64
+        - ia32
+    - target: nsis
+      arch:
+        - x64
+        - ia32
+    - target: msi
+      arch:
+        - x64
+        - ia32
+    - target: portable
+      arch:
+        - x64
+        - ia32
+    - target: zip
+      arch:
+        - x64
+        - ia32
+    - target: 7z
+      arch:
+        - x64
+        - ia32
 portable:
-  artifactName: ${name}-${version}-single.${ext}
+  artifactName: ${name}-${version}-portable.${ext}
+msi:
+  artifactName: ${name}-${version}.${ext}
+  createDesktopShortcut: always
+  shortcutName: ${productName}
+  oneClick: false
+  perMachine: true
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
-  uninstallDisplayName: ${productName}
+  uninstallDisplayName: uninstall
   createDesktopShortcut: always
   oneClick: false
   perMachine: true
@@ -32,21 +60,24 @@ nsis:
   installerIcon: build/icon.ico
   uninstallerIcon: build/icon.ico
   installerHeaderIcon: build/icon.ico
-  menuCategory: ExpertiseX
   license: build/license.txt
 mac:
+  target:
+    - dmg
+    - zip
+    - pkg
   entitlementsInherit: build/entitlements.mac.plist
-  extendInfo:
-    - NSCameraUsageDescription: Application requests access to the device's camera.
-    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
-    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
-    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+  # No special permissions required for current features
   notarize: false
 dmg:
   artifactName: ${name}-${version}.${ext}
 linux:
   target:
     - AppImage
+    - deb
+    - rpm
+    - tar.gz
+    - snap
   maintainer: electronjs.org
   category: Utility
   icon: build/icon.png

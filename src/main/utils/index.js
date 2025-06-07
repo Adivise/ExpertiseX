@@ -25,7 +25,7 @@ export const writeLog = (message, userId) => {
     hour12: false
   });
   
-  const logPath = join(process.cwd(), `${userId}.log`);
+  const logPath = join(process.cwd(), userId + '.log');
   fs.appendFileSync(logPath, `[${timestamp}] | ${message}`);
 };
 

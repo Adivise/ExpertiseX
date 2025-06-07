@@ -28,7 +28,7 @@ const writeLog = (message, userId) => {
     second: "2-digit",
     hour12: false
   });
-  const logPath = path.join(process.cwd(), `${userId}.log`);
+  const logPath = path.join(process.cwd(), userId + ".log");
   fs.appendFileSync(logPath, `[${timestamp}] | ${message}`);
 };
 const isPortAvailable = (port) => {
@@ -179,7 +179,7 @@ const botManager = {
     });
     botProcesses.set(userId, botProcess);
     if (userId) {
-      fs.writeFileSync(path.join(process.cwd(), `${userId}.log`), "");
+      fs.writeFileSync(path.join(process.cwd(), userId + ".log"), "");
     }
     if (botProcess.stdout) {
       botProcess.stdout.on("data", (data) => writeLog(`[🟢] ${data.toString()}`, userId));
@@ -251,7 +251,7 @@ const setupIpcHandlers = (mainWindow2) => {
   electron.ipcMain.handle("download-ffmpeg", ffmpegManager.downloadFFmpeg);
   electron.ipcMain.handle("get-bot-logs", (_, userId) => {
     if (!userId) return "No user ID provided.";
-    const logPath = path.join(process.cwd(), `${userId}.log`);
+    const logPath = path.join(process.cwd(), userId + ".log");
     if (!fs.existsSync(logPath)) return "No logs found.";
     return fs.readFileSync(logPath, "utf8");
   });

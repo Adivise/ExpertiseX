@@ -19,7 +19,7 @@ if (process.contextIsolated) {
       loadConfig: () => ipcRenderer.invoke("load-config"),
       saveConfig: (config) => ipcRenderer.invoke("save-config", config),
       checkConfig: () => ipcRenderer.invoke("check-config"),
-      getVersion: () => process.env.npm_package_version || '2.8.0',
+      getVersion: () => process.env.npm_package_version || '2.8.4',
       windowMinimize: () => ipcRenderer.send("window-minimize"),
       windowMaximize: () => ipcRenderer.send("window-maximize"),
       windowClose: () => ipcRenderer.send("window-close"),

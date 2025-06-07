@@ -22,7 +22,7 @@ export const setupIpcHandlers = (mainWindow) => {
   // Log handlers
   ipcMain.handle("get-bot-logs", (_, userId) => {
     if (!userId) return "No user ID provided.";
-    const logPath = join(process.cwd(), `${userId}.log`);
+    const logPath = join(process.cwd(), userId + '.log');
     if (!fs.existsSync(logPath)) return "No logs found.";
     return fs.readFileSync(logPath, "utf8");
   });

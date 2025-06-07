@@ -15,7 +15,7 @@ export const botManager = {
     botProcesses.set(userId, botProcess);
 
     if (userId) {
-      fs.writeFileSync(join(process.cwd(), `${userId}.log`), "");
+      fs.writeFileSync(join(process.cwd(), userId + '.log'), "");
     }
 
     if (botProcess.stdout) {
