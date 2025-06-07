@@ -121,8 +121,8 @@ Take your Discord automation and music experience to the next level with Experti
 ## 📋 Requirements
 
 - [Node.js](https://nodejs.org/en/download/) - Latest LTS version
-- [Java 17 SE](https://download.oracle.com/java/17/archive/jdk-17.0.12_windows-x64_bin.msi) - Required for LavaLink
-- [LavaLink](https://lavalink.dev/getting-started/index.html) - Music server
+- [Java 17 SE](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) - Required for LavaLink (Choose OS)
+- [LavaLink](https://lavalink.dev/getting-started/index.html) - Music Server
   - [Alternative Config](https://github.com/Adivise/ExpertiseX/releases/download/v2.1.0/LavaLink.zip)
 
 ## 🚀 Installation
@@ -130,13 +130,35 @@ Take your Discord automation and music experience to the next level with Experti
 ### For Regular Users
 
 #### Windows Users
-- **Single Executable** (Portable) - [Download Latest](https://github.com/Adivise/ExpertiseX/releases/download/v2.8.0/expertisex-2.8.0-single.exe)
-  > *Note: Settings reset when closing the application*
-- **Installer** - [Download Latest](https://github.com/Adivise/ExpertiseX/releases/download/v2.8.0/expertisex-2.8.0-setup.exe)
-  > *Note: All configuration will saved*
+- Go to the [latest release](https://github.com/Adivise/ExpertiseX/releases/latest) and download the correct file for your system from the "Assets" section:
+  - **Installer (.exe, .msi)**
+    - `expertisex-x.x.x-setup.exe` (NSIS installer, recommended for most users)
+    - `expertisex-x.x.x.msi` (MSI installer, alternative for enterprise environments)
+  - **Portable (.exe)**
+    - `expertisex-x.x.x-portable.exe` (no installation required, settings reset on close)
+  > *Note: Settings reset when closing the portable app. The installer saves all configuration. Choose the format that best fits your needs.*
 
-#### MacOS & Linux Users
-> *Currently unavailable. Check back later for updates.*
+#### macOS Users
+> **Note:** The macOS build is currently in **beta test**. There may be bugs or missing features. Please report any issues you encounter.
+- Go to the [latest release](https://github.com/Adivise/ExpertiseX/releases/latest) and download the correct file for your system from the "Assets" section:
+  - **DMG Installer (.dmg)**
+    - `expertisex-x.x.x.dmg` (recommended for most users)
+  - **PKG Installer (.pkg)**
+    - `ExpertiseX-x.x.x-arm64.pkg` (for Apple Silicon Macs)
+  > *On first launch, you may need to right-click and choose "Open" to bypass security warnings if the app is not notarized.*
+
+#### Linux Users
+> **Note:** The Linux build is currently in **beta test**. There may be bugs or missing features. Please report any issues you encounter.
+- Go to the [latest release](https://github.com/Adivise/ExpertiseX/releases/latest) and download the correct file for your system from the "Assets" section:
+  - **AppImage (.AppImage)**
+    - `expertisex-x.x.x.AppImage` (recommended for most users)
+  - **Debian Package (.deb)**
+    - `expertisex_x.x.x_amd64.deb`
+  - **RPM Package (.rpm)**
+    - `expertisex-x.x.x.x86_64.rpm`
+  > *You may need to make the AppImage executable: `chmod +x ./expertisex-x.x.x.AppImage` and then run it.*
+
+> **Note:** `.yml` files are for auto-update and can be ignored by most users. Download the installer or portable/archive for your platform.
 
 ### For Developers
 
@@ -155,7 +177,10 @@ Take your Discord automation and music experience to the next level with Experti
    ```bash
    # For Windows
    npm run build:win
-   npm run build:win-portable
+   # For MacOS
+   npm run build:mac
+   # For Linux
+   npm run build:linux
    ```
 
 
