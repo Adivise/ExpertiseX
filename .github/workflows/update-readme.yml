@@ -21,6 +21,11 @@ jobs:
             echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           fi
 
+      - name: Replace VERSION in README
+        run: |
+          VERSION="${{ steps.get_version.outputs.VERSION }}"
+          sed -i "s/\\${VERSION}/$VERSION/g" README.md
+
       - name: Update README
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
