@@ -131,7 +131,7 @@ Take your Discord automation and music experience to the next level with Experti
 ## For Regular Users
 
 ### Windows Users
-- Click [here](https://github.com/Adivise/ExpertiseX/releases/latest/download/expertisex-${VERSION}-setup.exe) to download the recommended Windows installer
+- Click [here](https://github.com/Adivise/ExpertiseX/releases/latest/download/expertisex-${VERSION}.exe) to download the recommended Windows installer
 - Alternative downloads from the [latest release](https://github.com/Adivise/ExpertiseX/releases/latest):
   - **Portable (.exe)**
     - `expertisex-${VERSION}-portable.exe` (no installation required, settings reset on close)
@@ -144,7 +144,7 @@ Take your Discord automation and music experience to the next level with Experti
 - Click [here](https://github.com/Adivise/ExpertiseX/releases/latest/download/expertisex-${VERSION}.dmg) to download the recommended macOS installer
 - Alternative downloads from the [latest release](https://github.com/Adivise/ExpertiseX/releases/latest):
   - **PKG Installer (.pkg)**
-    - `expertisex-${VERSION}-arm64.pkg` (for Apple Silicon Macs)
+    - `expertisex-${VERSION}.pkg` (for Apple Silicon Macs)
   > *On first launch, you may need to right-click and choose "Open" to bypass security warnings if the app is not notarized.*
 
 ### Linux Users
@@ -152,24 +152,12 @@ Take your Discord automation and music experience to the next level with Experti
 - Click [here](https://github.com/Adivise/ExpertiseX/releases/latest/download/expertisex-${VERSION}.AppImage) to download the recommended Linux AppImage
 - Alternative downloads from the [latest release](https://github.com/Adivise/ExpertiseX/releases/latest):
   - **Debian Package (.deb)**
-    - `expertisex_${VERSION}_amd64.deb`
+    - `expertisex_${VERSION}.deb`
   - **RPM Package (.rpm)**
-    - `expertisex-${VERSION}.x86_64.rpm`
+    - `expertisex-${VERSION}.rpm`
   > *You may need to make the AppImage executable: `chmod +x ./expertisex-${VERSION}.AppImage` and then run it.*
 
 > **Note:** `.yml` files are for auto-update and can be ignored by most users. Download the installer or portable/archive for your platform.
-
-<script>
-// Fetch the latest version from GitHub API
-fetch('https://api.github.com/repos/Adivise/ExpertiseX/releases/latest')
-  .then(response => response.json())
-  .then(data => {
-    const version = data.tag_name.replace('v', '');
-    // Replace all instances of ${VERSION} with the actual version
-    document.body.innerHTML = document.body.innerHTML.replace(/\${VERSION}/g, version);
-  })
-  .catch(error => console.error('Error fetching version:', error));
-</script>
 
 <details>
 <summary>⭐ For Developers [CLICK ME]</summary>
