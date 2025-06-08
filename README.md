@@ -2,25 +2,15 @@
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=ExpertiseX&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient"/>
 </p>
 
-## 📝 Description
+# 📝 Description
 
 **ExpertiseX** is a powerful, user-friendly desktop application designed for advanced Discord self-bot music and utility management. With a modern interface and robust feature set, ExpertiseX empowers users to control music playback, apply audio filters, manage multiple bots, and monitor activity—all from a single, intuitive dashboard.
 
 Whether you're running a music server, managing multiple bots, or just want seamless control over your Discord experience, ExpertiseX provides everything you need. Enjoy real-time logging, secure token management, session persistence, and a highly customizable sidebar with over 50 components, all enhanced by smooth animations and a responsive design.
 
-**Key highlights:**
-- 🎵 Effortless music and filter control
-- 🤖 Secure, multi-bot management
-- 📊 Real-time system feedback and notifications
-- 🔍 Smart search and auto-suggest for rapid navigation
-- 📁 Session data saver for seamless continuity
-- 📏 Sidebar collapse for a focused
-- ⚡ Over 50+ modular components
-- ...and much more!
-
 Take your Discord automation and music experience to the next level with ExpertiseX.
 
-## 🌟 Join Our Community
+# 🌟 Join Our Community
 
 <p align="center">
   <a href="https://discord.gg/SNG3dh3MbR" target="_blank">
@@ -28,7 +18,7 @@ Take your Discord automation and music experience to the next level with Experti
   </a>
 </p>
 
-## ☕ Support the Project
+# ☕ Support the Project
 
 <p align="center">
   <a href="https://ko-fi.com/nanotect" target="_blank">
@@ -36,11 +26,11 @@ Take your Discord automation and music experience to the next level with Experti
   </a>
 </p>
 
-## ⚠️ Important Notice
+# ⚠️ Important Notice
 
 > **Warning**: Using selfbots may violate Discord's Terms of Service. Use at your own risk. The developers are not responsible for any account actions taken by Discord.
 
-## ✨ Features
+# ✨ Features
 
 - 🎯 **Token Login** - Secure and easy authentication
 - 🔐 **Token Saver** - Secure token management and storage
@@ -58,7 +48,10 @@ Take your Discord automation and music experience to the next level with Experti
 - 📁 **Session Data Saver** - Automatically saves and restores your session data
 - 📏 **Sidebar Collapse Button** - Easily collapse or expand the sidebar for more workspace
 
-## 📃 Available (Over 50+) Components
+<details>
+<summary>📃 Component Lists [CLICK ME]</summary>
+
+## 📃 Available Components
 
 ### Special Control
 - 📊 **Console** - View logs and monitor bot activity in real time
@@ -118,6 +111,11 @@ Take your Discord automation and music experience to the next level with Experti
 - 📳 **Vibrate** - Add a vibration effect
 - 🎵 **Vibrato** - Add a vibrato effect
 
+</details>
+
+<details>
+<summary>🚀 Requirements [CLICK ME]</summary>
+
 ## 📋 Requirements
 
 - [Node.js](https://nodejs.org/en/download/) - Latest LTS version
@@ -126,42 +124,57 @@ Take your Discord automation and music experience to the next level with Experti
 - [LavaLink](https://lavalink.dev/getting-started/index.html) - Music Server
   - [Alternative Config](https://github.com/Adivise/ExpertiseX/releases/download/v2.1.0/LavaLink.zip)
 
-## 🚀 Installation
+</details>
 
-### For Regular Users
+# 🚀 Installation
 
-#### Windows Users
-- Go to the [latest release](https://github.com/Adivise/ExpertiseX/releases/latest) and download the correct file for your system from the "Assets" section:
-  - **Installer (.exe, .msi)**
-    - `expertisex-x.x.x-setup.exe` (NSIS installer, recommended for most users)
-    - `expertisex-x.x.x.msi` (MSI installer, alternative for enterprise environments)
+## For Regular Users
+
+### Windows Users
+- Click [here](https://github.com/Adivise/ExpertiseX/releases/latest/download/expertisex-${VERSION}-setup.exe) to download the recommended Windows installer
+- Alternative downloads from the [latest release](https://github.com/Adivise/ExpertiseX/releases/latest):
   - **Portable (.exe)**
-    - `expertisex-x.x.x-portable.exe` (no installation required, settings reset on close)
+    - `expertisex-${VERSION}-portable.exe` (no installation required, settings reset on close)
+  - **MSI Installer (.msi)**
+    - `expertisex-${VERSION}.msi` (alternative for enterprise environments)
   > *Note: Settings reset when closing the portable app. The installer saves all configuration. Choose the format that best fits your needs.*
 
-#### macOS Users
+### macOS Users
 > **Note:** The macOS build is currently in **beta test**. There may be bugs or missing features. Please report any issues you encounter.
-- Go to the [latest release](https://github.com/Adivise/ExpertiseX/releases/latest) and download the correct file for your system from the "Assets" section:
-  - **DMG Installer (.dmg)**
-    - `expertisex-x.x.x.dmg` (recommended for most users)
+- Click [here](https://github.com/Adivise/ExpertiseX/releases/latest/download/expertisex-${VERSION}.dmg) to download the recommended macOS installer
+- Alternative downloads from the [latest release](https://github.com/Adivise/ExpertiseX/releases/latest):
   - **PKG Installer (.pkg)**
-    - `ExpertiseX-x.x.x-arm64.pkg` (for Apple Silicon Macs)
+    - `expertisex-${VERSION}-arm64.pkg` (for Apple Silicon Macs)
   > *On first launch, you may need to right-click and choose "Open" to bypass security warnings if the app is not notarized.*
 
-#### Linux Users
+### Linux Users
 > **Note:** The Linux build is currently in **beta test**. There may be bugs or missing features. Please report any issues you encounter.
-- Go to the [latest release](https://github.com/Adivise/ExpertiseX/releases/latest) and download the correct file for your system from the "Assets" section:
-  - **AppImage (.AppImage)**
-    - `expertisex-x.x.x.AppImage` (recommended for most users)
+- Click [here](https://github.com/Adivise/ExpertiseX/releases/latest/download/expertisex-${VERSION}.AppImage) to download the recommended Linux AppImage
+- Alternative downloads from the [latest release](https://github.com/Adivise/ExpertiseX/releases/latest):
   - **Debian Package (.deb)**
-    - `expertisex_x.x.x_amd64.deb`
+    - `expertisex_${VERSION}_amd64.deb`
   - **RPM Package (.rpm)**
-    - `expertisex-x.x.x.x86_64.rpm`
-  > *You may need to make the AppImage executable: `chmod +x ./expertisex-x.x.x.AppImage` and then run it.*
+    - `expertisex-${VERSION}.x86_64.rpm`
+  > *You may need to make the AppImage executable: `chmod +x ./expertisex-${VERSION}.AppImage` and then run it.*
 
 > **Note:** `.yml` files are for auto-update and can be ignored by most users. Download the installer or portable/archive for your platform.
 
-### For Developers
+<script>
+// Fetch the latest version from GitHub API
+fetch('https://api.github.com/repos/Adivise/ExpertiseX/releases/latest')
+  .then(response => response.json())
+  .then(data => {
+    const version = data.tag_name.replace('v', '');
+    // Replace all instances of ${VERSION} with the actual version
+    document.body.innerHTML = document.body.innerHTML.replace(/\${VERSION}/g, version);
+  })
+  .catch(error => console.error('Error fetching version:', error));
+</script>
+
+<details>
+<summary>⭐ For Developers [CLICK ME]</summary>
+
+## ⭐ For Developers
 
 1. **Clone the Repository**
    ```bash
@@ -184,23 +197,21 @@ Take your Discord automation and music experience to the next level with Experti
    npm run build:linux
    ```
 
+4. **Development Mode**
+   ```bash
+   npm run build
+   npm run dev
+   ```
 
-## 🏃‍♂️ Running the Application
+</details>
 
-For development:
-```bash
-npm run dev
-```
-
-## 👥 Contributors
+# 👥 Contributors
 
 <p align="center">
   <a href="https://github.com/Adivise/ExpertiseX/graphs/contributors">
     <img src="https://contributors-img.web.app/image?repo=Adivise/ExpertiseX" alt="Project Contributors"/>
   </a>
 </p>
-
----
 
 <p align="center">
   Made with ❤️ by Adivise

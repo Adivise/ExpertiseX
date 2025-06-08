@@ -5,7 +5,7 @@ module.exports = async (client) => {
     let count = 0; // ✅ Initialize count for loaded events
 
     const loadcommand = (dirs) => {
-        const dirPath = path.join(__dirname, `../events/${dirs}`);
+        const dirPath = path.join(__dirname, `../listeners/${dirs}`);
 
         // ✅ Ensure the directory exists before scanning
         if (!existsSync(dirPath)) {

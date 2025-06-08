@@ -1,4 +1,4 @@
-const formatDuration = require('../../structures/FormatDuration.js');
+const formatDuration = require('../../models/FormatDuration.js');
 const { KazagumoTrack } = require("kazagumo");
 
 module.exports = (client) => {

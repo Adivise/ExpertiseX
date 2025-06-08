@@ -18,7 +18,7 @@ import TitleBar from './module/TitleBar';
  */
 const App = () => {
     // State management
-    const [activeComponent, setActiveComponent] = useState('logins');
+    const [activeComponents, setActiveComponents] = useState({});
     const tabs = useTabs();
     const sessionStorageSet = useSessionStorage();
     const { handleLogout } = useBotOperations(tabs, tabs.removeTab, tabs.setCurrentTab);
@@ -45,12 +45,10 @@ const App = () => {
                             connectSSERef.current(bot.userId);
                         }
                     });
-                } else {
-                    //
                 }
             } catch (error) {
                 if (isMounted) {
-                    //
+                    console.error('Error loading active bots:', error);
                 }
             }
         };
@@ -71,25 +69,40 @@ const App = () => {
         };
 
         tabs.addTab(newTab);
-        setActiveComponent('console');
+        setActiveComponents(prev => ({
+            ...prev,
+            [loggedInUserId]: 'console'
+        }));
         sessionStorageSet.setSessionData(loggedInUserId, loggedInUsername, port);
         connectSSERef.current(loggedInUserId);
     };
 
     const handleNewTab = () => {
         tabs.setCurrentTab(null);
-        setActiveComponent('logins');
     };
 
     const handleTabSwitch = (tabId) => {
         tabs.switchTab(tabId);
-        setActiveComponent('console');
+    };
+
+    const handleComponentChange = (component) => {
+        if (tabs.currentTab) {
+            setActiveComponents(prev => ({
+                ...prev,
+                [tabs.currentTab]: component
+            }));
+        }
     };
 
     // Handle logout - unmount SSE connection for the specific bot
     const handleLogoutWithSSE = async (userId) => {
         disconnectSSE(userId);
         await handleLogout(userId);
+        setActiveComponents(prev => {
+            const newState = { ...prev };
+            delete newState[userId];
+            return newState;
+        });
     };
 
     // Render helpers
@@ -98,6 +111,7 @@ const App = () => {
             return <Logins onLoginSuccess={handleLoginSuccess} />;
         }
 
+        const activeComponent = activeComponents[tabs.currentTab] || 'console';
         const ActiveComponent = COMPONENT_MAP[activeComponent];
         return ActiveComponent ? <ActiveComponent userId={tabs.currentTab} /> : null;
     };
@@ -123,9 +137,9 @@ const App = () => {
             <div className="dashboard">
                 {tabs.currentTab && (
                     <Sidebar 
-                        setActiveComponent={setActiveComponent} 
+                        setActiveComponent={handleComponentChange} 
                         setIsLoggedIn={() => handleLogoutWithSSE(tabs.currentTab)}
-                        activeComponent={activeComponent}
+                        activeComponent={activeComponents[tabs.currentTab] || 'console'}
                     />
                 )}
                 <div className="main-content">
@@ -139,8 +153,7 @@ const App = () => {
                 onTabClose={handleLogoutWithSSE}
                 onNewTab={handleNewTab}
             />
-            <ToastContainer
-            />
+            <ToastContainer />
         </div>
     );
 };

@@ -1,5 +1,5 @@
 appId: com.expertisex.app
-productName: ExpertiseX
+productName: 'ExpertiseX'
 directories:
   buildResources: build
 files:
@@ -12,25 +12,25 @@ files:
   - "!ffmpeg.exe"
   - "!*.log"
   - "!session-data.json"
+  - "!encryption.key"
+  - "!website/**"
 asarUnpack:
   - "resources/**"
 win:
   signtoolOptions:
     publisherName: Adivise
   target:
-    - target: nsis
-    - target: portable
-    - target: msi
-portable:
-  artifactName: ${name}-${version}-portable.${ext}
+    - nsis
+    - portable
+    - msi
 msi:
-  artifactName: ${name}-${version}.${ext}
+  artifactName: expertisex-${version}.${ext}
   createDesktopShortcut: always
   shortcutName: ${productName}
   oneClick: false
   perMachine: true
 nsis:
-  artifactName: ${name}-${version}-setup.${ext}
+  artifactName: expertisex-${version}.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: uninstall
   createDesktopShortcut: always
@@ -42,6 +42,8 @@ nsis:
   uninstallerIcon: build/icon.ico
   installerHeaderIcon: build/icon.ico
   license: build/license.txt
+portable:
+  artifactName: expertisex-${version}-portable.${ext}
 mac:
   target:
     - dmg
@@ -51,8 +53,10 @@ mac:
   notarize: false
   icon: build/icon.icns
 dmg:
-  artifactName: ${name}-${version}.${ext}
   icon: build/icon.icns
+  artifactName: expertisex-${version}.${ext}
+pkg:
+  artifactName: expertisex-${version}.${ext}
 linux:
   target:
     - AppImage
@@ -62,7 +66,11 @@ linux:
   category: Utility
   icon: build/icon.png
 appImage:
-  artifactName: ${name}-${version}.${ext}
+  artifactName: expertisex-${version}.${ext}
+deb:
+  artifactName: expertisex-${version}.${ext}
+rpm:
+  artifactName: expertisex-${version}.${ext}
 npmRebuild: true
 publish:
   provider: github

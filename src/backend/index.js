@@ -31,7 +31,7 @@ client.manager = new Kazagumo({
     }
 }, new Connectors.DiscordJS(client), client.config.nodes);
 
-["loadEvent", "loadPlayer", "loadTrack", "loadEndpoint", "loadSSE"].forEach(x => require(`./handlers/${x}`)(client));
+["loadEvent", "loadPlayer", "loadTrack", "loadEndpoint", "loadSSE"].forEach(x => require(`./loaders/${x}`)(client));
 
 client.app.listen(port);
 client.login(token);

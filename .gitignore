@@ -11,6 +11,7 @@ config.json
 credentials.json
 session-data.json
 *.log
+encryption.key
 
 # Keep package-lock.json
 !package-lock.json 

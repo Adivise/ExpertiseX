@@ -5,7 +5,7 @@ module.exports = (client) => {
     let count = 0; // ✅ Initialize count for loaded endpoints
 
     const load = (dirs) => {
-        const dirPath = path.join(__dirname, `../endpoints/${dirs}`);
+        const dirPath = path.join(__dirname, `../api/${dirs}`);
 
         // ✅ Ensure the directory exists before scanning
         if (!existsSync(dirPath)) {

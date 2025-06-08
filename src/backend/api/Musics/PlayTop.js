@@ -1,4 +1,4 @@
-const formatDuration = require('../../structures/FormatDuration.js');
+const formatDuration = require('../../models/FormatDuration.js');
 
 module.exports = (client) => {
     client.app.post('/playtop', async (req, res) => {
