@@ -27,6 +27,8 @@ win:
     publisherName: Adivise
   target:
     - nsis
+    - portable
+    - msi
 msi:
   artifactName: expertisex-${version}.${ext}
   createDesktopShortcut: always
