@@ -131,31 +131,31 @@ Take your Discord automation and music experience to the next level with Experti
 ## For Regular Users
 
 ### Windows Users
-- Click [here](https://github.com/Adivise/ExpertiseX/releases/latest/download/expertisex-${VERSION}-setup.exe) to download the recommended Windows installer
+- Click [here](https://github.com/Adivise/ExpertiseX/releases/latest/download/expertisex-3.0.0-setup.exe) to download the recommended Windows installer
 - Alternative downloads from the [latest release](https://github.com/Adivise/ExpertiseX/releases/latest):
   - **Portable (.exe)**
-    - `expertisex-${VERSION}-portable.exe` (no installation required, settings reset on close)
+    - `expertisex-3.0.0-portable.exe` (no installation required, settings reset on close)
   - **MSI Installer (.msi)**
-    - `expertisex-${VERSION}.msi` (alternative for enterprise environments)
+    - `expertisex-3.0.0.msi` (alternative for enterprise environments)
   > *Note: Settings reset when closing the portable app. The installer saves all configuration. Choose the format that best fits your needs.*
 
 ### macOS Users
 > **Note:** The macOS build is currently in **beta test**. There may be bugs or missing features. Please report any issues you encounter.
-- Click [here](https://github.com/Adivise/ExpertiseX/releases/latest/download/expertisex-${VERSION}.dmg) to download the recommended macOS installer
+- Click [here](https://github.com/Adivise/ExpertiseX/releases/latest/download/expertisex-3.0.0.dmg) to download the recommended macOS installer
 - Alternative downloads from the [latest release](https://github.com/Adivise/ExpertiseX/releases/latest):
   - **PKG Installer (.pkg)**
-    - `expertisex-${VERSION}-arm64.pkg` (for Apple Silicon Macs)
+    - `expertisex-3.0.0-arm64.pkg` (for Apple Silicon Macs)
   > *On first launch, you may need to right-click and choose "Open" to bypass security warnings if the app is not notarized.*
 
 ### Linux Users
 > **Note:** The Linux build is currently in **beta test**. There may be bugs or missing features. Please report any issues you encounter.
-- Click [here](https://github.com/Adivise/ExpertiseX/releases/latest/download/expertisex-${VERSION}.AppImage) to download the recommended Linux AppImage
+- Click [here](https://github.com/Adivise/ExpertiseX/releases/latest/download/expertisex-3.0.0.AppImage) to download the recommended Linux AppImage
 - Alternative downloads from the [latest release](https://github.com/Adivise/ExpertiseX/releases/latest):
   - **Debian Package (.deb)**
-    - `expertisex_${VERSION}_amd64.deb`
+    - `expertisex_3.0.0_amd64.deb`
   - **RPM Package (.rpm)**
-    - `expertisex-${VERSION}.x86_64.rpm`
-  > *You may need to make the AppImage executable: `chmod +x ./expertisex-${VERSION}.AppImage` and then run it.*
+    - `expertisex-3.0.0.x86_64.rpm`
+  > *You may need to make the AppImage executable: `chmod +x ./expertisex-3.0.0.AppImage` and then run it.*
 
 > **Note:** `.yml` files are for auto-update and can be ignored by most users. Download the installer or portable/archive for your platform.
 
@@ -165,8 +165,8 @@ fetch('https://api.github.com/repos/Adivise/ExpertiseX/releases/latest')
   .then(response => response.json())
   .then(data => {
     const version = data.tag_name.replace('v', '');
-    // Replace all instances of ${VERSION} with the actual version
-    document.body.innerHTML = document.body.innerHTML.replace(/\${VERSION}/g, version);
+    // Replace all instances of 3.0.0 with the actual version
+    document.body.innerHTML = document.body.innerHTML.replace(/\3.0.0/g, version);
   })
   .catch(error => console.error('Error fetching version:', error));
 </script>
