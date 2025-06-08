@@ -23,9 +23,24 @@ export default defineConfig({
         assetFileNames: '[name].[ext]',
         format: 'cjs'
       },
-      external: ['electron', 'express', 'cors', 'discord.js-selfbot-v13', 'shoukaku', 'kazagumo', 'path', 'fs', 'child_process'],
+      external: [
+        'electron',
+        'express',
+        'cors',
+        'discord.js-selfbot-v13',
+        'shoukaku',
+        'kazagumo',
+        'path',
+        'fs',
+        'child_process',
+        'ffmpeg-static',
+        'libsodium-wrappers',
+        'opusscript'
+      ],
     },
     sourcemap: false,
     minify: false,
+    emptyOutDir: true,
+    copyPublicDir: false
   },
 });

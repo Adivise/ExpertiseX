@@ -2,6 +2,7 @@ appId: com.expertisex.app
 productName: 'ExpertiseX'
 directories:
   buildResources: build
+  output: dist
 files:
   - "**/*"
   - "!src/**"
@@ -14,15 +15,18 @@ files:
   - "!session-data.json"
   - "!encryption.key"
   - "!website/**"
+  - "!backend.vite.config.mjs"
+  - "!electron.vite.config.mjs"
+  - "!eslint.config.mjs"
+  - "!LICENSE"
 asarUnpack:
   - "resources/**"
+asar: false
 win:
   signtoolOptions:
     publisherName: Adivise
   target:
     - nsis
-    - portable
-    - msi
 msi:
   artifactName: expertisex-${version}.${ext}
   createDesktopShortcut: always

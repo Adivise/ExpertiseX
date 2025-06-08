@@ -1,12 +1,13 @@
 {
   "name": "expertisex",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "ExpertiseX - A Discord Selfbot with advanced features and a user-friendly interface.",
   "main": "./out/main/main.js",
   "author": "Adivise",
   "scripts": {
     "dev": "electron-vite dev",
-    "build": "electron-vite build && npm run build:backend",
+    "clean": "rimraf out dist",
+    "build": "npm run clean && electron-vite build && npm run build:backend",
     "build:backend": "vite build --config backend.vite.config.mjs",
     "build:win": "npm run build && electron-builder --win",
     "build:win:portable": "npm run build && electron-builder --win --portable",
@@ -26,6 +27,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "prettier": "^3.5.3",
+    "rimraf": "^5.0.10",
     "vite": "^6.2.6"
   },
   "dependencies": {
@@ -34,7 +36,6 @@
     "axios": "^1.9.0",
     "cors": "^2.8.5",
     "discord.js-selfbot-v13": "^3.6.1",
-    "dotenv": "^16.5.0",
     "electron-updater": "6.6.5",
     "express": "^5.1.0",
     "ffmpeg-static": "^5.2.0",
