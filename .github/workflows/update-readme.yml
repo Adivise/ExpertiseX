@@ -21,10 +21,17 @@ jobs:
             echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           fi
 
-      - name: Replace VERSION in README
+      - name: Get current version from README
+        id: current_version
         run: |
-          VERSION="${{ steps.get_version.outputs.VERSION }}"
-          sed -i "s/\${VERSION}/$VERSION/g" README.md
+          CURRENT_VERSION=$(grep -o 'expertisex-[0-9]\+\.[0-9]\+\.[0-9]\+' README.md | head -n 1 | cut -d'-' -f2)
+          echo "CURRENT_VERSION=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Replace version in README
+        run: |
+          OLD_VERSION="${{ steps.current_version.outputs.CURRENT_VERSION }}"
+          NEW_VERSION="${{ steps.get_version.outputs.VERSION }}"
+          sed -i "s/$OLD_VERSION/$NEW_VERSION/g" README.md
 
       - name: Update README
         uses: stefanzweifel/git-auto-commit-action@v4
