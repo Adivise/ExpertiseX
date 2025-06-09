@@ -41,6 +41,17 @@ const GoLive = ({ userId }) => {
 
     const handleGoLive = async () => {
         setResponse(''); // Clear the old response
+        try { // check and download ffmpeg.exe
+            const hasFFmpeg = await window.electronAPI.checkFFmpeg();
+            if (!hasFFmpeg) {
+                setResponse("FFmpeg not found. Downloading FFmpeg, please wait...");
+                await window.electronAPI.downloadFFmpeg();
+                setResponse("FFmpeg downloaded successfully, joining voice channel...");
+            }
+        } catch {
+            setResponse("Error checking/downloading FFmpeg: " + err.message);
+            return;
+        }
         if (!isCooldown) {
             setIsCooldown(true);
             setTimeout(() => setIsCooldown(false), 3000); // 3-second cooldown

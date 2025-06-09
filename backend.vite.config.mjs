@@ -14,33 +14,26 @@ const input = backendFiles.reduce((acc, file) => {
 
 export default defineConfig({
   build: {
-    outDir: 'out/backend',
+    outDir: "out/backend",
     rollupOptions: {
       input,
       output: {
-        entryFileNames: '[name]',
-        chunkFileNames: '[name]',
-        assetFileNames: '[name].[ext]',
-        format: 'cjs'
+        entryFileNames: "[name]",
+        chunkFileNames: "[name]",
+        assetFileNames: "[name].[ext]",
+        format: "cjs"
       },
-      external: [
-        'electron',
-        'express',
-        'cors',
-        'discord.js-selfbot-v13',
-        'shoukaku',
-        'kazagumo',
-        'path',
-        'fs',
-        'child_process',
-        'ffmpeg-static',
-        'libsodium-wrappers',
-        'opusscript'
-      ],
+      external: (id) => /^node_modules/.test(id),
     },
     sourcemap: false,
-    minify: false,
+    minify: "terser",
+    treeshake: true,
     emptyOutDir: true,
     copyPublicDir: false
   },
+  resolve: {
+    alias: {
+      "@backend": resolve(__dirname, "src/backend")
+    }
+  }
 });

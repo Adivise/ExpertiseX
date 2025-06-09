@@ -20,6 +20,8 @@ declare global {
       windowClose: () => Promise<void>;
       saveSessionData: (userId: string, sessionData: Record<string, any>) => Promise<boolean>;
       getSessionData: (userId: string) => Promise<Record<string, any> | null>;
+      checkFFmpeg: () => Promise<boolean>;
+      downloadFFmpeg: () => Promise<void>;
     };
   }
 }

@@ -21,7 +21,7 @@ files:
   - "!LICENSE"
 asarUnpack:
   - "resources/**"
-asar: false
+asar: true
 win:
   signtoolOptions:
     publisherName: Adivise
@@ -77,7 +77,7 @@ deb:
   artifactName: expertisex-${version}.${ext}
 rpm:
   artifactName: expertisex-${version}.${ext}
-npmRebuild: true
+npmRebuild: false
 publish:
   provider: github
   owner: Adivise

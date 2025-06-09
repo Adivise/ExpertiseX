@@ -7,6 +7,7 @@ import { sessionsManager } from '../managers/sessions.js';
 import { isPortAvailable } from '../utils/index.js';
 import fs from 'fs';
 import { join } from 'path';
+import { ffmpegManager } from '../managers/ffmpeg.js';
 
 export const setupIpcHandlers = (mainWindow) => {
   // Config handlers
@@ -55,4 +56,8 @@ export const setupIpcHandlers = (mainWindow) => {
   // Session data handlers
   ipcMain.handle('save-session-data', (_, userId, sessionData) => sessionsManager.saveSessionData(userId, sessionData));
   ipcMain.handle('get-session-data', (_, userId) => sessionsManager.getSessionData(userId));
+
+  // ffmpeg handlers
+  ipcMain.handle('check-ffmpeg', () => ffmpegManager.checkFFmpeg());
+  ipcMain.handle('download-ffmpeg', () => ffmpegManager.downloadFFmpeg());
 }; 

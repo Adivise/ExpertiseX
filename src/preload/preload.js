@@ -17,12 +17,14 @@ if (process.contextIsolated) {
       loadConfig: () => ipcRenderer.invoke("load-config"),
       saveConfig: (config) => ipcRenderer.invoke("save-config", config),
       checkConfig: () => ipcRenderer.invoke("check-config"),
-      getVersion: () => process.env.npm_package_version || '3.1.0',
+      getVersion: () => process.env.npm_package_version || '3.2.0',
       windowMinimize: () => ipcRenderer.send("window-minimize"),
       windowMaximize: () => ipcRenderer.send("window-maximize"),
       windowClose: () => ipcRenderer.send("window-close"),
       saveSessionData: (userId, sessionData) => ipcRenderer.invoke("save-session-data", userId, sessionData),
       getSessionData: (userId) => ipcRenderer.invoke("get-session-data", userId),
+      checkFFmpeg: () => ipcRenderer.invoke("check-ffmpeg"),
+      downloadFFmpeg: () => ipcRenderer.invoke("download-ffmpeg"),
     });
   } catch (error) {
     console.error("Error exposing Electron API:", error);
