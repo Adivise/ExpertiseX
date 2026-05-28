@@ -14,4 +14,4 @@ session-data.json
 encryption.key
 
 # Keep package-lock.json
-!package-lock.json 
+!package-lock.json
